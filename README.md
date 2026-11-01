@@ -14,7 +14,7 @@ HVAC wiring and bus interfaces can involve hazardous voltages or damage equipmen
 
 ## For contributors
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md). Public documentation, examples, comments, release notes, and discussions use US English. Planned documentation belongs in `docs/`. The foundation and receive-only transport provide bounded framing, real host/schema/code-generation tests and a two-framework firmware workflow. NASA typed packets are decoded passively; the Non-NASA typed engine and HVAC entities are not implemented yet.
+Read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md). Public documentation, examples, comments, release notes, and discussions use US English. Planned documentation belongs in `docs/`. The foundation and receive-only transport provide bounded framing, real host/schema/code-generation tests and a two-framework firmware workflow. NASA and Non-NASA packets are decoded by independent passive engines; HVAC entities are not implemented yet.
 
 ## License and attribution
 
@@ -41,3 +41,5 @@ Read the [baseline inventory](docs/compatibility/legacy-feature-inventory.md), [
 See [transport behavior and limits](docs/development/transport.md) for bounded buffers, diagnostics, scheduler tests and the native ESP32 UART scope.
 
 The [NASA engine notes](docs/protocol/nasa-engine.md) distinguish passive decoding from the host-tested read lifecycle and its remaining active-scheduler integration boundary.
+
+The [Non-NASA engine notes](docs/protocol/non-nasa-engine.md) explain source evidence, conservative ACK/readback behavior and the disabled production control lifecycle.

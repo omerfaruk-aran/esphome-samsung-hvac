@@ -1,0 +1,92 @@
+{
+  "ack_non_echo.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp",
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_non_nasa.cpp",
+    "notes": "Independent XOR framing from pinned source wire observations. No identified hardware/capture; never transmitted to equipment."
+  },
+  "control_heat18_low.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp",
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_non_nasa.cpp",
+    "notes": "Independent XOR framing from pinned source wire observations. No identified hardware/capture; never transmitted to equipment."
+  },
+  "status_fahrenheit.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp",
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_non_nasa.cpp",
+    "notes": "Independent XOR framing from pinned source wire observations. No identified hardware/capture; never transmitted to equipment."
+  },
+  "status_off.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp",
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_non_nasa.cpp",
+    "notes": "Independent XOR framing from pinned source wire observations. No identified hardware/capture; never transmitted to equipment."
+  },
+  "status_heat18_low.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp",
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_non_nasa.cpp",
+    "notes": "Independent XOR framing from pinned source wire observations. No identified hardware/capture; never transmitted to equipment."
+  },
+  "ack_heat18_low.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp",
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_non_nasa.cpp",
+    "notes": "Independent XOR framing from pinned source wire observations. No identified hardware/capture; never transmitted to equipment."
+  },
+  "registration.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp",
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_non_nasa.cpp",
+    "notes": "Independent XOR framing from pinned source wire observations. No identified hardware/capture; never transmitted to equipment."
+  },
+  "broadcast.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp",
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_non_nasa.cpp",
+    "notes": "Independent XOR framing from pinned source wire observations. No identified hardware/capture; never transmitted to equipment."
+  },
+  "telemetry_f3.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp",
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_non_nasa.cpp",
+    "notes": "Independent XOR framing from pinned source wire observations. No identified hardware/capture; never transmitted to equipment."
+  },
+  "poll.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp",
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_non_nasa.cpp",
+    "notes": "Independent XOR framing from pinned source wire observations. No identified hardware/capture; never transmitted to equipment."
+  }
+}

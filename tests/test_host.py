@@ -36,6 +36,17 @@ ROOT = Path(__file__).resolve().parents[1]
             "nasa",
             "All NASA assertions passed",
         ),
+        (
+            "test_non_nasa.cpp",
+            [
+                "non_nasa_packet.cpp",
+                "non_nasa_registration.cpp",
+                "non_nasa_control_queue.cpp",
+                "non_nasa_engine.cpp",
+            ],
+            "non_nasa",
+            "All Non-NASA assertions passed",
+        ),
     ],
 )
 def test_host_with_sanitizers(tmp_path, program, sources, fixtures, success):
@@ -43,6 +54,7 @@ def test_host_with_sanitizers(tmp_path, program, sources, fixtures, success):
     assert compiler, "A C++17 compiler is required for transport tests"
     component = ROOT / "components/samsung_hvac"
     binary = tmp_path / "transport-tests"
+    platform_defines = ["-DLOW=0", "-DHIGH=1"] if program == "test_non_nasa.cpp" else []
     command = [
         compiler,
         "-std=c++17",
@@ -53,6 +65,7 @@ def test_host_with_sanitizers(tmp_path, program, sources, fixtures, success):
         "-fsanitize=address,undefined",
         "-fno-omit-frame-pointer",
         "-g",
+        *platform_defines,
         "-I",
         str(component),
         str(ROOT / "tests/cpp" / program),
