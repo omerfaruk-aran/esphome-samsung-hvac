@@ -26,6 +26,7 @@ void SamsungHVAC::setup() {
         static_cast<nasa::PacketSink &>(*this), static_cast<nasa::ReadSink &>(*this));
   } else {
     this->framer_ = std::make_unique<non_nasa::Framer>(sink, this->stats_);
+    this->non_nasa_engine_ = std::make_unique<non_nasa::Engine>(static_cast<non_nasa::PacketSink &>(*this));
   }
   this->transport_ = std::make_unique<Transport>(static_cast<BusIO &>(*this), *this->framer_, this->stats_);
   // No production API enables TX in P1. Receive-only discovery is the default.
@@ -35,6 +36,7 @@ void SamsungHVAC::loop() {
   if (this->transport_ == nullptr) return;
   this->transport_->loop(millis());
   if (this->nasa_engine_ != nullptr) this->nasa_engine_->tick(millis());
+  if (this->non_nasa_engine_ != nullptr) this->non_nasa_engine_->tick(millis());
   if (this->stats_.tx_faults != 0) {
     ESP_LOGE(TAG, "Transport TX fault; restart required before any further transmission");
     this->mark_failed();
@@ -69,6 +71,7 @@ void SamsungHVAC::set_direction(bool transmit) {
 
 void SamsungHVAC::on_frame(const Frame &frame) {
   if (this->nasa_engine_ != nullptr) this->nasa_engine_->receive(frame, millis());
+  if (this->non_nasa_engine_ != nullptr) this->non_nasa_engine_->receive(frame, millis());
 }
 
 void SamsungHVAC::on_nasa_packet(const nasa::Packet &packet) {
@@ -79,6 +82,11 @@ void SamsungHVAC::on_nasa_packet(const nasa::Packet &packet) {
 void SamsungHVAC::on_read_complete(const nasa::ReadResult &result) {
   // Production never queues active reads in P2; host tests exercise the lifecycle.
   (void) result;
+}
+
+void SamsungHVAC::on_non_nasa_packet(const non_nasa::Packet &packet) {
+  // Passive state observations only. Production never enables the offline TX lifecycles.
+  (void) packet;
 }
 
 void SamsungHVAC::dump_config() {
@@ -93,6 +101,11 @@ void SamsungHVAC::dump_config() {
   if (this->nasa_engine_ != nullptr) {
     const auto &stats = this->nasa_engine_->stats();
     ESP_LOGCONFIG(TAG, "  NASA decoded: %" PRIu32 ", invalid typed packets: %" PRIu32,
+                  stats.decoded_packets, stats.invalid_packets);
+  }
+  if (this->non_nasa_engine_ != nullptr) {
+    const auto &stats = this->non_nasa_engine_->stats();
+    ESP_LOGCONFIG(TAG, "  Non-NASA decoded: %" PRIu32 ", invalid packets: %" PRIu32,
                   stats.decoded_packets, stats.invalid_packets);
   }
 }

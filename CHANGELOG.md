@@ -29,3 +29,11 @@ Notable changes will be recorded here. This project has not made a release.
 - Distinguish packet categories and add a bounded read-only lifecycle with source/destination/sequence/message correlation, confirmed-TX timers, retries and sequence quarantine.
 - Integrate passive NASA decoding and counters; production active reads and all control writes remain unavailable.
 - Add evidence-labelled synthetic fixtures and sanitizer regression/fuzz tests. No device compatibility or disputed message meaning is asserted.
+
+
+### P3 Non-NASA (unreleased)
+
+- Add independent Non-NASA packet/status decoding and passive engine counters, without linking NASA state.
+- Add disabled-by-default registration/keepalive/wake and coalesced control lifecycle helpers with shared rate limits, bounded retries, generation tokens and readback-based completion.
+- Treat all ACKs as nonterminal; document deliberate legacy differences and unsupported Fahrenheit control/ambiguous telemetry scaling.
+- Add synthetic fixtures, sanitizer regression tests, and Arduino macro compatibility coverage. No active registration, control YAML or hardware compatibility is available.

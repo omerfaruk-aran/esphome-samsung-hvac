@@ -7,7 +7,7 @@ Codex must update this file after every meaningful task. Do not mark future phas
 - Legacy repository (read-only): https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus
 - Legacy baseline verified 2026-11-01: `6b1966bea8db9344d23763454f9cebed015d15c5`
 - Workspace package prepared: 2026-11-01
-- Overall status: IN PROGRESS — P2 NASA
+- Overall status: IN PROGRESS — P3 Non-NASA
 
 ## Status vocabulary
 `NOT STARTED` / `IN PROGRESS` / `PASS` / `FAIL` / `BLOCKED` / `NOT TESTED`
@@ -18,8 +18,8 @@ Codex must update this file after every meaningful task. Do not mark future phas
 |---|---|---|---|---|
 | P0 Foundation | PASS | 2fc4012 / PR #1 | 24 tests, Ruff, both local firmware builds and all three CI jobs PASS | Six ADRs reviewed; hardware NOT TESTED |
 | P1 Transport | PASS | 71155da / PR #3 | 32 tests, both local builds and all three CI jobs PASS | DE ownership fixed; pytest9.0.3; hardware NOT TESTED |
-| P2 NASA | IN PROGRESS | phase/p2-nasa | pending | P1 gate accepted; passive production integration |
-| P3 Non-NASA | NOT STARTED | — | — | — |
+| P2 NASA | PASS | a66a87b / PR #4 | 33 tests, both local builds, all three CI jobs PASS | Review clean; hardware NOT TESTED; active reads unavailable |
+| P3 Non-NASA | IN PROGRESS | phase/p3-non-nasa | pending | P2 accepted; conservative readback ACK policy |
 | P4 AC profiles | NOT STARTED | — | — | — |
 | P5 EHS | NOT STARTED | — | — | — |
 | P6 Catalog / FSV | NOT STARTED | — | — | — |
@@ -157,3 +157,37 @@ Commands below run from repository/, unless otherwise stated:
 - Review ruling: active polling YAML/scheduler integration is not a P2 acceptance requirement in plan/05; the implemented read lifecycle is host-tested and production remains passive. Cost: do not claim active-read latency, bus starvation or physical read success; later active integration must bridge actual TX completion/cancellation and explicit policy.
 - Review limits: hardware compatibility/timing/captures NOT TESTED; synthetic fixtures do not establish universal semantics; disputed message meanings unassigned. Firmware builds were verified by implementer, not independently rerun by reviewer. No phase marked hardware PASS.
 - No new ADR required; existing independent-engine/evidence/write-safety decisions apply. No live hardware actions or legacy modifications.
+
+- P2 delivery: ee4345a (see git for full SHA), branch phase/p2-nasa, PR https://github.com/omerfaruk-aran/esphome-samsung-hvac/pull/4. Final local suite33PASS in6.11s; Ruff/diffPASS. CI41292696348 host/schema/codegen SUCCESS, firmware jobs pending. No merge before final CI gate.
+
+
+## 2026-11-01 / P2 acceptance and P3 start
+
+- P2 PR#4 merged by squash as a66a87b44f88a8557c12a9c641ce1d6f3df662cd after CI41292696348 all three jobs SUCCESS, matched sourcehead ee4345a1a0bd75172f0279baeaf942d403a21bad. P3 branch from latest main, protections unchanged.
+- P1 pytest Dependabot alert#1 verified fixed after the patched dependency reached main. No dependabot PR or security settings modified.
+- P3 pinned source inspection confirmed B0 full-state layout, D1 registration bytes and C6 polling/54 echo behavior; legacy queue regression scenarios reviewed. No legacy files modified.
+- Ruling: because Non-NASA has no unambiguous per-request sequence in non-echo ACKs, ACK alone will not complete new control intents; require Cmd20 readback. Cost: deliberate legacy behavioral difference; ACK-only devices remain unverified/unsupported until capture-backed review.
+- Hardware NOT TESTED. Production remains passive; software lifecycle timing is not a physical-control guarantee.
+
+
+## 2026-11-01 / P3 — independent Non-NASA engine
+
+- Files/modules: non_nasa_packet, non_nasa_registration, non_nasa_control_queue, non_nasa_engine, passive root routing/counters; six-group C++ regression program, synthetic fixtures/metadata; protocol notes, parity tracker, README/changelog.
+- Initial host program failed before sources existed. The new independent executable links no NASA source and runs with ASan/UBSan. Preliminary full suite34PASS in6.76s, Ruff/diffPASS.
+- Test-driven corrections: a rate-limited keepalive broadcast could survive into a stale reply; RED→GREEN drop/expiry guard added. Wake APIs and engine wiring were first observed RED, then added with fresh-indoor-status gating. Arduino full firmware initially failed because LOW/HIGH macros collided with fan enum members; a host compile with those exact defines reproduced RED, then LOW_SPEED/HIGH_SPEED names fixed it. ESP-IDF initial build passed; final both-framework builds rerunning after fixes.
+- Source-backed Cmd20/Cmd54/CmdC6/B0/D1 behavior is tested without importing legacy source. Celsius negative pipe reads use signed raw-minus55; Fahrenheit reads convert explicitly, Fahrenheit control is rejected. CmdF3 power scaling stays unresolved/raw.
+- Ruling: all acknowledgements are nonterminal until requested fields are observed in Cmd20. Exact echoes suppress uncertain retries; non-echo and old ACKs cannot verify/clear newer intents. Cost: intentional PARTIAL legacy behavior and no ACK-only-device compatibility claim.
+- Ruling: internal8-device slots,10000ms shared D1 limiter, three attempts,100ms preparation windows,30ms keepalive delay, fresh status after wake,4500ms ACK/readback interval,5000ms preparation/15000ms intent bounds are source-informed engineering policies. Cost: controller ownership and physical response/silence timing remain unverified; no active production integration is exposed.
+- Authorization/security/localization/migration: production TX remains disabled; no public raw/control settings or real hardware writes; per-device policy/range/cancellation bridge is a later prerequisite. No payload/credential logging. US English public content. No database migration; legacy compatibility differences tracked explicitly.
+- Hardware NOT TESTED. Branch phase/p3-non-nasa; commit/PR pending. Next: final tests/builds, independent review, relevant CI/PR gate before P4.
+
+
+### P3 independent review and completed fix pass
+
+- Independent read-only reviewer ran34tests PASS in6.86s and reproduced two Important races in a separate /tmp C++ program. No production-default bypass found; scope/provenance/PARTIAL parity accepted with these fixes required.
+- Fixed: a new Cmd20 could change unrequested full-state fields while an old B0 preparation still passed is_current. Regression RED on remote power-off → generation invalidation/rebuild GREEN. An already-observed goal also invalidates unnecessary preparation; cancellation retires the obsolete generation without failing a newer intent.
+- Fixed: C6 discarded the outstanding D1 TX-completion ticket, measuring the shared limiter from preparation instead of actual completion. Repro RED at only6000ms after TX → C6 now preserves the issued ticket, completion timestamp sets the10000ms limiter → GREEN.
+- Additional associated regression: an unknown/late registration outcome could be reenabled manually after its prepared deadline. RED→GREEN sticky fault now requires reconstruction/restart, preventing an uncertain send from reopening the limiter path.
+- Final `../.venv/bin/python -m pytest -q` →34PASS in7.17s, including seven Non-NASA assertion groups and LOW/HIGH macro defines under ASan/UBSan; Ruff check/format and git diff --check PASS.
+- Both `../.venv/bin/esphome compile tests/yaml/esp-idf.yaml` and Arduino counterpart PASS after review fixes. Logs artifacts/p3/firmware-{idf,arduino}-reviewed.log. Hardware NOT TESTED.
+- Review limits/rulings: physical timing, controller-seat ownership, capture correctness and equipment behavior remain unverified; no active production lifecycle submission. These costs remain documented. The fix pass uses reproducing tests and the full suite; no additional review seat is needed for already-covered fixes.
