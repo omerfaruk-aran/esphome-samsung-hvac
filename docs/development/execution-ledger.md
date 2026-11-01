@@ -16,7 +16,7 @@ Codex must update this file after every meaningful task. Do not mark future phas
 
 | Phase | Status | Commit / PR | Tests / Evidence | Notes |
 |---|---|---|---|---|
-| P0 Foundation | IN PROGRESS | phase/p0-foundation; no commit/PR yet | 24 schema/codegen tests PASS; both framework builds PASS; remote CI pending | GitHub CLI authentication verified |
+| P0 Foundation | IN PROGRESS | 3c112b9 / PR #1 | 24 schema/codegen tests PASS; both framework builds PASS; remote CI pending | GitHub CLI authentication verified |
 | P1 Transport | NOT STARTED | — | — | — |
 | P2 NASA | NOT STARTED | — | — | — |
 | P3 Non-NASA | NOT STARTED | — | — | — |
@@ -79,3 +79,12 @@ Commands below run from repository/, unless otherwise stated:
 - Baseline general Non-NASA compile failure: test/main_test_non_nasa.cpp line 100 and following compare the Temperature struct with integers (invalid operands); retained without modification.
 
 - Final review-fix suite: `../.venv/bin/python -m pytest -q` → 24 passed; Ruff check/format and diff --check PASS. Independent reviewer ran the pre-fix 22-test suite and reproduced the additional JSON-key failure separately.
+
+- Git delivery: local identity/auth reverified; commit `3c112b9`, branch `phase/p0-foundation`, PR https://github.com/omerfaruk-aran/esphome-samsung-hvac/pull/1. GitHub Validation run 41289216799 queued/in progress. No merge attempted before CI success. Public ledger snapshot predates the PR URL; next phase snapshot will include delivery evidence.
+
+
+### P0 initial remote CI failure and correction
+
+- Validation run 41289216799: FAIL in all three jobs during actions/setup-python cache initialization. Exact error: no file matched **/requirements.txt or **/pyproject.toml. All test/firmware steps were SKIPPED, not passing.
+- Root cause: the project intentionally uses requirements-dev.txt, while setup-python pip cache discovery defaults to other filenames. Fix: explicitly set cache-dependency-path: requirements-dev.txt in both setup-python steps. No protection or test was disabled; no implementation changed.
+- Remote rerun required before P0 acceptance. Node 20 action runtime deprecation warning is nonfatal; Actions remain SHA-pinned.

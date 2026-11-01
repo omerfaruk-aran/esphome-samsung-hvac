@@ -24,6 +24,7 @@ jobs:
         with:
           python-version: '3.13'
           cache: pip
+          cache-dependency-path: requirements-dev.txt
       - run: python -m pip install -r requirements-dev.txt
       - run: ruff check components tests
       - run: ruff format --check components tests
@@ -44,6 +45,7 @@ jobs:
         with:
           python-version: '3.13'
           cache: pip
+          cache-dependency-path: requirements-dev.txt
       - run: python -m pip install -r requirements-dev.txt
       - run: esphome config tests/yaml/${{ matrix.framework }}.yaml
       - run: esphome compile tests/yaml/${{ matrix.framework }}.yaml
