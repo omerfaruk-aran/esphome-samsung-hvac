@@ -7,7 +7,7 @@ Codex must update this file after every meaningful task. Do not mark future phas
 - Legacy repository (read-only): https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus
 - Legacy baseline verified 2026-11-01: `6b1966bea8db9344d23763454f9cebed015d15c5`
 - Workspace package prepared: 2026-11-01
-- Overall status: IN PROGRESS — P1 transport
+- Overall status: IN PROGRESS — P2 NASA
 
 ## Status vocabulary
 `NOT STARTED` / `IN PROGRESS` / `PASS` / `FAIL` / `BLOCKED` / `NOT TESTED`
@@ -17,8 +17,8 @@ Codex must update this file after every meaningful task. Do not mark future phas
 | Phase | Status | Commit / PR | Tests / Evidence | Notes |
 |---|---|---|---|---|
 | P0 Foundation | PASS | 2fc4012 / PR #1 | 24 tests, Ruff, both local firmware builds and all three CI jobs PASS | Six ADRs reviewed; hardware NOT TESTED |
-| P1 Transport | IN PROGRESS | phase/p1-transport | pending | P0 gate accepted; production TX remains disabled |
-| P2 NASA | NOT STARTED | — | — | — |
+| P1 Transport | PASS | 71155da / PR #3 | 32 tests, both local builds and all three CI jobs PASS | DE ownership fixed; pytest9.0.3; hardware NOT TESTED |
+| P2 NASA | IN PROGRESS | phase/p2-nasa | pending | P1 gate accepted; passive production integration |
 | P3 Non-NASA | NOT STARTED | — | — | — |
 | P4 AC profiles | NOT STARTED | — | — | — |
 | P5 EHS | NOT STARTED | — | — | — |
@@ -128,3 +128,32 @@ Commands below run from repository/, unless otherwise stated:
 - GitHub reported Dependabot alert #1 for the development dependency pytest: vulnerable tmpdir handling in versions below 9.0.3. Updated requirements-dev.txt from 8.4.2 to the first patched 9.0.3, installed locally and reran the suite. This is a dependency correction in the phase validation path; no runtime code or protections changed. Dependabot's separate PR #2 is not merged or modified by this task.
 
 - Patched dependency validation: `../.venv/bin/python -m pytest -q` with pytest9.0.3 → 32 passed; `../.venv/bin/python -m pip check` → no broken requirements; git diff --check PASS.
+
+- Final P1 head 98d06073cce5a942154ef16ab786c662fb7c4a7f; CI run 41290705727. Initial fa66993 run canceled automatically by the configured PR concurrency group after the dependency fix; not counted as PASS. Final host/schema and ESP-IDF jobs passed; Arduino still running at this checkpoint.
+
+
+## 2026-11-01 / P1 acceptance and P2 start
+
+- PR #3 merged by squash as71155da4cb611d9b193e370d0b552923b69f22d0 after all three jobs in CI41290705727 SUCCESS. Source head98d0607 matched at merge; protections unchanged. P2 branch created from fetched/fast-forwarded latest main.
+- P2 additional source research: nasactl629c43fce1c6a0595b5070028e34cf4ad0f25386 full MIT license verified. It creates READ packets with zero typed scalar payloads; LongVariable wire integers are big-endian; Structure consumes remaining payload. These are reverse-engineering source observations, not Samsung documentation or device confirmation. No third-party implementation source is imported.
+- P1 deferred minor diagnostic accounting remains documented; no critical criterion was marked PASS on hardware evidence. Hardware remains NOT TESTED.
+
+
+## 2026-11-01 / P2 — NASA typed packets and read lifecycle
+
+- Files: nasa_packet.h/.cpp, nasa_read_queue.h/.cpp, nasa_engine.h/.cpp; passive root integration, NASA synthetic fixtures and metadata, sanitizer tests; protocol notes, README/changelog.
+- Initial new-module host test failed before implementation. Typed parser, encoding, read queue, correlation/retry/quarantine/rollover tests then passed. An additional delayed-event regression reproduced an overdue response being accepted when tick had not run; fixed by enforcing deadlines in packet and TX-completion entry points.
+- Preliminary full suite: `../.venv/bin/python -m pytest -q` →33 passed in5.63s, including separate sanitizer transport and NASA executables. Additional CRC-valid inner fuzz cases added afterward; final results below.
+- Ruling: raw scalars stay unsigned; explicit signed helper does not assign product semantics. Structure must be last and is retained losslessly. Unknown/disputed mappings stay unassigned. Cost: unsupported header/structure variants are rejected until evidence supports them.
+- Ruling: production remains passive; read lifecycle is host-tested but does not submit to UART or enable TX. Future active integration must bridge actual completion/cancellation and policy. Cost: no user-facing active polling is claimed in P2; this boundary must be assessed against the phase gate rather than silently called complete.
+- Hardware NOT TESTED. No live device actions, captures or speculative writes. No third-party implementation source copied. Branch phase/p2-nasa; commit/PR pending.
+
+
+### P2 review and final local verification
+
+- Independent read-only review: no material findings; final snapshot33pytest PASS in5.80s, diff --check PASS, all17 fixture envelopes/CRCs/provenance independently checked with binascii. Signedmin/max8/16/32, maximum1484-byte opaque Structure within1502-byte frame,255 messages and all7 DataType categories reviewed.
+- `../.venv/bin/esphome compile tests/yaml/esp-idf.yaml` and Arduino counterpart → PASS after the encoder alias fix. Logs: artifacts/p2/firmware-{idf,arduino}-final.log. The alias regression observed RED then GREEN; encoding a packet into its own storage uses a bounded scratch frame to preserve structure bytes.
+- Host coverage: seven NASA assertion groups and10000CRC-valid inner fuzz cases, plus P1 transport groups/100000 random bytes, under ASan/UBSan. The final full suite is33pytest tests, not33 hardware cases.
+- Review ruling: active polling YAML/scheduler integration is not a P2 acceptance requirement in plan/05; the implemented read lifecycle is host-tested and production remains passive. Cost: do not claim active-read latency, bus starvation or physical read success; later active integration must bridge actual TX completion/cancellation and explicit policy.
+- Review limits: hardware compatibility/timing/captures NOT TESTED; synthetic fixtures do not establish universal semantics; disputed message meanings unassigned. Firmware builds were verified by implementer, not independently rerun by reviewer. No phase marked hardware PASS.
+- No new ADR required; existing independent-engine/evidence/write-safety decisions apply. No live hardware actions or legacy modifications.

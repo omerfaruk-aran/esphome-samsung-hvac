@@ -1,0 +1,240 @@
+{
+  "unknown_type.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "response.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "trailing_payload.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "short_variable.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "count_255.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "unsigned_limits.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "bad_count.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "mixed_notification.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "signed_min.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "write.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "read_target.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "nack.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "structure_max.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "request.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "structure_not_last.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "ack.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  },
+  "signed_max.hex": {
+    "origin": "synthetic",
+    "evidence_level": "inferred",
+    "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp",
+    "source_urls": [
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_message.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_command.h",
+      "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/nasa_packet.cpp"
+    ],
+    "device_models": [],
+    "capture_reference": null,
+    "test_reference": "tests/cpp/test_nasa.cpp",
+    "notes": "Synthetic wire-rule fixture, independent binascii CRC; not captured or hardware-confirmed. Control-category bytes are decoded only, never transmitted."
+  }
+}

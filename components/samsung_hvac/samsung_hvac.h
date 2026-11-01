@@ -5,12 +5,14 @@
 #include "esphome/components/uart/uart_component_esp_idf.h"
 #include "esphome/core/gpio.h"
 #include "bus_transport.h"
+#include "nasa_engine.h"
 #include "protocol_selection.h"
 #include <memory>
 
 namespace esphome::samsung_hvac {
 
-class SamsungHVAC : public Component, public uart::UARTDevice, private BusIO, private FrameSink {
+class SamsungHVAC : public Component, public uart::UARTDevice, private BusIO, private FrameSink,
+                    private nasa::PacketSink, private nasa::ReadSink {
  public:
   void set_protocol(Protocol protocol) { this->protocol_ = protocol; }
   void set_flow_control_pin(GPIOPin *pin) { this->flow_control_pin_ = pin; }
@@ -31,10 +33,13 @@ class SamsungHVAC : public Component, public uart::UARTDevice, private BusIO, pr
   TxStatus tx_status() override;
   void set_direction(bool transmit) override;
   void on_frame(const Frame &frame) override;
+  void on_nasa_packet(const nasa::Packet &packet) override;
+  void on_read_complete(const nasa::ReadResult &result) override;
   Diagnostics stats_;
   uart::IDFUARTComponent *native_uart_{nullptr};
   std::unique_ptr<FrameAssembler> framer_;
   std::unique_ptr<Transport> transport_;
+  std::unique_ptr<nasa::Engine> nasa_engine_;
 };
 
 }  // namespace esphome::samsung_hvac
