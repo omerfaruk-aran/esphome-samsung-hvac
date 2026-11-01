@@ -1,0 +1,8 @@
+{
+  "evidence_level": "INFERRED",
+  "device_models": [],
+  "capture_reference": null,
+  "source_url": "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py",
+  "notes": "Synthetic Response with FSV upper450/10 and disputed raw4204. Independently generated CRC; no transmitted frame or verified hardware.",
+  "test_reference": "tests/cpp/test_messages.cpp"
+}

@@ -73,6 +73,18 @@ ROOT = Path(__file__).resolve().parents[1]
             "ehs",
             "All EHS profile assertions passed",
         ),
+        (
+            "test_messages.cpp",
+            [
+                "typed_message.cpp",
+                "write_policy.cpp",
+                "nasa_packet.cpp",
+                "nasa_framer.cpp",
+                "frame_assembler.cpp",
+            ],
+            "advanced",
+            "All typed message and policy assertions passed",
+        ),
     ],
 )
 def test_host_with_sanitizers(tmp_path, program, sources, fixtures, success):

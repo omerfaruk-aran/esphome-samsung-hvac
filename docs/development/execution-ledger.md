@@ -7,7 +7,7 @@ Codex must update this file after every meaningful task. Do not mark future phas
 - Legacy repository (read-only): https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus
 - Legacy baseline verified 2026-11-01: `6b1966bea8db9344d23763454f9cebed015d15c5`
 - Workspace package prepared: 2026-11-01
-- Overall status: IN PROGRESS — P5 EHS read-only
+- Overall status: IN PROGRESS — P6 typed catalog
 
 ## Status vocabulary
 `NOT STARTED` / `IN PROGRESS` / `PASS` / `FAIL` / `BLOCKED` / `NOT TESTED`
@@ -21,8 +21,8 @@ Codex must update this file after every meaningful task. Do not mark future phas
 | P2 NASA | PASS | a66a87b / PR #4 | 33 tests, both local builds, all three CI jobs PASS | Review clean; hardware NOT TESTED; active reads unavailable |
 | P3 Non-NASA | PASS | 7069274 / PR #5 | 34 tests, both local builds, all three CI jobs PASS | Review races fixed; hardware NOT TESTED; passive production |
 | P4 AC profiles | PASS | fad669e / PR #6 | 51tests, both local frameworks and all three CI jobs PASS | Read-only entities/internal climate; control evidence unresolved |
-| P5 EHS | IN PROGRESS | phase/p5-ehs-readonly | pending | Evidence-backed passive fields; disputed zones stay disabled |
-| P6 Catalog / FSV | NOT STARTED | — | — | — |
+| P5 EHS | PASS | 9fdce0a / PR #7 | 63tests, both frameworks and all three CI jobs PASS | Evidence-backed passive fields; disputed zones stay disabled |
+| P6 Catalog / FSV | IN PROGRESS | phase/p6-typed-catalog | pending | Passive typed entities; active writes unavailable |
 | P7 Migration | NOT STARTED | — | — | — |
 | P8 CI / Docs | NOT STARTED | — | — | — |
 | P9 Hardware / Release | NOT STARTED | — | — | — |
@@ -34,6 +34,20 @@ Codex must update this file after every meaningful task. Do not mark future phas
 
 ## Work log format
 Add newest entries first. Each entry must include date/phase, summary/files, commit/PR, exact test commands/results, hardware tested or NOT TESTED, risks and next action.
+
+
+## 2026-11-01 / P6 — typed catalog, passive observers and offline write policy
+
+- Modules: catalog.py + version1message_catalog.json (44entries), typed_message.h/.cpp, message_entity.h/.cpp, message_config.py, write_policy.h/.cpp; separate bounded32message observers alongside8profiles in the existing sole root owner. No UART/protocol state ownership moved. Both firmware fixtures instantiate numeric/binary/FSV/custom/precision observers; Arduino also has a separate NASA UART alongside Non-NASA.
+- Catalog: strict standard-library schema/semantic/evidence validation, protocol-specific widths/layouts, scale/offset/signedness/raw sentinel/range/value bounds, sources/capture/test/model fields. Shipped access values only passive/disabled and evidence only inferred/unknown. NASA AC/EHS/selected passive FSV and descriptive Non-NASA Cmd20 entries; no model/capture claim or third-party implementation transplant.
+- Public interface: NASA Notification/Response scalar observers only, exact source and roles, explicit catalog or custom metadata, no poll/write option. Named4203/4204/42D6 semantics remain disabled; custom raw unsigned/unitless/scale1offset0 observation does not assign room/zone state. Custom evidence stays UNKNOWN. Non-NASA generic observers deliberately unavailable; its product profile and descriptive catalog stay isolated.
+- TDD: missing catalog/core/observer modules and absent YAML messages schema observed RED before implementation. Malformed JSON typing/non-scalar values reproduced RED and now reject with ValueError. Guard copy/move prevention regression RED→GREEN; no duplicate ticket/rate history through copy. Initial full suite96PASS, both frameworks compiled; later review exposed additional correctness cases.
+- Independent review: no Critical/live TX bypass; two Important findings and one Minor. SDK FloatLiteral emitted float-suffixed scale/offset despite double contract (scale1e-100 underflow, offset4294967295 rounding). Real codegen regression RED→GREEN with numeric-only validated double RawExpression; both firmware precision probes compile. Fixed actual decoded physical range/representability: scale1000,min=max0.0001 could admit raw0 outside allowlist. Both outside-range and unequal decoded-requested cases RED→GREEN; re-decoded value now rechecks strict min/max, step and roundoff-relative equivalence, without enlarging physical bounds. Strict decoded0.3boundary assertion also passes. Minor mask1/shift7 schema failure reproduced RED→GREEN via normalized contiguous mask, lower-bit/boolean/temperature extraction and extracted-domain checks. Reviewer ran22catalog/host tests PASS before regression fixes; no final firmware rerun by reviewer.
+- Offline Guard: immutable opt-in/verified-family/unicast/device/code/range/step policy, at most8rules, one intent, minimum1000ms rate measured from preparation/actualTX, explicit preparation/readback deadlines, no retries, sticky uncertain/send faults, matching ticket and exact raw source/destination/code readback; ACK nonterminal. Positive policies exist only in synthetic tests. No root Guard, approved family, bus-frame encoder, public opt-in or actual transport bridge is shipped. OBSERVED_MATCH is state convergence, not command causality. Physical writes remain BLOCKED pending capture-backed policies/authorized pilot.
+- Final `../.venv/bin/python -m pytest -q` →98PASS in17.24s (six ASan/UBSan C++ programs,75real YAML/codegen cases,17catalog tests). Log artifacts/p6/pytest-final.log. An earlier final attempt had97PASS/1test-setup FAIL because the new offset assertion did not set its offset input; corrected the fixture and reran. No product regression hidden.
+- `../.venv/bin/ruff check components tests`, `../.venv/bin/ruff format --check components tests`, `git diff --check` →PASS. `../.venv/bin/esphome compile tests/yaml/esp-idf.yaml` and Arduino counterpart →PASS, exit0 after product fixes, including scale1e-100/offset4294967295double probes. Logs artifacts/p6/firmware-{idf,arduino}-reviewed.log. Later changes only tests/docs/ledger. Python3.13.7, ESPHome2026.10.1, pytest9.0.3. No upload/live hardware action; legacy SHA/worktree unchanged.
+- ADR0008 accepted for passive/offline scope; advanced/catalog/write-policy notes, parity/entity matrices and changelog updated. User authorization/validation/logging/audit/localization/migration: no transmission enablement, strict typed/source/unit/unknown-key validation, no raw payload/credential logging, English public content and explicit PARTIAL legacy custom behavior. Sensor float32 precision/sentinel uncertainty and passive FSV availability documented. Hardware/actual write readback/real HA publication/registry/restore NOT TESTED.
+- Local P6 software gate passes after reproducing review fixes; live-control readiness is not accepted. Branch phase/p6-typed-catalog; maintainer-auth push/PR/CI/squash gate pending before P7. No routine approval or protection bypass.
 
 
 ## 2026-11-01 / P5 — EHS passive profile and local acceptance
@@ -233,3 +247,9 @@ Commands below run from repository/, unless otherwise stated:
 
 - PR#6 merged by squashfad669ee73d892a9511d4f87e12934db30381541 after CI41297319356 all three jobs SUCCESS, sourcehead642df8d5db4b9adfd6850ef915b68f04eef945ca. P5 branch from latestmain; no protection bypass. P4 passive software gate PASS, full parity PARTIAL, hardware NOT TESTED.
 - P5: inspect pinned MIT legacy/nasactl and public Water Law/EHS/remote-sensor reports. User confirmed no local captures; no evidence level upgrade or live write.
+
+- P5 delivery: commit8a6b2d1bf0ee061315cc3f78fb66e708f8704e26, PR https://github.com/omerfaruk-aran/esphome-samsung-hvac/pull/7, CI41298588789 three jobs in progress. No merge before all checks succeed.
+
+## 2026-11-01 / P5 acceptance and P6 start
+
+- PR#7 merged by squash9fdce0a6c2d4e5f4d558e293fa7854b8a0e8b8b5 after CI41298588789 all three jobs SUCCESS, sourcehead8a6b2d1bf0ee061315cc3f78fb66e708f8704e26. P6 branch from latestmain; no protection bypass. P5 source-labelled read-only software PASS; hardware/model/real HA publication NOT TESTED.
