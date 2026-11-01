@@ -1,0 +1,59 @@
+# Receive-only software reference. Hardware/interface safety is NOT TESTED.
+# Synthetic pins are not wiring guidance. Keep logs private until redacted/reviewed.
+# No dummy receiver, UART write action, active polling or upload is configured.
+esphome:
+  name: samsung-capture
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+logger:
+  baud_rate: 0
+  level: DEBUG
+wifi:
+  ssid: !secret 'wifi_ssid'
+  password: !secret 'wifi_password'
+api:
+  encryption:
+    key: !secret 'api_encryption_key'
+  reboot_timeout: 0s
+external_components:
+- source:
+    type: local
+    path: ../components
+  components:
+  - samsung_hvac
+uart:
+  id: hvac_uart
+  rx_pin: GPIO16
+  tx_pin: GPIO17
+  baud_rate: 9600
+  parity: EVEN
+  debug:
+    direction: RX
+    dummy_receiver: false
+    after:
+      bytes: 32
+      timeout: 50ms
+    sequence:
+    - lambda: |
+        (void) direction;
+        (void) debug_prefix;
+        static const char hex_digits[] = "0123456789ABCDEF";
+        for (size_t offset = 0; offset < bytes.size(); offset += 32) {
+          char line[96]{};
+          size_t position = 0;
+          size_t end = offset + 32;
+          if (end > bytes.size()) end = bytes.size();
+          for (size_t index = offset; index < end; ++index) {
+            if (position != 0) line[position++] = ' ';
+            line[position++] = hex_digits[bytes[index] >> 4];
+            line[position++] = hex_digits[bytes[index] & 0x0f];
+          }
+          ESP_LOGD("samsung_capture", "RX %s", line);
+        }
+samsung_hvac:
+  id: hvac
+  uart_id: hvac_uart
+  protocol: nasa
+  flow_control_pin: GPIO23

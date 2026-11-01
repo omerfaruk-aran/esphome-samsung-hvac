@@ -15,16 +15,16 @@ struct ReadResult {
 class ReadSink {
  public:
   virtual ~ReadSink() = default;
-  virtual void on_read_complete(const ReadResult &result) = 0;
+  virtual void on_read_complete(const ReadResult& result) = 0;
 };
 
 class ReadQueue {
  public:
-  ReadQueue(Address local, ReadSink &sink) : local_(local), sink_(sink) {}
+  ReadQueue(Address local, ReadSink& sink) : local_(local), sink_(sink) {}
   bool enqueue(Address device, uint16_t code, uint32_t now);
-  bool prepare(uint32_t now, Frame &frame);
+  bool prepare(uint32_t now, Frame& frame);
   void on_transmitted(uint8_t sequence, uint32_t now, bool success);
-  bool on_packet(const Packet &packet, uint32_t now);
+  bool on_packet(const Packet& packet, uint32_t now);
   void tick(uint32_t now);
 
  private:
@@ -38,7 +38,7 @@ class ReadQueue {
   uint8_t allocate_sequence_(uint32_t now);
   void finish_(ReadStatus status, uint32_t now, uint32_t raw = 0);
   Address local_;
-  ReadSink &sink_;
+  ReadSink& sink_;
   std::array<Entry, 8> entries_{};
   std::array<uint32_t, 256> last_used_{};
   std::array<bool, 256> used_{};

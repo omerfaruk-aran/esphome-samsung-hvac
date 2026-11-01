@@ -1,0 +1,15 @@
+# Private receive-only packet capture
+
+No real device capture has been performed here. Use this procedure only after the setup is identified, electrically verified and explicitly authorized. Never attach GPIO directly to an unknown bus. A capture does not authorize a write or prove a universal message meaning.
+
+The [capture example](../examples/capture.yaml) uses the standard ESPHome UART debug callback with direction RX, dummy_receiver:false, 32-byte/50ms chunks and the existing root's only UART reader. The bounded logger callback emits hex without adding a sleep or reading/writing UART itself. The SDK default UARTDebug.log_hex has an intentional 10 ms delay; this example uses its own bounded formatting callback instead. The example codegen/full firmware build is tested; physical capture quality is NOT TESTED.
+
+Keep capture output private. Normal ESPHome logs can contain network details, identifiers, configuration and unrelated data; raw bus data may also be sensitive. Never publish an unredacted log or a credentials file. Turn off capture when the approved investigation ends; it is optional diagnostic configuration, not a required runtime dependency or the old debug MQTT interface.
+
+Record a private evidence manifest with exact indoor/outdoor/controller models and firmware, interface/isolation/topology, component commit, ESPHome/framework, root protocol, observed source/destination, packet category, raw bytes, timestamps/time source, acquisition method and any gaps. Software log timestamps/chunk boundaries are not bus timing or frame boundaries. At high traffic or logging backpressure, data may be delayed/dropped; use an appropriate verified passive analyzer when timing evidence is needed.
+
+Reassemble ordered chunks and independently validate frame length/CRC or XOR before creating a fixture. Preserve originals privately. Redact unrelated personal/network data. If protocol addresses/bytes are changed for privacy, document the transformation, recalculate integrity and label the published fixture as a sanitized derivative/synthetic transformation rather than an untouched capture. Do not join a different commenter's model report to another capture's provenance.
+
+For disputed mappings, a later separately authorized test should change one variable at a time through the existing supported controller, preserving before/after evidence and operation/timing context. This document performs no such action. Keep meaning INFERRED/UNKNOWN until the evidence standard is met: OBSERVED requires a reliable identified-device capture; CONFIRMED additionally requires repeatable capture plus automated tests. Source code, a successful build and a “works” report do not satisfy that standard.
+
+Every accepted fixture needs evidence level, source URL/reference, device models, capture reference, test reference and limitations. Current fixtures remain explicitly source-derived/synthetic. Read [catalog evidence](protocol/message-catalog.md), [developer tests](development/testing.md) and the compatibility matrices before proposing a semantic mapping or device claim.

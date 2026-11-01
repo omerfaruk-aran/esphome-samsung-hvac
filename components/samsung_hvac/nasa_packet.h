@@ -13,8 +13,16 @@ struct Address {
   bool operator!=(Address other) const { return !(*this == other); }
 };
 
-enum class DataType : uint8_t { UNDEFINED = 0, READ = 1, WRITE = 2, REQUEST = 3, NOTIFICATION = 4,
-                              RESPONSE = 5, ACK = 6, NACK = 7 };
+enum class DataType : uint8_t {
+  UNDEFINED = 0,
+  READ = 1,
+  WRITE = 2,
+  REQUEST = 3,
+  NOTIFICATION = 4,
+  RESPONSE = 5,
+  ACK = 6,
+  NACK = 7
+};
 enum class ValueType : uint8_t { ENUM, VARIABLE, LONG_VARIABLE, STRUCTURE };
 enum class DecodeError { NONE, FRAME_SIZE, ENVELOPE, CRC, HEADER, PAYLOAD };
 
@@ -39,10 +47,10 @@ struct Packet {
 };
 
 // On failure message_count is zero; callers must check the return before using fields.
-DecodeError decode(const Frame &frame, Packet &packet);
+DecodeError decode(const Frame& frame, Packet& packet);
 // Control WRITE/REQUEST encoding is deliberately unavailable in this phase.
-bool encode(const Packet &packet, Frame &frame);
-bool encode_read(Address local, Address device, uint8_t sequence, uint16_t code, Frame &frame);
-std::optional<int64_t> signed_value(const Message &message);
+bool encode(const Packet& packet, Frame& frame);
+bool encode_read(Address local, Address device, uint8_t sequence, uint16_t code, Frame& frame);
+std::optional<int64_t> signed_value(const Message& message);
 
 }  // namespace esphome::samsung_hvac::nasa

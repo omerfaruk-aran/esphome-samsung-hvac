@@ -13,7 +13,7 @@
 using namespace esphome::samsung_hvac;
 using namespace esphome::samsung_hvac::nasa;
 
-Frame fixture(const std::string &directory, const char *name) {
+Frame fixture(const std::string& directory, const char* name) {
   std::ifstream file(directory + "/" + name + ".hex");
   std::string hex;
   file >> hex;
@@ -25,29 +25,36 @@ Frame fixture(const std::string &directory, const char *name) {
   return frame;
 }
 
-void test_types_and_roundtrip(const std::string &directory) {
+void test_types_and_roundtrip(const std::string& directory) {
   auto frame = fixture(directory, "mixed_notification");
   Packet packet;
   assert(decode(frame, packet) == DecodeError::NONE);
   assert(packet.source.value == 0x200000 && packet.destination.value == 0x80ff00);
-  assert(packet.type == DataType::NOTIFICATION && packet.sequence == 7 && packet.message_count == 4);
+  assert(packet.type == DataType::NOTIFICATION && packet.sequence == 7 &&
+         packet.message_count == 4);
   assert(packet.messages[0].kind() == ValueType::ENUM && packet.messages[0].raw == 1);
   assert(packet.messages[1].kind() == ValueType::VARIABLE && packet.messages[1].raw == 0xffce);
   assert(signed_value(packet.messages[1]).value() == -50);
-  assert(packet.messages[2].kind() == ValueType::LONG_VARIABLE && packet.messages[2].raw == 0x89abcdefU);
+  assert(packet.messages[2].kind() == ValueType::LONG_VARIABLE &&
+         packet.messages[2].raw == 0x89abcdefU);
   assert(signed_value(packet.messages[2]).value() == -1985229329LL);
-  const auto &structure = packet.messages[3];
+  const auto& structure = packet.messages[3];
   assert(structure.kind() == ValueType::STRUCTURE && structure.length == 8);
-  assert(packet.storage.data[structure.offset] == 1 && packet.storage.data[structure.offset + 7] == 8);
+  assert(packet.storage.data[structure.offset] == 1 &&
+         packet.storage.data[structure.offset + 7] == 8);
   assert(!signed_value(structure).has_value());
   Frame encoded;
   assert(encode(packet, encoded));
-  assert(encoded.size == frame.size && std::equal(frame.data.begin(), frame.data.begin() + frame.size, encoded.data.begin()));
+  assert(encoded.size == frame.size &&
+         std::equal(frame.data.begin(), frame.data.begin() + frame.size, encoded.data.begin()));
   assert(encode(packet, packet.storage));
-  assert(packet.storage.size == frame.size && std::equal(frame.data.begin(), frame.data.begin() + frame.size, packet.storage.data.begin()));
+  assert(
+      packet.storage.size == frame.size &&
+      std::equal(frame.data.begin(), frame.data.begin() + frame.size, packet.storage.data.begin()));
   assert(decode(fixture(directory, "unsigned_limits"), packet) == DecodeError::NONE);
   assert(packet.messages[2].raw == 0xffffffffU && signed_value(packet.messages[2]).value() == -1);
-  assert(signed_value(packet.messages[0]).value() == -1 && signed_value(packet.messages[1]).value() == -1);
+  assert(signed_value(packet.messages[0]).value() == -1 &&
+         signed_value(packet.messages[1]).value() == -1);
   assert(decode(fixture(directory, "signed_min"), packet) == DecodeError::NONE);
   assert(signed_value(packet.messages[0]).value() == -128);
   assert(signed_value(packet.messages[1]).value() == -32768);
@@ -60,7 +67,8 @@ void test_types_and_roundtrip(const std::string &directory) {
   assert(decode(large, packet) == DecodeError::NONE && packet.message_count == 1);
   assert(packet.messages[0].length == 1484);
   assert(encode(packet, encoded));
-  assert(encoded.size == 1502 && std::equal(large.data.begin(), large.data.begin() + 1502, encoded.data.begin()));
+  assert(encoded.size == 1502 &&
+         std::equal(large.data.begin(), large.data.begin() + 1502, encoded.data.begin()));
   auto many = fixture(directory, "count_255");
   assert(decode(many, packet) == DecodeError::NONE && packet.message_count == 255);
   assert(packet.messages[254].code == 0x4000 && packet.messages[254].raw == 1);
@@ -74,9 +82,10 @@ void test_types_and_roundtrip(const std::string &directory) {
   assert(Address{0x990000}.role() == AddressRole::UNKNOWN);
 }
 
-void test_strict_rejection(const std::string &directory) {
+void test_strict_rejection(const std::string& directory) {
   Packet packet;
-  for (const char *name : {"short_variable", "bad_count", "structure_not_last", "trailing_payload", "unknown_type"}) {
+  for (const char* name :
+       {"short_variable", "bad_count", "structure_not_last", "trailing_payload", "unknown_type"}) {
     assert(decode(fixture(directory, name), packet) != DecodeError::NONE);
     assert(packet.message_count == 0);
   }
@@ -102,7 +111,7 @@ void test_strict_rejection(const std::string &directory) {
 
 struct Results : ReadSink {
   std::vector<ReadResult> values;
-  void on_read_complete(const ReadResult &result) override { values.push_back(result); }
+  void on_read_complete(const ReadResult& result) override { values.push_back(result); }
 };
 
 Packet reply(uint8_t sequence, DataType type = DataType::RESPONSE) {
@@ -117,7 +126,7 @@ Packet reply(uint8_t sequence, DataType type = DataType::RESPONSE) {
   return packet;
 }
 
-void test_read_golden_and_correlation(const std::string &directory) {
+void test_read_golden_and_correlation(const std::string& directory) {
   Packet packet;
   packet.source = Address{0x80ff00};
   packet.destination = Address{0x200000};
@@ -128,7 +137,8 @@ void test_read_golden_and_correlation(const std::string &directory) {
   Frame encoded;
   assert(encode(packet, encoded));
   auto golden = fixture(directory, "read_target");
-  assert(encoded.size == golden.size && std::equal(golden.data.begin(), golden.data.begin() + golden.size, encoded.data.begin()));
+  assert(encoded.size == golden.size &&
+         std::equal(golden.data.begin(), golden.data.begin() + golden.size, encoded.data.begin()));
   Results results;
   ReadQueue queue(Address{0x80ff00}, results);
   assert(!queue.enqueue(Address{0xb00000}, 0x4201, 0));
@@ -139,9 +149,9 @@ void test_read_golden_and_correlation(const std::string &directory) {
   assert(decode(encoded, packet) == DecodeError::NONE && packet.type == DataType::READ);
   auto sequence = packet.sequence;
   auto response = reply(sequence);
-  assert(!queue.on_packet(response, 1)); // Not transmitted yet.
+  assert(!queue.on_packet(response, 1));  // Not transmitted yet.
   queue.tick(1001);
-  assert(results.values.empty()); // Response timeout begins only after confirmed TX.
+  assert(results.values.empty());  // Response timeout begins only after confirmed TX.
   queue.on_transmitted(sequence, 1500, true);
   auto wrong = response;
   wrong.source = Address{0x200001};
@@ -179,8 +189,10 @@ void test_retries_and_deadlines() {
   for (uint32_t attempt = 0; attempt < 3; ++attempt) {
     assert(queue.prepare(attempt * 1000, frame));
     assert(decode(frame, packet) == DecodeError::NONE);
-    if (attempt == 0) first = packet.sequence;
-    else assert(packet.sequence != first);
+    if (attempt == 0)
+      first = packet.sequence;
+    else
+      assert(packet.sequence != first);
     queue.on_transmitted(packet.sequence, attempt * 1000, true);
     queue.tick(attempt * 1000 + 999);
     assert(results.values.empty());
@@ -211,7 +223,8 @@ void test_retries_and_deadlines() {
   assert(late.prepare(1001, frame));
   assert(decode(frame, packet) == DecodeError::NONE);
   late.on_transmitted(packet.sequence, 7000, true);
-  assert(late_results.values.size() == 1 && late_results.values[0].status == ReadStatus::SEND_FAILED);
+  assert(late_results.values.size() == 1 &&
+         late_results.values[0].status == ReadStatus::SEND_FAILED);
 }
 
 void test_capacity_sequence_and_rollover() {
@@ -223,7 +236,7 @@ void test_capacity_sequence_and_rollover() {
   assert(!queue.enqueue(Address{0x200008}, 0x4201, 0));
   queue.tick(5000);
   assert(results.values.size() == 8);
-  for (const auto &result : results.values) assert(result.status == ReadStatus::EXPIRED);
+  for (const auto& result : results.values) assert(result.status == ReadStatus::EXPIRED);
   Results wrapped_results;
   ReadQueue wrapped(Address{0x80ff00}, wrapped_results);
   uint32_t now = std::numeric_limits<uint32_t>::max() - 400;
@@ -248,7 +261,7 @@ void test_capacity_sequence_and_rollover() {
     assert(exhausted.on_packet(reply(packet.sequence), i));
   }
   assert(exhausted.enqueue(Address{0x200000}, 0x4201, 255));
-  assert(!exhausted.prepare(255, frame)); // No safe sequence reuse within quarantine.
+  assert(!exhausted.prepare(255, frame));  // No safe sequence reuse within quarantine.
   exhausted.tick(5255);
   assert(exhausted_results.values.back().status == ReadStatus::EXPIRED);
   assert(exhausted.enqueue(Address{0x200000}, 0x4201, 31000));
@@ -258,20 +271,22 @@ void test_capacity_sequence_and_rollover() {
 struct Packets : PacketSink {
   unsigned received{0};
   DataType last{DataType::UNDEFINED};
-  void on_nasa_packet(const Packet &packet) override {
+  void on_nasa_packet(const Packet& packet) override {
     ++received;
     last = packet.type;
   }
 };
 
-void test_passive_engine(const std::string &directory) {
+void test_passive_engine(const std::string& directory) {
   Results results;
   Packets packets;
   Engine engine(Address{0x80ff00}, packets, results);
-  for (const char *name : {"read_target", "write", "request", "mixed_notification", "response", "ack", "nack"})
+  for (const char* name :
+       {"read_target", "write", "request", "mixed_notification", "response", "ack", "nack"})
     engine.receive(fixture(directory, name), 0);
   assert(packets.received == 7 && packets.last == DataType::NACK);
-  for (unsigned category = 1; category <= 7; ++category) assert(engine.stats().categories[category] == 1);
+  for (unsigned category = 1; category <= 7; ++category)
+    assert(engine.stats().categories[category] == 1);
   engine.receive(fixture(directory, "bad_count"), 1);
   assert(engine.stats().invalid_packets == 1 && packets.received == 7 && results.values.empty());
   assert(engine.reads().enqueue(Address{0x200000}, 0x4201, 2));
@@ -322,7 +337,8 @@ void test_inner_payload_fuzz() {
     if (result == DecodeError::NONE) {
       ++accepted;
       assert(encode(packet, encoded));
-      assert(encoded.size == frame.size && std::equal(frame.data.begin(), frame.data.begin() + frame.size, encoded.data.begin()));
+      assert(encoded.size == frame.size &&
+             std::equal(frame.data.begin(), frame.data.begin() + frame.size, encoded.data.begin()));
     } else {
       assert(packet.message_count == 0);
     }
@@ -330,7 +346,7 @@ void test_inner_payload_fuzz() {
   assert(accepted >= 2000);
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   assert(argc == 2);
   test_types_and_roundtrip(argv[1]);
   test_strict_rejection(argv[1]);

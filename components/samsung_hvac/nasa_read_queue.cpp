@@ -3,15 +3,16 @@
 namespace esphome::samsung_hvac::nasa {
 
 bool ReadQueue::enqueue(Address device, uint16_t code, uint32_t now) {
-  if (this->local_.role() != AddressRole::CONTROLLER || this->count_ == this->entries_.size() || code == 0 ||
-      Message{code}.kind() == ValueType::STRUCTURE ||
+  if (this->local_.role() != AddressRole::CONTROLLER || this->count_ == this->entries_.size() ||
+      code == 0 || Message{code}.kind() == ValueType::STRUCTURE ||
       (device.role() != AddressRole::INDOOR && device.role() != AddressRole::OUTDOOR))
     return false;
   for (size_t i = 0; i < this->count_; ++i) {
-    const auto &entry = this->entries_[(this->head_ + i) % this->entries_.size()];
+    const auto& entry = this->entries_[(this->head_ + i) % this->entries_.size()];
     if (entry.device == device && entry.code == code) return false;
   }
-  this->entries_[(this->head_ + this->count_) % this->entries_.size()] = Entry{device, code, now, 0};
+  this->entries_[(this->head_ + this->count_) % this->entries_.size()] =
+      Entry{device, code, now, 0};
   this->count_++;
   return true;
 }
@@ -20,7 +21,8 @@ uint8_t ReadQueue::allocate_sequence_(uint32_t now) {
   for (unsigned i = 0; i < 255; ++i) {
     uint8_t candidate = this->next_sequence_;
     this->next_sequence_ = candidate == 255 ? 1 : static_cast<uint8_t>(candidate + 1);
-    if (!this->used_[candidate] || static_cast<uint32_t>(now - this->last_used_[candidate]) >= 30000) {
+    if (!this->used_[candidate] ||
+        static_cast<uint32_t>(now - this->last_used_[candidate]) >= 30000) {
       this->used_[candidate] = true;
       this->last_used_[candidate] = now;
       return candidate;
@@ -42,9 +44,11 @@ void ReadQueue::finish_(ReadStatus status, uint32_t now, uint32_t raw) {
 
 void ReadQueue::tick(uint32_t now) {
   if (this->count_ == 0) return;
-  if (this->state_ == State::PREPARED && static_cast<uint32_t>(now - this->state_started_) >= 5000) {
+  if (this->state_ == State::PREPARED &&
+      static_cast<uint32_t>(now - this->state_started_) >= 5000) {
     this->finish_(ReadStatus::SEND_FAILED, now);
-  } else if (this->state_ == State::WAITING && static_cast<uint32_t>(now - this->state_started_) >= 1000) {
+  } else if (this->state_ == State::WAITING &&
+             static_cast<uint32_t>(now - this->state_started_) >= 1000) {
     if (this->entries_[this->head_].attempts >= 3) {
       this->finish_(ReadStatus::TIMEOUT, now);
     } else {
@@ -58,13 +62,13 @@ void ReadQueue::tick(uint32_t now) {
     this->finish_(ReadStatus::EXPIRED, now);
 }
 
-bool ReadQueue::prepare(uint32_t now, Frame &frame) {
+bool ReadQueue::prepare(uint32_t now, Frame& frame) {
   frame.size = 0;
   this->tick(now);
   if (this->count_ == 0 || this->state_ != State::IDLE) return false;
   uint8_t sequence = this->allocate_sequence_(now);
   if (sequence == 0) return false;
-  const auto &entry = this->entries_[this->head_];
+  const auto& entry = this->entries_[this->head_];
   if (!encode_read(this->local_, entry.device, sequence, entry.code, frame)) return false;
   this->sequence_ = sequence;
   this->state_ = State::PREPARED;
@@ -84,7 +88,7 @@ void ReadQueue::on_transmitted(uint8_t sequence, uint32_t now, bool success) {
   this->state_started_ = now;
 }
 
-bool ReadQueue::on_packet(const Packet &packet, uint32_t now) {
+bool ReadQueue::on_packet(const Packet& packet, uint32_t now) {
   this->tick(now);
   if (this->count_ == 0 || this->state_ != State::WAITING || packet.sequence != this->sequence_ ||
       packet.source != this->entries_[this->head_].device || packet.destination != this->local_ ||

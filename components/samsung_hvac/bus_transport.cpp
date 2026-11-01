@@ -25,13 +25,13 @@ void Transport::set_tx_enabled(bool enabled) {
   }
 }
 
-bool Transport::enqueue(const Frame &frame, uint32_t now) {
+bool Transport::enqueue(const Frame& frame, uint32_t now) {
   if (!this->tx_enabled_ || this->state_ == State::FAULT || this->count_ == this->queue_.size() ||
       frame.size == 0 || frame.size > MAX_FRAME_SIZE) {
     this->stats_.tx_rejected++;
     return false;
   }
-  auto &slot = this->queue_[(this->head_ + this->count_) % this->queue_.size()];
+  auto& slot = this->queue_[(this->head_ + this->count_) % this->queue_.size()];
   slot.frame = frame;
   slot.queued_at = now;
   this->count_++;
@@ -54,13 +54,14 @@ void Transport::loop(uint32_t now) {
   this->framer_.tick(now);
 
   if (this->state_ == State::IDLE) {
-    while (this->count_ != 0 && static_cast<uint32_t>(now - this->queue_[this->head_].queued_at) >= 5000) {
+    while (this->count_ != 0 &&
+           static_cast<uint32_t>(now - this->queue_[this->head_].queued_at) >= 5000) {
       this->stats_.tx_expired++;
       this->pop_();
     }
-    if (!this->tx_enabled_ || this->count_ == 0 || this->stats_.rx_frames == 0 || this->framer_.pending() ||
-        received == 64 || static_cast<uint32_t>(now - this->last_activity_) < 100 ||
-        this->io_.write_capacity() == 0)
+    if (!this->tx_enabled_ || this->count_ == 0 || this->stats_.rx_frames == 0 ||
+        this->framer_.pending() || received == 64 ||
+        static_cast<uint32_t>(now - this->last_activity_) < 100 || this->io_.write_capacity() == 0)
       return;
     this->state_ = State::SENDING;
     this->offset_ = 0;
@@ -73,7 +74,7 @@ void Transport::loop(uint32_t now) {
     return;
   }
   if (this->state_ == State::SENDING) {
-    const auto &frame = this->queue_[this->head_].frame;
+    const auto& frame = this->queue_[this->head_].frame;
     size_t chunk = std::min({size_t{64}, this->io_.write_capacity(), frame.size - this->offset_});
     if (chunk == 0) return;
     if (!this->io_.write(frame.data.data() + this->offset_, chunk)) {

@@ -7,7 +7,7 @@ namespace esphome::samsung_hvac {
 // Shared storage mechanics only. Protocol-specific boundary/integrity rules are separate.
 class FrameAssembler {
  public:
-  FrameAssembler(FrameSink &sink, Diagnostics &stats) : sink_(sink), stats_(stats) {}
+  FrameAssembler(FrameSink& sink, Diagnostics& stats) : sink_(sink), stats_(stats) {}
   virtual ~FrameAssembler() = default;
   void feed(uint8_t byte, uint32_t now);
   void tick(uint32_t now);
@@ -21,8 +21,8 @@ class FrameAssembler {
 
  private:
   void consume_(size_t size);
-  FrameSink &sink_;
-  Diagnostics &stats_;
+  FrameSink& sink_;
+  Diagnostics& stats_;
   uint32_t last_byte_{0};
 };
 
