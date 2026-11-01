@@ -14,3 +14,5 @@
 | Real controls, FSV writes, valves and electrical telemetry | insufficient capture/range/safety evidence for this profile | unavailable; no write option or live TX | BLOCKED pending device evidence and guarded policy |
 
 Before upgrading any row, record exact indoor/outdoor/controller model and firmware, interface/bus topology, sanitized before/after captures, independently decoded fields, automated fixture and authorized test outcome. Do not paste credentials or unredacted customer logs. Captures from a different commenter cannot be joined to a model report as if they came from one test. No user must migrate from the legacy integration.
+
+The [P9 pilot audit](../development/hardware-pilot.md) records EHS and physical zone isolation as NOT TESTED. No verified multi-zone hardware claim is made.

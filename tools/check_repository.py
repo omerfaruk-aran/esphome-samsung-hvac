@@ -156,6 +156,11 @@ def validate_licenses(requirements):
 
 
 def main():
+    from pilot_readiness import validate_readiness
+
+    validate_readiness(
+        json.loads((ROOT / "docs/development/pilot-readiness.json").read_text())
+    )
     paths = (
         subprocess.check_output(
             ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],

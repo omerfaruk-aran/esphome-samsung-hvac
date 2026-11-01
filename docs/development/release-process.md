@@ -17,3 +17,5 @@ Stable publication requires accepted P9 and legacy parity; neither is accepted n
 If an authorized pilot or later release shows a regression, stop rollout and use the privately validated recovery path. Do not silently fall back to a second UART owner or indefinite retries. Record the exact observed failure, affected model/commit, sanitized fixture and follow-up acceptance result. Current physical rollback and release readiness remain NOT TESTED/BLOCKED.
 
 See [migration](../compatibility/migration-guide.md), [compatibility evidence](../compatibility/ehs-matrix.md), [capture procedure](../packet-capture.md), [testing](testing.md) and [execution ledger](execution-ledger.md).
+
+The [P9 pilot audit](hardware-pilot.md) and [readiness record](pilot-readiness.json) pin the software baseline and enumerate critical unresolved gates. Repository validation checks record consistency only. A software PR merge is not hardware acceptance or release authorization.

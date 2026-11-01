@@ -7,7 +7,7 @@ Codex must update this file after every meaningful task. Do not mark future phas
 - Legacy repository (read-only): https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus
 - Legacy baseline verified 2026-11-01: `6b1966bea8db9344d23763454f9cebed015d15c5`
 - Workspace package prepared: 2026-11-01
-- Overall status: IN PROGRESS — P8 CI/security/docs
+- Overall status: BLOCKED — P9 physical pilot/readiness evidence; safe software audit in progress
 
 ## Status vocabulary
 `NOT STARTED` / `IN PROGRESS` / `PASS` / `FAIL` / `BLOCKED` / `NOT TESTED`
@@ -24,8 +24,8 @@ Codex must update this file after every meaningful task. Do not mark future phas
 | P5 EHS | PASS | 9fdce0a / PR #7 | 63tests, both frameworks and all three CI jobs PASS | Evidence-backed passive fields; disputed zones stay disabled |
 | P6 Catalog / FSV | PASS | d87914a / PR #8 | 98tests, both local frameworks and CI41301108612 three jobs PASS | Passive typed entities; active writes unavailable |
 | P7 Migration | PASS | e8e1e35 / PR #9 | 108tests, local builds/Git codegen and CI41303083192 three jobs PASS | Explicit baseline dispositions and compiled migration examples |
-| P8 CI / Docs | IN PROGRESS | phase/p8-ci-docs | pending | CI/static/license/dependency/documentation and release gates |
-| P9 Hardware / Release | NOT STARTED | — | — | — |
+| P8 CI / Docs | PASS | f01a2e1 / PR #10 | 119tests, five local builds and CI41307094537 six jobs PASS | CI/static/license/dependency/documentation and release gates |
+| P9 Hardware / Release | BLOCKED | phase/p9-pilot-readiness | Software audit/validation in progress; hardware NOT TESTED | Identified authorized setup not supplied; full parity PARTIAL; no production readiness |
 
 ## Decision log
 | Date | Decision | Rationale | ADR |
@@ -34,6 +34,21 @@ Codex must update this file after every meaningful task. Do not mark future phas
 
 ## Work log format
 Add newest entries first. Each entry must include date/phase, summary/files, commit/PR, exact test commands/results, hardware tested or NOT TESTED, risks and next action.
+
+
+## 2026-11-01 / P9 — physical pilot prerequisites and readiness audit
+
+- Files: docs/development/hardware-pilot.md and pilot-readiness.json; tools/pilot_readiness.py integrated into repository policy CLI; tests/test_readiness.py; README/documentation navigation, compatibility/migration/release/testing references and changelog. No runtime component, protocol state, UART ownership or public entity/API behavior changes. Existing ADRs remain applicable; no new architecture decision needed.
+- Concrete immutable software baseline: P8 squashf01a2e1d6d06f99688b4af93db07a10455744397 and testedsource7a05ad448ebabf328c3c14b0dad087a2ef8bc5cf share treeecffc7b8aa34a9354d7a5de792f94f179cd3cb4a; CI41307094537 passed119tests/all six jobs. This is the evidence baseline, not a claim that later P9 files were tested by that earlier run.
+- All three hardware profiles explicitly NOT_TESTED/unknown, no models/captures/test results invented, no physical action performed. Eleven critical gates record interface, individual profiles, physical zone isolation, actual API, fault/recovery, rollback, HA identity/restore, parity and verified control/readback separately. Full parity PARTIAL, control/readback BLOCKED, overall readiness BLOCKED, production_readyfalse and release_authorizedfalse.
+- User confirmed no local recordings and requested public evidence research. Identified-setup question sent after preparing the concrete pilot record; no setup/physical authorization supplied at this point. No response/elapsed time grants approval. Exact external prerequisite: identified electrically verified interface/topology and operator-authorized physical scope, then actual reproducible captures/test evidence. Public reports do not establish this integration's hardware compatibility.
+- TDD: absent validator/data tests observed RED, then structural checks GREEN. Additional regressions reproduced acceptance of observed evidence without capture and boolean version, then fixed strict version/setup/capture validation. A synthetic approval reference could permit release_authorized despite blocked criteria; RED1/9PASS then fixed accepted+overallPASS requirement. All10readiness tests PASS. CLI reports record consistent: BLOCKED, explicitly not a hardware result.
+- Preliminary full `../.venv/bin/python -m pytest -q` →126PASS in21.55s before final3regressions. Final suite/review/CI evidence follows below. `../.venv/bin/ruff check components tests tools`, format --check, `../.venv/bin/python tools/check_repository.py`, `../.venv/bin/python -m pip check`, `git diff --check` →PASS. Logs artifacts/p9/; no private physical logs or real credentials included.
+- `../.venv/bin/esphome compile tests/yaml/esp-idf.yaml` and Arduino counterpart →both PASS, exit0; artifacts/p9/firmware-{idf,arduino}.log. Actual schema/codegen and sanitizer integration tests remain in the full suite. Hosted five-case firmware matrix still required for this PR. No upload/equipment/network-device action or binary publication.
+- Authorization/validation/logging/audit/localization/migration: no physical approval inferred; explicit reference/type/evidence/promotion checks; private capture/redaction and qualified setup prerequisites; English public content; physical identity/restore/rollback and unsupported control parity remain unresolved. No third-party source/dependency/license change, release/tag/deploy or legacy modification. Legacy detached6b1966b remains clean. Local authenticated account/identity and new PUBLIC independent repo/defaultmain/protection reverified before delivery.
+- Independent read-only review initially ran129tests PASS in19.74s and found one Important readiness contradiction: otherwise accepted synthetic metadata allowed overallFAIL with production_readytrue. RED2FAIL/11PASS reproduced FAIL/BLOCKED cases; explicit overallPASS requirement fixed it.13readiness tests nowPASS, including a clearly labelled synthetic complete-record positive test; no actual evidence record is promoted. Reviewer independently reran13PASS/repository/Ruff/diff checks and closed the finding; no Critical/Important findings remain. Reviewer did not rerun firmware or query hosted jobs.
+- Final local `../.venv/bin/python -m pytest -q` →132PASS in19.89s, exit0; artifacts/p9/tests-final.log. Thirteen readiness cases plus all119baseline tests, including actual YAML/codegen and six ASan/UBSan C++executables. Final repository/readiness/Ruff check+format/pip/diff gates PASS; both firmware build results above remain applicable because no runtime/config changes followed. Branch phase/p9-pilot-readiness; authenticated commit/push/PR/hosted gate pending.
+- P9 hardware/release acceptance remains BLOCKED. Safe software evidence PR can be reviewed separately; a merge cannot promote evidence or production readiness. Next: independent review, final software checks, authenticated PR/all applicable hosted jobs; actual hardware gates require external identified/authorized setup and later evidence.
 
 
 ## 2026-11-01 / P8 — CI, policy checks, documentation and release gates
@@ -293,3 +308,9 @@ Commands below run from repository/, unless otherwise stated:
 ## 2026-11-01 / P7 acceptance and P8 start
 
 - PR#9 merged by squashe8e1e35ae446fce6add9ee561358dbe2f9e827b1 after CI41303083192 three jobs SUCCESS, sourcehead842ca61d5f1d5a63be5af7f1d9dd6ef14738a787. P8 branch from latestmain; no protection bypass. P7 software PASS, full parity/hardware/identity/restore remain unverified.
+
+- P8 delivery: commit7a05ad4, PR https://github.com/omerfaruk-aran/esphome-samsung-hvac/pull/10. Six hosted jobs must pass before squash/P9; no remote enforcement or hardware acceptance assumed.
+
+## 2026-11-01 / P8 acceptance and P9 start
+
+- PR#10 merged by squashf01a2e1d6d06f99688b4af93db07a10455744397 after CI41307094537 all six jobs SUCCESS, sourcehead7a05ad448ebabf328c3c14b0dad087a2ef8bc5cf. P9 branch from latestmain; no protection bypass. P0-P8software gates PASS, physical validation/full parity/production readiness remain unaccepted.

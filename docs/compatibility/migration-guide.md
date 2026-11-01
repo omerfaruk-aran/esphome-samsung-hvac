@@ -99,3 +99,5 @@ If a later authorized pilot fails, stop the candidate using the verified recover
 ## Why there is no compatibility facade
 
 Accepting old writable keys under new passive entities would conceal behavior changes and could break automations. The runtime API, protocol selection, capabilities and identity/restore contract are not equivalent, so no alias layer or automatic converter is shipped. Unknown legacy keys fail validation with their option name. Debug MQTT credentials/topics and raw/change-only logging knobs are intentionally removed; standard logger counters do not claim the same audit stream. No source reference, old default or community model report grants write authorization.
+
+Actual physical rollback, native API availability and Home Assistant identity/restore remain NOT TESTED in the [P9 pilot audit](../development/hardware-pilot.md). Successful code generation does not establish these outcomes.

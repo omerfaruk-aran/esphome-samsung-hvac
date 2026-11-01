@@ -12,3 +12,5 @@ No physical AC model is verified with this independent integration. Hardware and
 NASA source classes 20/10 and Non-NASA indoor 00–7F are configured software bounds, not a guarantee that every address or operation exists on every unit. Fan/swing/preset lists are explicit selection gates for observations, not auto-discovery or write permission. Compatibility claims require identified model/controller/firmware/interface, reproducible sanitized captures and linked tests. No current row meets the confirmed hardware standard.
 
 See [mapping evidence](../protocol/ac-profile-mappings.md), [entity dispositions](legacy-entity-matrix.md), [EHS matrix](ehs-matrix.md) and [capture requirements](../packet-capture.md). Legacy remains independently usable.
+
+The [P9 pilot audit](../development/hardware-pilot.md) records NASA AC and Non-NASA AC hardware as NOT TESTED; public reports have not been promoted to verified model support.
