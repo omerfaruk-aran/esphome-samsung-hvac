@@ -16,6 +16,8 @@ Home Assistant entities use standard ESPHome/native API; HACS is not required. R
 
 The [legacy integration](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus) remains independently usable and unchanged. The [optional migration guide](docs/compatibility/migration-guide.md) accounts for all pinned schema/entity declarations and explicitly documents PARTIAL/UNSUPPORTED behavior. No full-control migration, facade or automatic identity rewrite is offered.
 
+The [hardware pilot audit](docs/development/hardware-pilot.md) and [readiness record](docs/development/pilot-readiness.json) keep all three profiles NOT TESTED and release readiness BLOCKED. No physical pilot has been performed.
+
 ## Development checks
 
 Use Python 3.13 and a virtual environment, then run:

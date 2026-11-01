@@ -69,3 +69,9 @@ Notable changes will be recorded here. This project has not made a release.
 - Run quality tests and five firmware cases, including encrypted network examples and a bounded receive-only capture reference; no upload or publication job exists.
 - Add user/developer/safety/troubleshooting/capture/compatibility/security/license/release documentation and weekly dependency update configuration.
 - Keep hardware, live controls, full parity and release readiness unverified; no release or deployment is performed.
+
+### P9 pilot audit (unreleased)
+
+- Pin software evidence and record separate NASA AC, Non-NASA AC and EHS hardware criteria without inventing pilot results.
+- Add readiness consistency validation and regression tests for unsupported evidence/production/release promotion.
+- Document future authorized observation, privacy, recovery, zone and API/identity evidence requirements. Hardware remains NOT TESTED, full parity PARTIAL and release readiness BLOCKED. No runtime or live-device behavior changes.

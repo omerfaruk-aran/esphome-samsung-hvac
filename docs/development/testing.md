@@ -27,3 +27,5 @@ CI uses Ubuntu 24.04/Python 3.13, read-only contents permission, no stored check
 C++ formatting uses a pinned tool and preserves include/using order, string literals and comments. The P8 initial 48-file pass preserved non-whitespace content and is validated by the same compiler/sanitizer/firmware matrix. Current platform evidence is the esp32dev Arduino/ESP-IDF fixtures on local macOS and hosted Linux; no inherited ESP8266/LibreTiny/other-board guarantee exists.
 
 Hardware, actual bus timing/readback, real API publication, Home Assistant identity/restore and recovery are NOT TESTED until recorded on an identified authorized setup. A skipped/unavailable criterion is never a passing hardware result. See [execution evidence](execution-ledger.md) and [release gates](release-process.md).
+
+The readiness consistency checks run with `python tools/pilot_readiness.py` and within `python tools/check_repository.py`. Tests reject unsupported evidence/production promotions; they do not execute or establish hardware tests. See the [pilot audit](hardware-pilot.md).
