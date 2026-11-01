@@ -7,7 +7,7 @@ Codex must update this file after every meaningful task. Do not mark future phas
 - Legacy repository (read-only): https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus
 - Legacy baseline verified 2026-11-01: `6b1966bea8db9344d23763454f9cebed015d15c5`
 - Workspace package prepared: 2026-11-01
-- Overall status: IN PROGRESS — P6 typed catalog
+- Overall status: IN PROGRESS — P7 migration
 
 ## Status vocabulary
 `NOT STARTED` / `IN PROGRESS` / `PASS` / `FAIL` / `BLOCKED` / `NOT TESTED`
@@ -22,18 +22,31 @@ Codex must update this file after every meaningful task. Do not mark future phas
 | P3 Non-NASA | PASS | 7069274 / PR #5 | 34 tests, both local builds, all three CI jobs PASS | Review races fixed; hardware NOT TESTED; passive production |
 | P4 AC profiles | PASS | fad669e / PR #6 | 51tests, both local frameworks and all three CI jobs PASS | Read-only entities/internal climate; control evidence unresolved |
 | P5 EHS | PASS | 9fdce0a / PR #7 | 63tests, both frameworks and all three CI jobs PASS | Evidence-backed passive fields; disputed zones stay disabled |
-| P6 Catalog / FSV | IN PROGRESS | phase/p6-typed-catalog | pending | Passive typed entities; active writes unavailable |
-| P7 Migration | NOT STARTED | — | — | — |
+| P6 Catalog / FSV | PASS | d87914a / PR #8 | 98tests, both local frameworks and CI41301108612 three jobs PASS | Passive typed entities; active writes unavailable |
+| P7 Migration | IN PROGRESS | phase/p7-migration | pending | Explicit baseline dispositions and compiled migration examples |
 | P8 CI / Docs | NOT STARTED | — | — | — |
 | P9 Hardware / Release | NOT STARTED | — | — | — |
 
 ## Decision log
 | Date | Decision | Rationale | ADR |
 |---|---|---|---|
-| 2026-11-01 | New independent repository; legacy repository read-only | Protect existing users | Pending P0 |
+| 2026-11-01 | New independent repository; legacy repository read-only | Protect existing users | ADR0001/0006 accepted in P0 |
 
 ## Work log format
 Add newest entries first. Each entry must include date/phase, summary/files, commit/PR, exact test commands/results, hardware tested or NOT TESTED, risks and next action.
+
+
+## 2026-11-01 / P7 — explicit legacy migration dispositions
+
+- Files: complete eight-column legacy-yaml-reference.md and machine-readable legacy-migration.json for65pinned schema declarations; all27entity dispositions, feature/parity tracker; migration-guide.md; four examples (NASA AC, Non-NASA AC, EHS, multi-split); tests/test_migration.py and five legacy-key rejection cases; ADR0009, README/changelog.
+- Tests first: missing inventory/examples observed RED; real examples then generated through ESPHome with actual !secret references and ephemeral non-deployed secrets outside the repository. Test failure output masks values. No real credential or secrets.yaml committed. Explicit API encryption/Wi-Fi references, fixed IDs, typed state-only entities and capability/address changes documented.
+- Independent review: no Critical/Important; readonly AST verification matched all65old keys/requirements/defaults/source lines to pinned legacy HEAD.10migration-related tests PASS in2.66s. Two Minor issues closed: stale UNKNOWN prose updated to PARTIAL/UNSUPPORTED dispositions; test now compares all Markdown/JSON key/source/requirement/default/equivalent/status/note fields, not only counts/notes. A preset helper name row was clarified as unsupported display alias, distinct from standard entity names. No component behavior changed.
+- Final `../.venv/bin/python -m pytest -q` →108PASS in35.42s; `../.venv/bin/ruff check components tests`, `../.venv/bin/ruff format --check components tests`, `git diff --check` →PASS. Six sanitizer C++ executables,80config tests,17catalog tests and5migration inventory/real-codegen tests. Log artifacts/p7/pytest-reviewed.log.
+- Required existing firmware matrix: `../.venv/bin/esphome compile tests/yaml/esp-idf.yaml` and Arduino counterpart →PASS, exit0. Logs artifacts/p7/build-{idf,arduino}.log. Additional relevant full migration builds with actual Wi-Fi/encrypted API modules: `../.venv/bin/python ../artifacts/p7/build_migration.py nasa-ac` and non-nasa-ac counterpart →PASS, exit0, using temporary non-deployed secrets outside repo; logs migration-{idf,arduino}.log. No upload/network connection to a device.
+- Documented Git option independently tested: encrypted-API EHS example using remote refd87914a833316e3b5bb63cb2cc7189a8e4a8350c cloned/fetched via ESPHome and `compile --only-generate` →PASS. Log artifacts/p7/git-reference.log. New repo reverified PUBLIC, isForkfalse, defaultmain. Legacy SHA6b1966b/worktree unchanged.
+- Guide explicitly covers protocol/address conversion, changed writable entity types, defaults/inheritance/preset aliases, typed/raw/filter order, sensor-only offset versus climate, missing/invalid/last-observed state, inherited update_interval removal, native API secrets, registry/restore limits and private backup/authorized rollback boundary. Official ESPHome2026.10.1 API/YAML/sensor docs checked for encryption/secrets/filter behavior. No auto-converter/facade, physical action or forced migration. No full PARITY asserted.
+- Authorization/validation/logging/audit/localization/migration: unsupported old controls/debug/keepalive/poll settings fail by key; native entity transport replaces no legacy debug audit stream; no raw logs/customer data/credentials published, public content English. Hardware, actual HA identity/restore/network behavior and physical rollback NOT TESTED. Production writes remain unavailable.
+- Local P7 software gate PASS, CI/push/PR/squash pending before P8. Branch phase/p7-migration. ADR0009 records the reviewed no-facade decision; no externally consequential change to the legacy API or repository.
 
 
 ## 2026-11-01 / P6 — typed catalog, passive observers and offline write policy
@@ -253,3 +266,9 @@ Commands below run from repository/, unless otherwise stated:
 ## 2026-11-01 / P5 acceptance and P6 start
 
 - PR#7 merged by squash9fdce0a6c2d4e5f4d558e293fa7854b8a0e8b8b5 after CI41298588789 all three jobs SUCCESS, sourcehead8a6b2d1bf0ee061315cc3f78fb66e708f8704e26. P6 branch from latestmain; no protection bypass. P5 source-labelled read-only software PASS; hardware/model/real HA publication NOT TESTED.
+
+- P6 delivery: commitda91512, PR https://github.com/omerfaruk-aran/esphome-samsung-hvac/pull/8. Local tests/builds/review fixes complete; CI gate pending before merge/P7.
+
+## 2026-11-01 / P6 acceptance and P7 start
+
+- PR#8 merged by squashd87914a833316e3b5bb63cb2cc7189a8e4a8350c after CI41301108612 all three jobs SUCCESS, sourceheadda91512f76b1898b0e44726a9d03cad12a5ab19a. P7 branch from latestmain; protections unchanged. Passive/offline P6 software PASS, live writes/actual readback/hardware remain BLOCKED/NOT TESTED.

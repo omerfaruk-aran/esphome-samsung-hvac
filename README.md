@@ -1,6 +1,6 @@
 # Samsung HVAC Modular for ESPHome
 
-A planned modular ESPHome integration for Samsung HVAC systems. This repository is in the foundation stage: it provides receive-only transport, independent protocol engines and passive AC/EHS state entities, but no HVAC control, verified hardware matrix, installation procedure, or migration path. Do not use it to control equipment yet.
+A planned modular ESPHome integration for Samsung HVAC systems. This repository is in the foundation stage: it provides receive-only transport, independent protocol engines and passive AC/EHS state entities, but no HVAC control, verified hardware matrix or validated hardware installation procedure. Do not use it to control equipment yet.
 
 ## Project goals
 
@@ -8,7 +8,7 @@ The project aims to separate shared bus transport, NASA and Non-NASA protocols, 
 
 ## For users
 
-For the existing integration, see [esphome_samsung_hvac_bus](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus) and its documentation. This project is separate and no migration is currently available. Use [Discussions](https://github.com/omerfaruk-aran/esphome-samsung-hvac/discussions) for questions and [Issues](https://github.com/omerfaruk-aran/esphome-samsung-hvac/issues) for actionable reports. See [SUPPORT.md](SUPPORT.md).
+For the existing integration, see [esphome_samsung_hvac_bus](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus) and its documentation. This project is separate and no automatic or full-control migration is available. An optional passive transition is documented in the migration guide. Use [Discussions](https://github.com/omerfaruk-aran/esphome-samsung-hvac/discussions) for questions and [Issues](https://github.com/omerfaruk-aran/esphome-samsung-hvac/issues) for actionable reports. See [SUPPORT.md](SUPPORT.md).
 
 HVAC wiring and bus interfaces can involve hazardous voltages or damage equipment. Use a suitable isolated interface and qualified assistance; never connect an ESP32 directly to an unknown bus. Follow equipment instructions and local electrical requirements.
 
@@ -49,3 +49,5 @@ The [Non-NASA engine notes](docs/protocol/non-nasa-engine.md) explain source evi
 The [read-only EHS profile](docs/development/ehs-profile.md) exposes source-labelled hydro observations; the [EHS matrix](docs/compatibility/ehs-matrix.md) separates public model reports from verified compatibility. No identified hardware or complete multi-zone support is claimed.
 
 The [typed passive message interface](docs/development/advanced-messages.md) supports named catalog/custom scalar observations and passive FSV data. The [catalog schema](docs/protocol/message-catalog.md) records evidence; the [offline write gate](docs/development/write-policy.md) is tested infrastructure with no live write or polling option.
+
+The [optional migration guide](docs/compatibility/migration-guide.md) accounts for every pinned legacy schema/entity declaration and provides codegen-tested examples. The legacy project remains independently usable; no forced migration or compatibility facade is shipped.

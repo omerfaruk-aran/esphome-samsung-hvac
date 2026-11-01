@@ -568,3 +568,30 @@ def test_typed_observer_rejects_unsafe_configuration(tmp_path, case, expected):
     assert "Traceback" not in result.stderr
     assert result.returncode != 0
     assert expected in result.stdout + result.stderr
+
+
+@pytest.mark.parametrize(
+    "legacy_key",
+    [
+        "non_nasa_keepalive",
+        "debug_log_messages_raw",
+        "update_interval",
+        "room_temperature_offset",
+        "power",
+    ],
+)
+def test_legacy_keys_require_explicit_migration(tmp_path, legacy_key):
+    data = config()
+    root = data["samsung_hvac"][0]
+    if legacy_key in ("room_temperature_offset", "power"):
+        device = ac_device()
+        device[legacy_key] = (
+            0.5 if legacy_key == "room_temperature_offset" else {"name": "Old Switch"}
+        )
+        root["devices"] = [device]
+    else:
+        root[legacy_key] = "30s" if legacy_key == "update_interval" else True
+    result = run_esphome(tmp_path, data, "config")
+    assert "Traceback" not in result.stderr
+    assert result.returncode != 0
+    assert legacy_key in result.stdout + result.stderr
