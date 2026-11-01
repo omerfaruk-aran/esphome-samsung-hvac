@@ -37,3 +37,9 @@ Notable changes will be recorded here. This project has not made a release.
 - Add disabled-by-default registration/keepalive/wake and coalesced control lifecycle helpers with shared rate limits, bounded retries, generation tokens and readback-based completion.
 - Treat all ACKs as nonterminal; document deliberate legacy differences and unsupported Fahrenheit control/ambiguous telemetry scaling.
 - Add synthetic fixtures, sanitizer regression tests, and Arduino macro compatibility coverage. No active registration, control YAML or hardware compatibility is available.
+
+### P4 AC observations (unreleased)
+
+- Add isolated, bounded NASA AC and Non-NASA AC profiles, explicit addresses/capabilities and standard ESPHome state entities.
+- Keep public climate/control entities unavailable; optional climate projections are internal only. Disputed NASA room codes remain disabled.
+- Add source-labelled state fixtures, profile/capability/codegen tests and API entity firmware compilation. Full legacy parity, device captures, hardware and Home Assistant registry/restore behavior remain unverified.

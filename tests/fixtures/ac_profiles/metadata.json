@@ -1,0 +1,10 @@
+{
+  "evidence": "INFERRED",
+  "construction": "Synthetic source-derived state observations, not device captures. CRC/XOR fixtures are produced independently of the C++ encoder.",
+  "baseline": "6b1966bea8db9344d23763454f9cebed015d15c5",
+  "hardware": "NOT TESTED",
+  "files": [
+    "nasa_ac_state.hex",
+    "non_nasa_ac_state.hex"
+  ]
+}

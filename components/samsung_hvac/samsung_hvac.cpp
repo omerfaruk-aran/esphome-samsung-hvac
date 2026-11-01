@@ -75,8 +75,7 @@ void SamsungHVAC::on_frame(const Frame &frame) {
 }
 
 void SamsungHVAC::on_nasa_packet(const nasa::Packet &packet) {
-  // Product profiles subscribe in P4/P5; passive packets trigger no transmission.
-  (void) packet;
+  for (size_t i = 0; i < this->profile_count_; ++i) this->profiles_[i]->receive(packet);
 }
 
 void SamsungHVAC::on_read_complete(const nasa::ReadResult &result) {
@@ -85,14 +84,14 @@ void SamsungHVAC::on_read_complete(const nasa::ReadResult &result) {
 }
 
 void SamsungHVAC::on_non_nasa_packet(const non_nasa::Packet &packet) {
-  // Passive state observations only. Production never enables the offline TX lifecycles.
-  (void) packet;
+  for (size_t i = 0; i < this->profile_count_; ++i) this->profiles_[i]->receive(packet);
 }
 
 void SamsungHVAC::dump_config() {
   ESP_LOGCONFIG(TAG, "Samsung HVAC transport:");
   ESP_LOGCONFIG(TAG, "  Protocol: %s", protocol_name(this->protocol_));
   ESP_LOGCONFIG(TAG, "  Receive-only; no active polling, registration, or control");
+  ESP_LOGCONFIG(TAG, "  Passive AC profiles: %u", static_cast<unsigned>(this->profile_count_));
   LOG_PIN("  Direction pin: ", this->flow_control_pin_);
   ESP_LOGCONFIG(TAG, "  RX: %" PRIu32 " bytes, %" PRIu32 " valid frames, %" PRIu32 " invalid candidates",
                 this->stats_.rx_bytes, this->stats_.rx_frames, this->stats_.invalid_frames);

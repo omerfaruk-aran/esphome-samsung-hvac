@@ -276,3 +276,104 @@ def test_unrelated_json_keys_are_not_uart_configuration(tmp_path, payload):
     ]
     result = run_esphome(tmp_path, data, "config")
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+def ac_device(protocol="nasa", address=0x200000):
+    return {
+        "id": "living_room",
+        "profile": "nasa_ac" if protocol == "nasa" else "non_nasa_ac",
+        "address": address,
+        "target_temperature": {"name": "Living Room Target"},
+        "power_state": {"name": "Living Room Power"},
+        "operation_mode": {"name": "Living Room Mode"},
+        "fan_modes": ["auto", "low", "medium", "high"],
+        "fan_mode": {"name": "Living Room Fan"},
+        "climate": {"name": "Living Room Internal Climate", "internal": True},
+    }
+
+
+@pytest.mark.parametrize("protocol,address", [("nasa", 0x200000), ("non_nasa", 0)])
+def test_ac_profiles_generate(tmp_path, protocol, address):
+    data = config()
+    root = data["samsung_hvac"][0]
+    root["protocol"] = protocol
+    root["devices"] = [ac_device(protocol, address)]
+    result = run_esphome(tmp_path, data, "compile", "--only-generate")
+    assert result.returncode == 0, result.stdout + result.stderr
+    main = (tmp_path / ".esphome/build/samsung-foundation/src/main.cpp").read_text()
+    assert "add_profile" in main
+    assert "set_climate" in main
+
+
+def test_ac_multisplit_codegen(tmp_path):
+    data = config()
+    first = ac_device()
+    second = {
+        "id": "bedroom",
+        "profile": "nasa_ac",
+        "address": 0x200001,
+        "power_state": {"name": "Bedroom Power"},
+    }
+    data["samsung_hvac"][0]["devices"] = [first, second]
+    result = run_esphome(tmp_path, data, "compile", "--only-generate")
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+@pytest.mark.parametrize(
+    "case,expected",
+    [
+        ("mismatch", "profile must match"),
+        ("duplicate", "Duplicate device address"),
+        ("bad_address", "indoor address"),
+        ("missing_id", "id"),
+        ("public_climate", "internal"),
+        ("nasa_room", "room_temperature"),
+        ("legacy_preset", "presets"),
+        ("fan_without_capability", "fan_modes"),
+        ("nasa_fresh", "fresh"),
+        ("swing_without_capability", "vertical_swing"),
+        ("outdoor_without_address", "outdoor_address"),
+        ("outdoor_indoor_address", "outdoor address"),
+        ("too_many", "8"),
+    ],
+)
+def test_ac_unsupported_configuration_rejected(tmp_path, case, expected):
+    data = config()
+    device = ac_device()
+    devices = [device]
+    if case == "mismatch":
+        device.update(profile="non_nasa_ac", address=0)
+    elif case == "duplicate":
+        devices.append(
+            {"id": "duplicate", "profile": "nasa_ac", "address": device["address"]}
+        )
+    elif case == "bad_address":
+        device["address"] = 0x800000
+    elif case == "missing_id":
+        del device["id"]
+    elif case == "public_climate":
+        device["climate"]["internal"] = False
+    elif case == "nasa_room":
+        device["room_temperature"] = {"name": "Room"}
+    elif case == "legacy_preset":
+        data["samsung_hvac"][0]["protocol"] = "non_nasa"
+        device.update(profile="non_nasa_ac", address=0, presets=["windfree"])
+    elif case == "fan_without_capability":
+        del device["fan_modes"]
+    elif case == "nasa_fresh":
+        device["fan_modes"] = ["fresh"]
+    elif case == "swing_without_capability":
+        device["vertical_swing_state"] = {"name": "Swing"}
+    elif case == "outdoor_without_address":
+        device["outdoor_temperature"] = {"name": "Outdoor"}
+    elif case == "outdoor_indoor_address":
+        device["outdoor_address"] = 0x200001
+    elif case == "too_many":
+        devices = [
+            {"id": f"device_{i}", "profile": "nasa_ac", "address": 0x200000 + i}
+            for i in range(9)
+        ]
+    data["samsung_hvac"][0]["devices"] = devices
+    result = run_esphome(tmp_path, data, "config")
+    assert result.returncode != 0
+    assert expected in result.stdout + result.stderr

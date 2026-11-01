@@ -15,6 +15,10 @@ from esphome.const import (
 )
 import esphome.final_validate as fv
 
+from . import ac_config
+
+AUTO_LOAD = ["sensor", "binary_sensor", "text_sensor", "climate"]
+
 CODEOWNERS = ["@omerfaruk-aran"]
 DEPENDENCIES = ["uart"]
 MULTI_CONF = True
@@ -31,9 +35,13 @@ CONFIG_SCHEMA = cv.All(
             cv.GenerateID(): cv.declare_id(SamsungHVAC),
             cv.Required(CONF_PROTOCOL): cv.enum(PROTOCOLS, lower=True),
             cv.Required(CONF_UART_ID): cv.use_id(uart.UARTComponent),
+            cv.Optional("devices", default=[]): cv.All(
+                cv.ensure_list(ac_config.DEVICE_SCHEMA), cv.Length(max=8)
+            ),
             cv.Optional(CONF_FLOW_CONTROL_PIN): pins.internal_gpio_output_pin_schema,
         }
     ).extend(cv.COMPONENT_SCHEMA),
+    ac_config.validate_devices,
 )
 
 
@@ -125,3 +133,6 @@ async def to_code(config):
     if CONF_FLOW_CONTROL_PIN in config:
         pin = await cg.gpio_pin_expression(config[CONF_FLOW_CONTROL_PIN])
         cg.add(var.set_flow_control_pin(pin))
+
+    for device in config["devices"]:
+        await ac_config.to_code(var, device)

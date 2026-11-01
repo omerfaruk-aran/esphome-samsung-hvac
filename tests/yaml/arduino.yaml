@@ -1,30 +1,68 @@
-# Build-only fixture. Pin numbers are not wiring guidance for HVAC equipment.
+# Build-only fixture. Do not upload to equipment; pins are not wiring guidance.
 esphome:
   name: samsung-foundation-arduino
-
 esp32:
   board: esp32dev
   framework:
     type: arduino
-
 logger:
   baud_rate: 0
-
 external_components:
-  - source:
-      type: local
-      path: ../../components
-    components: [samsung_hvac]
-
+- source:
+    type: local
+    path: ../../components
+  components:
+  - samsung_hvac
 uart:
   id: hvac_uart
   rx_pin: GPIO16
   tx_pin: GPIO17
   baud_rate: 9600
   parity: EVEN
-
 samsung_hvac:
   id: hvac
   uart_id: hvac_uart
   protocol: non_nasa
   flow_control_pin: GPIO23
+  devices:
+  - id: living_room
+    profile: non_nasa_ac
+    address: 0
+    fan_modes:
+    - auto
+    - low
+    - medium
+    - high
+    - turbo
+    vertical_swing: true
+    horizontal_swing: true
+    climate:
+      id: living_room_projection
+      name: Living Room Internal Climate
+      internal: true
+    target_temperature:
+      name: Living Room Target Temperature
+    indoor_eva_in_temperature:
+      name: Living Room Indoor Eva In Temperature
+    indoor_eva_out_temperature:
+      name: Living Room Indoor Eva Out Temperature
+    power_state:
+      name: Living Room Power State
+    operation_mode:
+      name: Living Room Operation Mode
+    fan_mode:
+      name: Living Room Fan Mode
+    vertical_swing_state:
+      name: Living Room Vertical Swing State
+    horizontal_swing_state:
+      name: Living Room Horizontal Swing State
+    room_temperature:
+      name: Living Room Temperature
+  - id: bedroom
+    profile: non_nasa_ac
+    address: 1
+    power_state:
+      name: Bedroom Power
+api:
+  reboot_timeout: 0s
+network: {}

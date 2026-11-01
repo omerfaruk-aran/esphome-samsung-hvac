@@ -1,30 +1,91 @@
-# Build-only fixture. Pin numbers are not wiring guidance for HVAC equipment.
+# Build-only fixture. Do not upload to equipment; pins are not wiring guidance.
 esphome:
   name: samsung-foundation-idf
-
 esp32:
   board: esp32dev
   framework:
     type: esp-idf
-
 logger:
   baud_rate: 0
-
 external_components:
-  - source:
-      type: local
-      path: ../../components
-    components: [samsung_hvac]
-
+- source:
+    type: local
+    path: ../../components
+  components:
+  - samsung_hvac
 uart:
   id: hvac_uart
   rx_pin: GPIO16
   tx_pin: GPIO17
   baud_rate: 9600
   parity: EVEN
-
 samsung_hvac:
   id: hvac
   uart_id: hvac_uart
   protocol: nasa
   flow_control_pin: GPIO23
+  devices:
+  - id: living_room
+    profile: nasa_ac
+    address: 2097152
+    fan_modes:
+    - auto
+    - low
+    - medium
+    - high
+    - turbo
+    vertical_swing: true
+    horizontal_swing: true
+    climate:
+      id: living_room_projection
+      name: Living Room Internal Climate
+      internal: true
+    target_temperature:
+      name: Living Room Target Temperature
+    indoor_eva_in_temperature:
+      name: Living Room Indoor Eva In Temperature
+    indoor_eva_out_temperature:
+      name: Living Room Indoor Eva Out Temperature
+    power_state:
+      name: Living Room Power State
+    operation_mode:
+      name: Living Room Operation Mode
+    fan_mode:
+      name: Living Room Fan Mode
+    vertical_swing_state:
+      name: Living Room Vertical Swing State
+    horizontal_swing_state:
+      name: Living Room Horizontal Swing State
+    outdoor_address: 1048576
+    presets:
+    - none
+    - sleep
+    - quiet
+    - fast
+    - long_reach
+    - eco
+    - windfree
+    outdoor_temperature:
+      name: Living Room Outdoor Temperature
+    error_code:
+      name: Living Room Error Code
+    humidity:
+      name: Living Room Humidity
+    filter_warning:
+      name: Living Room Filter Warning
+    defrosting:
+      name: Living Room Defrosting
+    silence_state:
+      name: Living Room Silence State
+    automatic_cleaning_state:
+      name: Living Room Automatic Cleaning State
+    preset_state:
+      name: Living Room Preset State
+  - id: bedroom
+    profile: nasa_ac
+    address: 2097153
+    power_state:
+      name: Bedroom Power
+api:
+  reboot_timeout: 0s
+network: {}
