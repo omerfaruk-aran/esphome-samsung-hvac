@@ -21,3 +21,11 @@ Notable changes will be recorded here. This project has not made a release.
 - Add an internal serialized TX scheduler with queue limits, discovery/silence gating, nonblocking drain polling, direction guard and sticky faults; TX remains unavailable in YAML.
 - Test parser recovery, random streams, queue behavior, driver failures and clock rollover under address/undefined-behavior sanitizers.
 - Require native ESP32 UART and reject competing aliases on the same pins.
+
+
+### P2 NASA (unreleased)
+
+- Add strict bounded typed NASA decoding, lossless opaque structures and consistent big-endian scalars, with explicit signed conversion.
+- Distinguish packet categories and add a bounded read-only lifecycle with source/destination/sequence/message correlation, confirmed-TX timers, retries and sequence quarantine.
+- Integrate passive NASA decoding and counters; production active reads and all control writes remain unavailable.
+- Add evidence-labelled synthetic fixtures and sanitizer regression/fuzz tests. No device compatibility or disputed message meaning is asserted.
