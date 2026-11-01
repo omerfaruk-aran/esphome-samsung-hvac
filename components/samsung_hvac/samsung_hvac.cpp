@@ -1,14 +1,82 @@
 #include "samsung_hvac.h"
 #include "esphome/core/log.h"
+#include "nasa_framer.h"
+#include "non_nasa_framer.h"
+#include <cinttypes>
 
 namespace esphome::samsung_hvac {
 
 static const char *const TAG = "samsung_hvac";
 
+void SamsungHVAC::setup() {
+  if (this->flow_control_pin_ != nullptr) {
+    this->flow_control_pin_->setup();
+    this->flow_control_pin_->digital_write(false);
+  }
+  // The final schema requires this concrete native UART implementation.
+  this->native_uart_ = static_cast<uart::IDFUARTComponent *>(this->parent_);
+  if (this->native_uart_ == nullptr || this->native_uart_->is_failed()) {
+    this->mark_failed();
+    return;
+  }
+  auto &sink = static_cast<FrameSink &>(*this);
+  if (this->protocol_ == Protocol::NASA)
+    this->framer_ = std::make_unique<nasa::Framer>(sink, this->stats_);
+  else
+    this->framer_ = std::make_unique<non_nasa::Framer>(sink, this->stats_);
+  this->transport_ = std::make_unique<Transport>(static_cast<BusIO &>(*this), *this->framer_, this->stats_);
+  // No production API enables TX in P1. Receive-only discovery is the default.
+}
+
+void SamsungHVAC::loop() {
+  if (this->transport_ == nullptr) return;
+  this->transport_->loop(millis());
+  if (this->stats_.tx_faults != 0) {
+    ESP_LOGE(TAG, "Transport TX fault; restart required before any further transmission");
+    this->mark_failed();
+  }
+}
+
+void SamsungHVAC::on_shutdown() { this->set_direction(false); }
+
+bool SamsungHVAC::read(uint8_t &byte) {
+  return this->native_uart_->available() != 0 && this->native_uart_->read_byte(&byte);
+}
+
+size_t SamsungHVAC::write_capacity() { return this->native_uart_->available_for_write(); }
+
+bool SamsungHVAC::write(const uint8_t *data, size_t size) {
+  if (this->native_uart_->is_failed() || size > this->write_capacity()) return false;
+  this->native_uart_->write_array(data, size);
+  return !this->native_uart_->is_failed();
+}
+
+TxStatus SamsungHVAC::tx_status() {
+  auto port = static_cast<uart_port_t>(this->native_uart_->get_hw_serial_number());
+  if (!uart_is_driver_installed(port)) return TxStatus::FAILED;
+  esp_err_t result = uart_wait_tx_done(port, 0);
+  if (result == ESP_OK) return TxStatus::DONE;
+  return result == ESP_ERR_TIMEOUT ? TxStatus::BUSY : TxStatus::FAILED;
+}
+
+void SamsungHVAC::set_direction(bool transmit) {
+  if (this->flow_control_pin_ != nullptr) this->flow_control_pin_->digital_write(transmit);
+}
+
+void SamsungHVAC::on_frame(const Frame &frame) {
+  // P2/P3 add typed protocol consumers. Do not log raw payloads or send replies.
+  (void) frame;
+}
+
 void SamsungHVAC::dump_config() {
-  ESP_LOGCONFIG(TAG, "Samsung HVAC foundation:");
+  ESP_LOGCONFIG(TAG, "Samsung HVAC transport:");
   ESP_LOGCONFIG(TAG, "  Protocol: %s", protocol_name(this->protocol_));
-  ESP_LOGCONFIG(TAG, "  No bus processing or control is implemented in this foundation.");
+  ESP_LOGCONFIG(TAG, "  Receive-only; no active polling, registration, or control");
+  LOG_PIN("  Direction pin: ", this->flow_control_pin_);
+  ESP_LOGCONFIG(TAG, "  RX: %" PRIu32 " bytes, %" PRIu32 " valid frames, %" PRIu32 " invalid candidates",
+                this->stats_.rx_bytes, this->stats_.rx_frames, this->stats_.invalid_frames);
+  ESP_LOGCONFIG(TAG, "  RX timeouts: %" PRIu32 ", discarded bytes: %" PRIu32, this->stats_.frame_timeouts,
+                this->stats_.discarded_bytes);
 }
 
 }  // namespace esphome::samsung_hvac

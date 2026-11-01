@@ -1,9 +1,18 @@
 """Independent Samsung HVAC component foundation; no active bus traffic."""
 
+from esphome import pins
 import esphome.codegen as cg
 from esphome.components import uart
 import esphome.config_validation as cv
-from esphome.const import CONF_ID, CONF_PROTOCOL, CONF_UART_ID
+from esphome.const import (
+    CONF_FLOW_CONTROL_PIN,
+    CONF_ID,
+    CONF_NUMBER,
+    CONF_PROTOCOL,
+    CONF_RX_PIN,
+    CONF_TX_PIN,
+    CONF_UART_ID,
+)
 import esphome.final_validate as fv
 
 CODEOWNERS = ["@omerfaruk-aran"]
@@ -15,13 +24,17 @@ SamsungHVAC = ns.class_("SamsungHVAC", cg.Component, uart.UARTDevice)
 Protocol = ns.enum("Protocol", is_class=True)
 PROTOCOLS = {"nasa": Protocol.NASA, "non_nasa": Protocol.NON_NASA}
 
-CONFIG_SCHEMA = cv.Schema(
-    {
-        cv.GenerateID(): cv.declare_id(SamsungHVAC),
-        cv.Required(CONF_PROTOCOL): cv.enum(PROTOCOLS, lower=True),
-        cv.Required(CONF_UART_ID): cv.use_id(uart.UARTComponent),
-    }
-).extend(cv.COMPONENT_SCHEMA)
+CONFIG_SCHEMA = cv.All(
+    cv.only_on_esp32,
+    cv.Schema(
+        {
+            cv.GenerateID(): cv.declare_id(SamsungHVAC),
+            cv.Required(CONF_PROTOCOL): cv.enum(PROTOCOLS, lower=True),
+            cv.Required(CONF_UART_ID): cv.use_id(uart.UARTComponent),
+            cv.Optional(CONF_FLOW_CONTROL_PIN): pins.internal_gpio_output_pin_schema,
+        }
+    ).extend(cv.COMPONENT_SCHEMA),
+)
 
 
 def _mappings(value):
@@ -48,6 +61,43 @@ def _exclusive_uart(config):
             raise cv.Invalid("uart.write cannot bypass the samsung_hvac UART owner")
     path = full.get_path_for_id(bus)[:-1]
     hub = full.get_config_for_path(path)
+    if not hub[CONF_ID].type.inherits_from(uart.IDFUARTComponent):
+        raise cv.Invalid("samsung_hvac requires a native ESP32 UART")
+    if CONF_FLOW_CONTROL_PIN in hub:
+        raise cv.Invalid(
+            "Configure flow_control_pin under samsung_hvac instead of uart"
+        )
+    owned_pins = {
+        hub[key][CONF_NUMBER] for key in (CONF_RX_PIN, CONF_TX_PIN) if key in hub
+    }
+    for other in full.get("uart", []):
+        if other[CONF_ID] == hub[CONF_ID]:
+            continue
+        other_pins = {
+            other[key][CONF_NUMBER]
+            for key in (CONF_RX_PIN, CONF_TX_PIN)
+            if key in other
+        }
+        if owned_pins & other_pins:
+            raise cv.Invalid(
+                "samsung_hvac UART pins must not be shared by another UART bus"
+            )
+    uart_pins = {
+        entry[key][CONF_NUMBER]
+        for entry in full.get("uart", [])
+        for key in (CONF_RX_PIN, CONF_TX_PIN)
+        if key in entry
+    }
+    direction_pins = set()
+    for owner in full["samsung_hvac"]:
+        if CONF_FLOW_CONTROL_PIN not in owner:
+            continue
+        number = owner[CONF_FLOW_CONTROL_PIN][CONF_NUMBER]
+        if number in uart_pins or number in direction_pins:
+            raise cv.Invalid(
+                "samsung_hvac direction pin must be exclusive of UART and other direction pins"
+            )
+        direction_pins.add(number)
     if hub.get("debug", {}).get("dummy_receiver", False):
         raise cv.Invalid("UART debug dummy_receiver must be disabled for samsung_hvac")
     return config
@@ -72,3 +122,6 @@ async def to_code(config):
     await cg.register_component(var, config)
     await uart.register_uart_device(var, config)
     cg.add(var.set_protocol(config[CONF_PROTOCOL]))
+    if CONF_FLOW_CONTROL_PIN in config:
+        pin = await cg.gpio_pin_expression(config[CONF_FLOW_CONTROL_PIN])
+        cg.add(var.set_flow_control_pin(pin))

@@ -10,3 +10,13 @@ This initial repository contains no copied legacy protocol source. Preserve
 applicable copyright and license notices if third-party material is added.
 Samsung is a trademark of its respective owner. This project is independent
 and is not affiliated with or endorsed by Samsung.
+
+
+P1 test data attribution
+
+The NASA framing reference in tests/fixtures/framing/nasa.hex is a protocol
+frame recorded as expected test data in the MIT-licensed legacy project's
+test/main_test_nasa.cpp at commit 6b1966bea8db9344d23763454f9cebed015d15c5.
+Copyright (c) 2024 Ömer Faruk ARAN; originally developed by Lanwin.
+The full MIT terms are included in LICENSE. Other framing fixtures are synthetic.
+No hardware capture provenance or compatibility is implied by these test bytes.
