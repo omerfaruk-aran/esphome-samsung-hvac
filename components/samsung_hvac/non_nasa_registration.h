@@ -9,13 +9,20 @@ class Registration {
   void set_enabled(bool enabled) {
     if (!enabled && this->prepared_) this->faulted_ = true;
     this->enabled_ = enabled && !this->faulted_;
-    if (!this->enabled_) { this->prepared_ = false; this->wake_pending_ = false; this->keepalive_pending_ = false; }
+    if (!this->enabled_) {
+      this->prepared_ = false;
+      this->wake_pending_ = false;
+      this->keepalive_pending_ = false;
+    }
   }
-  void set_keepalive(bool enabled) { this->keepalive_ = enabled; if (!enabled) this->keepalive_pending_ = false; }
+  void set_keepalive(bool enabled) {
+    this->keepalive_ = enabled;
+    if (!enabled) this->keepalive_pending_ = false;
+  }
   bool registered() const { return this->registered_; }
   bool request_wakeup(uint32_t now);
-  void observe(const Packet &packet, uint32_t now);
-  bool prepare(uint32_t now, Frame &frame, uint32_t &token);
+  void observe(const Packet& packet, uint32_t now);
+  bool prepare(uint32_t now, Frame& frame, uint32_t& token);
   void on_transmitted(uint32_t token, uint32_t now, bool success);
   void tick(uint32_t now);
 

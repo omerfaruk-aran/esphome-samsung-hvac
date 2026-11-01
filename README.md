@@ -1,53 +1,43 @@
 # Samsung HVAC Modular for ESPHome
 
-A planned modular ESPHome integration for Samsung HVAC systems. This repository is in the foundation stage: it provides receive-only transport, independent protocol engines and passive AC/EHS state entities, but no HVAC control, verified hardware matrix or validated hardware installation procedure. Do not use it to control equipment yet.
+An independent, receive-only development integration for Samsung NASA AC, Non-NASA AC and NASA/EHS observations. Software tests and firmware builds pass for the documented fixtures. **No physical model or production control support is verified.** Public controls, active polling/registration and FSV/raw writes are unavailable.
 
-## Project goals
+| Scope | Implemented software | Evidence limits |
+|---|---|---|
+| NASA AC | isolated passive state, explicit fan/swing/preset observations, scoped outdoor telemetry | named room semantics unresolved; no public climate/control |
+| Non-NASA AC | independent codec/lifecycles and passive Cmd20 state | active registration/control unconnected; electrical scaling unresolved |
+| EHS | passive DHW/outlet/Water Law/flow/state and distinct configured zone enables | INFERRED mappings; no verified multi-zone model or zone targets |
+| Advanced | strict typed catalog/custom NASA scalar and passive FSV observers | no active queries/writes; generic Non-NASA observers unavailable |
+| Architecture | one UART owner, bounded RX/TX infrastructure, independent engines | physical timing, recovery and real Home Assistant behavior NOT TESTED |
 
-The project aims to separate shared bus transport, NASA and Non-NASA protocols, climate profiles, and EHS heat-pump support. Compatibility and behavior must be established through implementation and hardware validation; a goal is not a support guarantee.
+Start with [getting started](docs/getting-started.md), [interface safety](docs/wiring-safety.md), [protocol selection](docs/protocol-selection.md) and the [documentation index](docs/README.md). Examples for [NASA AC](examples/nasa-ac.yaml), [Non-NASA AC](examples/non-nasa-ac.yaml), [EHS](examples/ehs.yaml) and [multi-split](examples/multi-split.yaml) are software references with synthetic pins/addresses and local secret references. They are not validated wiring or deployment configurations. Never connect an ESP32 directly to an unknown HVAC bus.
 
-## For users
+Home Assistant entities use standard ESPHome/native API; HACS is not required. Real API availability, registry/restore and hardware compatibility remain NOT TESTED. See the [AC](docs/compatibility/ac-matrix.md) and [EHS](docs/compatibility/ehs-matrix.md) evidence matrices.
 
-For the existing integration, see [esphome_samsung_hvac_bus](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus) and its documentation. This project is separate and no automatic or full-control migration is available. An optional passive transition is documented in the migration guide. Use [Discussions](https://github.com/omerfaruk-aran/esphome-samsung-hvac/discussions) for questions and [Issues](https://github.com/omerfaruk-aran/esphome-samsung-hvac/issues) for actionable reports. See [SUPPORT.md](SUPPORT.md).
+The [legacy integration](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus) remains independently usable and unchanged. The [optional migration guide](docs/compatibility/migration-guide.md) accounts for all pinned schema/entity declarations and explicitly documents PARTIAL/UNSUPPORTED behavior. No full-control migration, facade or automatic identity rewrite is offered.
 
-HVAC wiring and bus interfaces can involve hazardous voltages or damage equipment. Use a suitable isolated interface and qualified assistance; never connect an ESP32 directly to an unknown bus. Follow equipment instructions and local electrical requirements.
+## Development checks
 
-## For contributors
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md). Public documentation, examples, comments, release notes, and discussions use US English. Planned documentation belongs in `docs/`. The foundation and receive-only transport provide bounded framing, real host/schema/code-generation tests and a two-framework firmware workflow. NASA and Non-NASA packets are decoded by independent passive engines; device-scoped passive AC entities are available for development; public climate controls remain unavailable.
-
-See [passive AC profile configuration and limitations](docs/development/ac-profiles.md) before adding device entities.
-
-## License and attribution
-
-This project is licensed under the [MIT License](LICENSE). The legacy integration was originally developed by [Lanwin](https://github.com/lanwin) and maintained by [Ömer Faruk ARAN](https://github.com/omerfaruk-aran); see [NOTICE](NOTICE). This repository does not currently include legacy protocol source.
-
-## Foundation development checks
-
-Use Python 3.13 and a virtual environment, then install `requirements-dev.txt`.
+Use Python 3.13 and a virtual environment, then run:
 
 ```sh
 python -m pip install -r requirements-dev.txt
+python -m pip check
+ruff check components tests tools
+ruff format --check components tests tools
+python tools/check_repository.py
 python -m pytest -q
-ruff check components tests
-ruff format --check components tests
-esphome config tests/yaml/esp-idf.yaml
 esphome compile tests/yaml/esp-idf.yaml
 esphome compile tests/yaml/arduino.yaml
+python tools/check_example.py nasa-ac --compile
+python tools/check_example.py non-nasa-ac --compile
+python tools/check_example.py capture --compile
 ```
 
-The YAML files are build fixtures, not installation or wiring examples. Do not upload them to connected equipment. The transport requires explicit `protocol: nasa` or `protocol: non_nasa`, exclusive `uart_id`, and 9600 8E1 test framing. This is a packaging contract, not a universal device configuration. It reads and validates framing without transmitting any bus bytes and can register standard read-only state entities through ESPHome. Unsupported write settings fail validation.
+The helper creates ephemeral non-deployed test secrets and only generates/compiles; it never uploads. CI runs real parser/sanitizer/catalog/schema/integration tests, direct dependency/license/format checks and five firmware cases. Read [testing](docs/development/testing.md), [architecture](docs/development/architecture.md), [catalog evidence](docs/protocol/message-catalog.md), [execution ledger](docs/development/execution-ledger.md) and [release gates](docs/development/release-process.md). A build or synthetic fixture is not hardware evidence.
 
-Read the [baseline inventory](docs/compatibility/legacy-feature-inventory.md), [architecture decisions](docs/architecture/adr/0001-public-component-packaging.md), [parity tracker](docs/architecture/legacy-parity.md) and [execution ledger](docs/development/execution-ledger.md). Firmware compilation does not establish physical compatibility. Hardware: NOT TESTED.
+Use [Discussions](https://github.com/omerfaruk-aran/esphome-samsung-hvac/discussions) for questions and [Issues](https://github.com/omerfaruk-aran/esphome-samsung-hvac/issues) for actionable reports, after reviewing [SUPPORT](SUPPORT.md). Report vulnerabilities privately through [SECURITY](SECURITY.md). Contributions follow [CONTRIBUTING](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md); public content uses professional US English.
 
-See [transport behavior and limits](docs/development/transport.md) for bounded buffers, diagnostics, scheduler tests and the native ESP32 UART scope.
+## License and attribution
 
-The [NASA engine notes](docs/protocol/nasa-engine.md) distinguish passive decoding from the host-tested read lifecycle and its remaining active-scheduler integration boundary.
-
-The [Non-NASA engine notes](docs/protocol/non-nasa-engine.md) explain source evidence, conservative ACK/readback behavior and the disabled production control lifecycle.
-
-The [read-only EHS profile](docs/development/ehs-profile.md) exposes source-labelled hydro observations; the [EHS matrix](docs/compatibility/ehs-matrix.md) separates public model reports from verified compatibility. No identified hardware or complete multi-zone support is claimed.
-
-The [typed passive message interface](docs/development/advanced-messages.md) supports named catalog/custom scalar observations and passive FSV data. The [catalog schema](docs/protocol/message-catalog.md) records evidence; the [offline write gate](docs/development/write-policy.md) is tested infrastructure with no live write or polling option.
-
-The [optional migration guide](docs/compatibility/migration-guide.md) accounts for every pinned legacy schema/entity declaration and provides codegen-tested examples. The legacy project remains independently usable; no forced migration or compatibility facade is shipped.
+[MIT License](LICENSE). The legacy integration was originally developed by [Lanwin](https://github.com/lanwin) and maintained by [Ömer Faruk ARAN](https://github.com/omerfaruk-aran); applicable provenance/notices are preserved in [NOTICE](NOTICE). No third-party implementation source was transplanted. Reverse-engineered source facts are not official Samsung specifications. This project is independent and not endorsed by Samsung.

@@ -66,7 +66,9 @@ def test_all_baseline_declarations_have_explicit_dispositions():
         ]
 
 
-@pytest.mark.parametrize("name", ["nasa-ac", "non-nasa-ac", "ehs", "multi-split"])
+@pytest.mark.parametrize(
+    "name", ["nasa-ac", "non-nasa-ac", "ehs", "multi-split", "capture"]
+)
 def test_migration_example_codegen(tmp_path, name):
     example = ROOT / "examples" / f"{name}.yaml"
     text = example.read_text().replace("../components", str(ROOT / "components"))
@@ -90,3 +92,9 @@ def test_migration_example_codegen(tmp_path, name):
         output = output.replace(value, "[redacted]")
     assert result.returncode == 0, output
     assert "Component not found" not in output and "Traceback" not in output
+    if name == "capture":
+        main = next((tmp_path / ".esphome/build").glob("*/src/main.cpp")).read_text()
+        bounded = "set_after_bytes(32)" in main
+        only_owner = "UARTDummyReceiver" not in main
+        no_delay = "UARTDebug::log_hex" not in main and "delay(10)" not in main
+        assert bounded and only_owner and no_delay

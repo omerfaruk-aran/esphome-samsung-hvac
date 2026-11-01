@@ -7,7 +7,7 @@ namespace esphome::samsung_hvac::profiles {
 class PacketConsumer {
  public:
   virtual ~PacketConsumer() = default;
-  virtual void receive(const nasa::Packet &packet) { (void) packet; }
-  virtual void receive(const non_nasa::Packet &packet) { (void) packet; }
+  virtual void receive(const nasa::Packet& packet) { (void)packet; }
+  virtual void receive(const non_nasa::Packet& packet) { (void)packet; }
 };
 }  // namespace esphome::samsung_hvac::profiles

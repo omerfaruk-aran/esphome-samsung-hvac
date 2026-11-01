@@ -1,6 +1,6 @@
 # Legacy parity tracking
 
-No feature has achieved complete legacy PARITY. P0–P7 provide software groundwork and simulation evidence, with production remaining passive. The complete schema and entity rows are tracked in [the YAML reference](../compatibility/legacy-yaml-reference.md) and [entity matrix](../compatibility/legacy-entity-matrix.md). All runtime equivalence starts UNKNOWN.
+No feature has achieved complete legacy PARITY. P0–P8 provide software groundwork and simulation evidence, with production remaining passive. The complete schema and entity rows are tracked in [the YAML reference](../compatibility/legacy-yaml-reference.md) and [entity matrix](../compatibility/legacy-entity-matrix.md). All runtime equivalence starts UNKNOWN.
 
 | Behavior group | Phase owner | Current result | Required evidence |
 |---|---|---|---|
@@ -11,7 +11,7 @@ No feature has achieved complete legacy PARITY. P0–P7 provide software groundw
 | EHS DHW/outlet/Water Law/zones | P5 | PARTIAL; inferred passive DHW/outlet/Water Law/state, distinct zone enables only | device-scoped mapping sources, zone isolation |
 | Custom entities, descriptors, FSV | P6 | PARTIAL; NASA typed passive observers/FSV, strict catalog and offline policy; live writes unavailable | schema and fail-closed write-policy tests |
 | MQTT/debug migration, IDs, restored state, filters | P7 | PARTIAL; complete baseline dispositions and compiled examples, no facade/identity or full migration guarantee | explicit disposition for every configuration and observable behavior |
-| Platforms/CI/docs | P8 | UNKNOWN | required checks and documented scope |
+| Platforms/CI/docs | P8 | PARTIAL; actual quality/firmware matrix, source/license/dependency checks and user/developer/release docs; physical maturity unverified | required checks and documented scope |
 | Device compatibility and release maturity | P9 | NOT TESTED | identified hardware evidence |
 
 Unsupported behavior must be explicitly justified; a missing implementation remains UNKNOWN. Users may remain on the legacy project. No compatibility facade or stable migration is available in P0.

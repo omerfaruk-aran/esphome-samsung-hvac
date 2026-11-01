@@ -12,14 +12,23 @@ struct Patch {
   std::optional<Fan> fan;
   std::optional<Swing> swing;
 };
-enum class ControlResult { NONE, PENDING, VERIFIED, TIMEOUT, READBACK_TIMEOUT, SEND_FAILED, CANCELLED, SUPERSEDED };
+enum class ControlResult {
+  NONE,
+  PENDING,
+  VERIFIED,
+  TIMEOUT,
+  READBACK_TIMEOUT,
+  SEND_FAILED,
+  CANCELLED,
+  SUPERSEDED
+};
 
 class ControlQueue {
  public:
   void set_enabled(bool enabled);
-  void observe(const Packet &packet, uint32_t now);
-  bool submit(uint8_t address, const Patch &patch, uint32_t now);
-  bool prepare(uint32_t now, Frame &frame, uint32_t &token);
+  void observe(const Packet& packet, uint32_t now);
+  bool submit(uint8_t address, const Patch& patch, uint32_t now);
+  bool prepare(uint32_t now, Frame& frame, uint32_t& token);
   bool is_current(uint32_t token) const;
   void on_transmitted(uint32_t token, uint32_t now, bool success);
   void tick(uint32_t now);
@@ -50,11 +59,11 @@ class ControlQueue {
     Phase phase{Phase::IDLE};
     ControlResult result{ControlResult::NONE};
   };
-  Device *find_(uint8_t address);
-  const Device *find_(uint8_t address) const;
-  static bool matches_(const ControlState &a, const ControlState &b, uint8_t mask);
-  static ControlState merge_(const ControlState &base, const ControlState &desired, uint8_t mask);
-  static void finish_(Device &device, ControlResult result);
+  Device* find_(uint8_t address);
+  const Device* find_(uint8_t address) const;
+  static bool matches_(const ControlState& a, const ControlState& b, uint8_t mask);
+  static ControlState merge_(const ControlState& base, const ControlState& desired, uint8_t mask);
+  static void finish_(Device& device, ControlResult result);
   std::array<Device, 8> devices_{};
   bool enabled_{false};
   bool poll_pending_{false};

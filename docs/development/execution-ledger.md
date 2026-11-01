@@ -7,7 +7,7 @@ Codex must update this file after every meaningful task. Do not mark future phas
 - Legacy repository (read-only): https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus
 - Legacy baseline verified 2026-11-01: `6b1966bea8db9344d23763454f9cebed015d15c5`
 - Workspace package prepared: 2026-11-01
-- Overall status: IN PROGRESS — P7 migration
+- Overall status: IN PROGRESS — P8 CI/security/docs
 
 ## Status vocabulary
 `NOT STARTED` / `IN PROGRESS` / `PASS` / `FAIL` / `BLOCKED` / `NOT TESTED`
@@ -23,8 +23,8 @@ Codex must update this file after every meaningful task. Do not mark future phas
 | P4 AC profiles | PASS | fad669e / PR #6 | 51tests, both local frameworks and all three CI jobs PASS | Read-only entities/internal climate; control evidence unresolved |
 | P5 EHS | PASS | 9fdce0a / PR #7 | 63tests, both frameworks and all three CI jobs PASS | Evidence-backed passive fields; disputed zones stay disabled |
 | P6 Catalog / FSV | PASS | d87914a / PR #8 | 98tests, both local frameworks and CI41301108612 three jobs PASS | Passive typed entities; active writes unavailable |
-| P7 Migration | IN PROGRESS | phase/p7-migration | pending | Explicit baseline dispositions and compiled migration examples |
-| P8 CI / Docs | NOT STARTED | — | — | — |
+| P7 Migration | PASS | e8e1e35 / PR #9 | 108tests, local builds/Git codegen and CI41303083192 three jobs PASS | Explicit baseline dispositions and compiled migration examples |
+| P8 CI / Docs | IN PROGRESS | phase/p8-ci-docs | pending | CI/static/license/dependency/documentation and release gates |
 | P9 Hardware / Release | NOT STARTED | — | — | — |
 
 ## Decision log
@@ -34,6 +34,21 @@ Codex must update this file after every meaningful task. Do not mark future phas
 
 ## Work log format
 Add newest entries first. Each entry must include date/phase, summary/files, commit/PR, exact test commands/results, hardware tested or NOT TESTED, risks and next action.
+
+
+## 2026-11-01 / P8 — CI, policy checks, documentation and release gates
+
+- Files/modules: pinned clang-format23.1.3 and .clang-format,48-file C++format-only pass; tools/check_repository.py, tools/check_example.py, direct-tool license inventory; Node24SHA-pinned CI quality+five firmware entries, weekly Dependabot config; bounded receive-only capture example/tests; user/developer/safety/troubleshooting/protocol/capture/compatibility/security/license/release docs, README/contribution/security/parity/changelog.
+- Format impact/risk documented before changes. Include/using sorting, comment reflow, string breaking and namespace-comment edits disabled. Own check and independent reviewer compared all48files with artifacts/p8/cpp-before-format.json: non-whitespace content identical. Existing compiler/sanitizer/firmware behavior checks retained; no protocol/product behavior refactor.
+- TDD: absent repository checker and capture example observed RED before implementation. Policy tests reject floating pins, writable permissions, privileged workflow events, persisted credentials, missing links and plaintext example secrets. Helper accepts only codegen/compile, creates/masks ephemeral non-deployed test values and rejects upload arguments. Initial checker failed to find venv-local formatter without activation; fixed explicit interpreter-sibling lookup/version validation.
+- Capture: standard SDK RX callback, dummy_receiverfalse,32-byte/50mschunks, bounded96char buffer (95hexcharacters+NUL), no extra read/write/delay; avoids SDK log_hex10msdelay. Real codegen passed but first full compile FAILED because SDK names the lambda argument debug_prefix, not prefix. Installed SDK source verified; callback fixed; capture full compile PASS, exit0. Logging remains best-effort/private and is not wire timing/capture provenance proof.
+- Final `../.venv/bin/python -m pytest -q` →119PASS in20.26s (six ASan/UBSan C++programs,80config cases,17catalog,6inventory/example-codegen,10repository/helper cases). Log artifacts/p8/pytest-final.log. Independent reviewer also ran119PASS in20.37s, repository/Ruff/pip/diff checks PASS; no Critical/Important/Minor findings. Reviewer verified capture callback bounds and SDK clearing behavior, no additional UART owner or write path.
+- `../.venv/bin/python tools/check_repository.py`, Ruff check/format over components/tests/tools, `../.venv/bin/python -m pip check`, `git diff --check` →PASS. Installed direct versions/full license-file markers checked. Primary pinned MIT LICENSE files fetched/verified for ESPHome2026.10.1, pytest9.0.3 and Ruff0.14.3; downloaded/installed clang-format23.1.3wheel full Apache2packaging terms/COPYING reviewed. No formatter binary/third-party implementation source bundled. Tool checks are not a complete transitive vulnerability/legal audit or firmware SBOM.
+- Full local CI-equivalent firmware commands: `../.venv/bin/esphome compile tests/yaml/esp-idf.yaml` and Arduino counterpart; `../.venv/bin/python tools/check_example.py nasa-ac --compile`, non-nasa-ac counterpart, and capture counterpart →all five PASS, exit0 after capture fix. Logs artifacts/p8/{bus-idf,bus-arduino,example-idf,example-arduino,capture-build-fixed}.log. No upload/real network connection/equipment action. Python3.13.7, ESPHome2026.10.1, clang-format23.1.3.
+- Official Actions pinned after primary release/tag/action.yml/fullMIT verification: checkoutv7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1 and setup-pythonv7.1.0@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0; both node24. Ubuntu24.04/Python3.13, contentsread, checkoutpersistfalse, no repository secrets/privileged PR/publish workflow. Six hosted job results must pass procedurally before squash; current remote main-protection has no required_status_checks rule. No ruleset/protection was changed or bypassed.
+- Dated read-only GH audit2026-11-01:0openDependabot alerts; securityupdates, secretscanning, pushprotection and private vulnerability reporting enabled; optional non-provider/validity checks reported disabled and unchanged. Weekly updates do not auto-merge and are not a guarantee of complete CVE/secret coverage. Legacy SHA6b1966b/worktree unchanged.
+- Docs match receive-only scope and direct-tool/license/security limits. No release/tag/deployment/publication action; manual maturity/release gates require actual evidence. No new ADR needed: existing ownership/evidence/migration decisions retained, formatting adds no architecture change. Authorization/validation/logging/audit/localization/migration: no hardware permission inferred, explicit typed/source/secret/CI validations, private bounded capture guidance, English public content, parity/identity/restore limits retained.
+- Hardware, actual timing/write readback/API/registry/rollback and production readiness remain NOT TESTED/BLOCKED. Local P8 software checks/review PASS; branch phase/p8-ci-docs, authenticated push/PR/all six hosted jobs/squash pending before P9.
 
 
 ## 2026-11-01 / P7 — explicit legacy migration dispositions
@@ -272,3 +287,9 @@ Commands below run from repository/, unless otherwise stated:
 ## 2026-11-01 / P6 acceptance and P7 start
 
 - PR#8 merged by squashd87914a833316e3b5bb63cb2cc7189a8e4a8350c after CI41301108612 all three jobs SUCCESS, sourceheadda91512f76b1898b0e44726a9d03cad12a5ab19a. P7 branch from latestmain; protections unchanged. Passive/offline P6 software PASS, live writes/actual readback/hardware remain BLOCKED/NOT TESTED.
+
+- P7 delivery: commit842ca61, PR https://github.com/omerfaruk-aran/esphome-samsung-hvac/pull/9. Local scope/review/codegen/build gates pass; CI pending before merge/P8.
+
+## 2026-11-01 / P7 acceptance and P8 start
+
+- PR#9 merged by squashe8e1e35ae446fce6add9ee561358dbe2f9e827b1 after CI41303083192 three jobs SUCCESS, sourcehead842ca61d5f1d5a63be5af7f1d9dd6ef14738a787. P8 branch from latestmain; no protection bypass. P7 software PASS, full parity/hardware/identity/restore remain unverified.

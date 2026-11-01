@@ -31,7 +31,7 @@ class FrameSink {
  public:
   virtual ~FrameSink() = default;
   // Borrowed until this synchronous callback returns; do not reenter the assembler.
-  virtual void on_frame(const Frame &frame) = 0;
+  virtual void on_frame(const Frame& frame) = 0;
 };
 
 }  // namespace esphome::samsung_hvac

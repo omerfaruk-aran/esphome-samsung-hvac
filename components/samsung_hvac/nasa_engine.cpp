@@ -2,7 +2,7 @@
 
 namespace esphome::samsung_hvac::nasa {
 
-void Engine::receive(const Frame &frame, uint32_t now) {
+void Engine::receive(const Frame& frame, uint32_t now) {
   if (decode(frame, this->packet_) != DecodeError::NONE) {
     this->stats_.invalid_packets++;
     return;

@@ -15,7 +15,7 @@ using namespace esphome::samsung_hvac;
 
 struct Sink : FrameSink {
   std::vector<Frame> frames;
-  void on_frame(const Frame &frame) override { frames.push_back(frame); }
+  void on_frame(const Frame& frame) override { frames.push_back(frame); }
 };
 
 struct SimulatedIO : BusIO {
@@ -25,14 +25,14 @@ struct SimulatedIO : BusIO {
   size_t capacity{64};
   TxStatus status{TxStatus::DONE};
   bool write_ok{true};
-  bool read(uint8_t &byte) override {
+  bool read(uint8_t& byte) override {
     if (rx.empty()) return false;
     byte = rx.front();
     rx.pop_front();
     return true;
   }
   size_t write_capacity() override { return capacity; }
-  bool write(const uint8_t *data, size_t size) override {
+  bool write(const uint8_t* data, size_t size) override {
     if (!write_ok) return false;
     tx.insert(tx.end(), data, data + size);
     return true;
@@ -41,7 +41,7 @@ struct SimulatedIO : BusIO {
   void set_direction(bool transmit) override { directions.push_back(transmit); }
 };
 
-Frame fixture(const std::string &directory, const char *name) {
+Frame fixture(const std::string& directory, const char* name) {
   std::ifstream file(directory + "/" + name);
   std::string hex;
   file >> hex;
@@ -54,11 +54,11 @@ Frame fixture(const std::string &directory, const char *name) {
   return frame;
 }
 
-void feed(FrameAssembler &framer, const Frame &frame, uint32_t now = 0) {
+void feed(FrameAssembler& framer, const Frame& frame, uint32_t now = 0) {
   for (size_t i = 0; i < frame.size; ++i) framer.feed(frame.data[i], now);
 }
 
-void test_framing(const Frame &nasa_frame, const Frame &non_frame, const Frame &maximum) {
+void test_framing(const Frame& nasa_frame, const Frame& non_frame, const Frame& maximum) {
   Sink a, b;
   Diagnostics da, db;
   nasa::Framer nasa_framer(a, da);
@@ -110,7 +110,7 @@ void test_framing(const Frame &nasa_frame, const Frame &non_frame, const Frame &
   assert(recovered.frames.size() == 1 && recovered.frames[0].size == nasa_frame.size);
 }
 
-void test_timeout_and_rollover(const Frame &frame) {
+void test_timeout_and_rollover(const Frame& frame) {
   Sink sink;
   Diagnostics stats;
   nasa::Framer parser(sink, stats);
@@ -124,7 +124,7 @@ void test_timeout_and_rollover(const Frame &frame) {
   assert(sink.frames.size() == 1);
 }
 
-void test_bounded_random_input(const Frame &frame) {
+void test_bounded_random_input(const Frame& frame) {
   Sink sink;
   Diagnostics stats;
   nasa::Framer parser(sink, stats);
@@ -144,14 +144,14 @@ struct Rig {
   SimulatedIO io;
   non_nasa::Framer parser{sink, stats};
   Transport transport{io, parser, stats};
-  void discover(const Frame &frame, uint32_t now = 0) {
+  void discover(const Frame& frame, uint32_t now = 0) {
     io.rx.insert(io.rx.end(), frame.data.begin(), frame.data.begin() + frame.size);
     transport.loop(now);
     assert(stats.rx_frames == 1);
   }
 };
 
-void test_passive_and_discovery(const Frame &frame) {
+void test_passive_and_discovery(const Frame& frame) {
   Rig rig;
   assert(!rig.transport.enqueue(frame, 0));
   rig.transport.loop(200);
@@ -159,7 +159,7 @@ void test_passive_and_discovery(const Frame &frame) {
   rig.transport.set_tx_enabled(true);
   assert(rig.transport.enqueue(frame, 200));
   rig.transport.loop(1000);
-  assert(rig.io.tx.empty()); // No valid bus frame observed.
+  assert(rig.io.tx.empty());  // No valid bus frame observed.
   rig.discover(frame, 1001);
   rig.transport.loop(1100);
   assert(rig.io.tx.empty());
@@ -167,7 +167,7 @@ void test_passive_and_discovery(const Frame &frame) {
   assert(rig.io.tx == std::vector<uint8_t>(frame.data.begin(), frame.data.begin() + frame.size));
 }
 
-void test_queue_capacity_and_expiry(const Frame &frame) {
+void test_queue_capacity_and_expiry(const Frame& frame) {
   Rig rig;
   rig.discover(frame);
   rig.transport.set_tx_enabled(true);
@@ -181,12 +181,12 @@ void test_queue_capacity_and_expiry(const Frame &frame) {
   assert(!rig.transport.enqueue(invalid, 5002));
 }
 
-void test_serialized_tx_and_direction(const Frame &frame) {
+void test_serialized_tx_and_direction(const Frame& frame) {
   Rig rig;
   rig.discover(frame);
   rig.transport.set_tx_enabled(true);
   auto second = frame;
-  second.data[4] = 0x99; // Scheduler handles bytes; codecs own frame integrity.
+  second.data[4] = 0x99;  // Scheduler handles bytes; codecs own frame integrity.
   assert(rig.transport.enqueue(frame, 1));
   assert(rig.transport.enqueue(second, 1));
   rig.io.capacity = 0;
@@ -218,7 +218,7 @@ void test_serialized_tx_and_direction(const Frame &frame) {
   assert(std::equal(second.data.begin(), second.data.begin() + 14, rig.io.tx.begin() + 14));
 }
 
-void test_rx_budget_and_priority(const Frame &frame) {
+void test_rx_budget_and_priority(const Frame& frame) {
   Rig rig;
   rig.discover(frame);
   rig.transport.set_tx_enabled(true);
@@ -237,7 +237,7 @@ void test_rx_budget_and_priority(const Frame &frame) {
   assert(rig.stats.echo_bytes == 1 && !rig.parser.pending());
 }
 
-void test_faults_and_clock_wrap(const Frame &frame) {
+void test_faults_and_clock_wrap(const Frame& frame) {
   {
     Rig failed_write;
     failed_write.discover(frame);
@@ -274,7 +274,7 @@ void test_faults_and_clock_wrap(const Frame &frame) {
   assert(rig.io.tx.size() == frame.size);
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   assert(argc == 2);
   auto nasa_frame = fixture(argv[1], "nasa.hex");
   auto non_frame = fixture(argv[1], "non_nasa.hex");

@@ -2,7 +2,7 @@
 
 namespace esphome::samsung_hvac {
 
-const char *protocol_name(Protocol protocol) {
+const char* protocol_name(Protocol protocol) {
   return protocol == Protocol::NASA ? "NASA" : "Non-NASA";
 }
 

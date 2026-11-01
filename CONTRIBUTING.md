@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for helping improve this project. The repository is at the foundation stage; please discuss substantial design or compatibility work before implementing it.
+Thank you for helping improve this project. The repository is in receive-only development; please discuss substantial design or compatibility work before implementing it.
 
 ## Workflow
 
@@ -13,3 +13,7 @@ Thank you for helping improve this project. The repository is at the foundation 
 Use professional US English for public documentation, comments, examples, release notes, and discussions. Preserve attribution and verify licenses before including third-party material. Do not claim support without evidence. Changes involving hardware or protocol behavior should include device models, protocol, interface, configuration, sanitized captures, and validation results where available.
 
 Use Python 3.13, install requirements-dev.txt, and run the checks in README.md. The PR workflow runs real schema/code-generation tests and ESP32 Arduino/ESP-IDF firmware builds. Do not invent results; document exact commands, outcomes and limitations. Follow the [Code of Conduct](CODE_OF_CONDUCT.md) and report security vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
+
+The current runtime is deliberately passive. Read [architecture](docs/development/architecture.md), [testing](docs/development/testing.md), [catalog evidence](docs/protocol/message-catalog.md) and [release gates](docs/development/release-process.md) before changing protocol behavior. Product profiles/observers must not own UART readers or writers; NASA/Non-NASA state machines stay separate. Mapping contributions require explicit type/unit/scale/signedness/sentinel/source evidence and tests; model reports alone do not establish compatibility.
+
+Run the pinned C++ formatter and Python/repository checks. Direct dependency or Action upgrades require corresponding license/source review and passing CI; update the inventory when versions change. Preserve the legacy repository as read-only. No contribution or software check authorizes a physical write, firmware upload or public release.

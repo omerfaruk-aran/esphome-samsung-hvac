@@ -8,7 +8,7 @@ class PacketSink {
  public:
   virtual ~PacketSink() = default;
   // Packet storage is borrowed until this callback returns; do not reenter receive().
-  virtual void on_nasa_packet(const Packet &packet) = 0;
+  virtual void on_nasa_packet(const Packet& packet) = 0;
 };
 
 struct EngineStats {
@@ -19,14 +19,15 @@ struct EngineStats {
 
 class Engine {
  public:
-  Engine(Address local, PacketSink &sink, ReadSink &read_sink) : sink_(sink), reads_(local, read_sink) {}
-  void receive(const Frame &frame, uint32_t now);
+  Engine(Address local, PacketSink& sink, ReadSink& read_sink)
+      : sink_(sink), reads_(local, read_sink) {}
+  void receive(const Frame& frame, uint32_t now);
   void tick(uint32_t now) { this->reads_.tick(now); }
-  ReadQueue &reads() { return this->reads_; }
-  const EngineStats &stats() const { return this->stats_; }
+  ReadQueue& reads() { return this->reads_; }
+  const EngineStats& stats() const { return this->stats_; }
 
  private:
-  PacketSink &sink_;
+  PacketSink& sink_;
   ReadQueue reads_;
   Packet packet_;
   EngineStats stats_;

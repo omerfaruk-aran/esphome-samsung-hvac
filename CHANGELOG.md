@@ -62,3 +62,10 @@ Notable changes will be recorded here. This project has not made a release.
 - Complete explicit dispositions for all 65 legacy schema declarations and 27 entity rows, preserving baseline source/default evidence without claiming full parity.
 - Add optional passive migration, identity/filter/credential/rollback guidance and codegen-tested NASA AC, Non-NASA AC, EHS and multi-split examples.
 - Keep legacy controls and unsupported keys explicit; no compatibility facade, automatic registry migration, hardware upload or forced transition is added.
+
+### P8 CI and documentation (unreleased)
+
+- Pin official Node 24 Actions and clang-format, enforce C++/Python formatting, repository policy/local-link/secret-reference and direct dependency/license evidence checks.
+- Run quality tests and five firmware cases, including encrypted network examples and a bounded receive-only capture reference; no upload or publication job exists.
+- Add user/developer/safety/troubleshooting/capture/compatibility/security/license/release documentation and weekly dependency update configuration.
+- Keep hardware, live controls, full parity and release readiness unverified; no release or deployment is performed.
