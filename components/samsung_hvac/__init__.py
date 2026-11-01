@@ -15,7 +15,7 @@ from esphome.const import (
 )
 import esphome.final_validate as fv
 
-from . import ac_config
+from . import ac_config, ehs_config
 
 AUTO_LOAD = ["sensor", "binary_sensor", "text_sensor", "climate"]
 
@@ -28,6 +28,25 @@ SamsungHVAC = ns.class_("SamsungHVAC", cg.Component, uart.UARTDevice)
 Protocol = ns.enum("Protocol", is_class=True)
 PROTOCOLS = {"nasa": Protocol.NASA, "non_nasa": Protocol.NON_NASA}
 
+
+def _device_schema(value):
+    if isinstance(value, dict) and str(value.get("profile", "")).lower() == "ehs":
+        return ehs_config.DEVICE_SCHEMA(value)
+    return ac_config.DEVICE_SCHEMA(value)
+
+
+def _validate_devices(config):
+    allowed = {"nasa_ac", "ehs"} if config["protocol"] == "nasa" else {"non_nasa_ac"}
+    seen = set()
+    for device in config["devices"]:
+        if device["profile"] not in allowed:
+            raise cv.Invalid("Device profile must match the bus protocol")
+        if device["address"] in seen:
+            raise cv.Invalid("Duplicate device address on the same bus")
+        seen.add(device["address"])
+    return config
+
+
 CONFIG_SCHEMA = cv.All(
     cv.only_on_esp32,
     cv.Schema(
@@ -36,12 +55,12 @@ CONFIG_SCHEMA = cv.All(
             cv.Required(CONF_PROTOCOL): cv.enum(PROTOCOLS, lower=True),
             cv.Required(CONF_UART_ID): cv.use_id(uart.UARTComponent),
             cv.Optional("devices", default=[]): cv.All(
-                cv.ensure_list(ac_config.DEVICE_SCHEMA), cv.Length(max=8)
+                cv.ensure_list(_device_schema), cv.Length(max=8)
             ),
             cv.Optional(CONF_FLOW_CONTROL_PIN): pins.internal_gpio_output_pin_schema,
         }
     ).extend(cv.COMPONENT_SCHEMA),
-    ac_config.validate_devices,
+    _validate_devices,
 )
 
 
@@ -135,4 +154,7 @@ async def to_code(config):
         cg.add(var.set_flow_control_pin(pin))
 
     for device in config["devices"]:
-        await ac_config.to_code(var, device)
+        if device["profile"] == "ehs":
+            await ehs_config.to_code(var, device)
+        else:
+            await ac_config.to_code(var, device)

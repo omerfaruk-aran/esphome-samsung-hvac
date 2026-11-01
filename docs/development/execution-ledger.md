@@ -7,7 +7,7 @@ Codex must update this file after every meaningful task. Do not mark future phas
 - Legacy repository (read-only): https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus
 - Legacy baseline verified 2026-11-01: `6b1966bea8db9344d23763454f9cebed015d15c5`
 - Workspace package prepared: 2026-11-01
-- Overall status: IN PROGRESS — P4 AC profiles
+- Overall status: IN PROGRESS — P5 EHS read-only
 
 ## Status vocabulary
 `NOT STARTED` / `IN PROGRESS` / `PASS` / `FAIL` / `BLOCKED` / `NOT TESTED`
@@ -20,8 +20,8 @@ Codex must update this file after every meaningful task. Do not mark future phas
 | P1 Transport | PASS | 71155da / PR #3 | 32 tests, both local builds and all three CI jobs PASS | DE ownership fixed; pytest9.0.3; hardware NOT TESTED |
 | P2 NASA | PASS | a66a87b / PR #4 | 33 tests, both local builds, all three CI jobs PASS | Review clean; hardware NOT TESTED; active reads unavailable |
 | P3 Non-NASA | PASS | 7069274 / PR #5 | 34 tests, both local builds, all three CI jobs PASS | Review races fixed; hardware NOT TESTED; passive production |
-| P4 AC profiles | IN PROGRESS | phase/p4-ac-profiles | pending | Read-only entities/internal climate; control evidence unresolved |
-| P5 EHS | NOT STARTED | — | — | — |
+| P4 AC profiles | PASS | fad669e / PR #6 | 51tests, both local frameworks and all three CI jobs PASS | Read-only entities/internal climate; control evidence unresolved |
+| P5 EHS | IN PROGRESS | phase/p5-ehs-readonly | pending | Evidence-backed passive fields; disputed zones stay disabled |
 | P6 Catalog / FSV | NOT STARTED | — | — | — |
 | P7 Migration | NOT STARTED | — | — | — |
 | P8 CI / Docs | NOT STARTED | — | — | — |
@@ -34,6 +34,19 @@ Codex must update this file after every meaningful task. Do not mark future phas
 
 ## Work log format
 Add newest entries first. Each entry must include date/phase, summary/files, commit/PR, exact test commands/results, hardware tested or NOT TESTED, risks and next action.
+
+
+## 2026-11-01 / P5 — EHS passive profile and local acceptance
+
+- Modules: ehs_profile.h/.cpp pure bounded state, ehs_entities.h/.cpp, ehs_config.py; stateless PacketConsumer interface and small AC/root routing/schema adaptation within the existing shared eight-device bound. No protocol state machine sharing or new UART path. Firmware fixture instantiates EHS numeric/binary/text alongside NASA AC; Non-NASA Arduino coverage retained.
+- Evidence: pinned MIT legacy6b1966b and MIT nasactl629c43fce1c6a0595b5070028e34cf4ad0f25386, full copyright2026PaoloStivanin terms verified. Public Water Law269, remote-sensor261, EHS294 and selected82model reports inspected. No unlicensed implementation source imported and no raw customer logs published. Model reports stay separate from compatibility proof.
+- Tests first: missing EHS source caused host RED; EHS YAML failed before profile schema existed. Independent implementation then passed source/category/scaling/negative-shift/enum/outdoor/zone-isolation cases. Synthetic hydro/outdoor fixtures use independently generated CRCs. Integration feeds simulated UART through production Transport/Framer/NASA Engine into EHS state and asserts zero TX/direction enables.
+- Mappings/evidence/profile notes and EHS compatibility matrix added; legacy entity/parity rows updated. Targets4235/4247 deliberately follow legacy unsigned reads; current/return/Water Law follow explicit nasactl signed interpretation. Source differences/sentinel uncertainty documented; no universal out-of-range semantics. Disputed4203/4204/42D6 disabled, generic outlet target never aliases a zone;4119/411E publish only configured source-labelled enable observations. No verified multi-zone support claimed.
+- Independent review: no Critical/Important, one Minor missing golden assertions for power/pump/defrost/mode. Added explicit expected values; no product bug found. Reviewer ran63tests PASS in13.97s, independently checked both fixture lengths/CRC using binascii.crc_hqx, diff check PASS, legacy clean; did not rerun firmware. Reviewer judged local P5 inferred read-only software gate PASS.
+- Final `../.venv/bin/python -m pytest -q` →63PASS in14.54s, five ASan/UBSan C++ programs and58 real ESPHome YAML/codegen cases. `../.venv/bin/ruff check components tests`, `../.venv/bin/ruff format --check components tests`, `git diff --check` →PASS. Log artifacts/p5/pytest-reviewed.log. Existing P4/Non-NASA tests retained.
+- `../.venv/bin/esphome compile tests/yaml/esp-idf.yaml` and Arduino counterpart →PASS, exit0, after all product changes; later changes only documentation/assertions. Logs artifacts/p5/build-{idf,arduino}.log. No upload/network/hardware action. Python3.13.7, ESPHome2026.10.1, pytest9.0.3. Legacy SHA unchanged and working tree clean.
+- Authorization/validation/logging/audit/localization/migration: no writable schema or TX handle, strict address/profile/zone/duplicate/unsupported-key validation, no new payload logging or secrets; English public content, per-entity PARTIAL migration disposition. Hardware/model compatibility/real HA publication/registry/restore NOT TESTED. Energy, valves, ambiguous zone targets, active reads and FSV writes remain unavailable.
+- No new ADR needed: consumer dispatch refines ADR0003 without moving UART ownership; ADR0004/0006 govern inferred evidence and writes. Branch phase/p5-ehs-readonly; commit/PR/CI pending. Next prerequisite: verified maintainer identity/auth, PR checks, squash merge before P6.
 
 
 ## 2026-11-01 / P4 — passive AC profiles and final local verification
@@ -213,3 +226,10 @@ Commands below run from repository/, unless otherwise stated:
 - Pinned SDK inspection: ClimateTraits requires Off/target and has no read-only climate flag. Ruling: keep climate projection internal-only until real control support exists; expose read-only state entities first. Cost: public climate control remains unavailable and must be considered explicitly at P4 acceptance.
 - Ruling: disputed NASA room mappings remain disabled/UNKNOWN despite model compatibility reports. Source-backed Non-NASA room readings can be scoped to its profile. No hardware result or compatibility is invented.
 - Optional async request for local model/capture paths sent; public source research and safe P4 work continue while waiting. No physical-device write requested or performed.
+
+- P4 delivery: commit642df8d5db4b9adfd6850ef915b68f04eef945ca, PR https://github.com/omerfaruk-aran/esphome-samsung-hvac/pull/6. CI41297319356 three jobs in progress; no merge before all succeed.
+
+## 2026-11-01 / P4 acceptance and P5 start
+
+- PR#6 merged by squashfad669ee73d892a9511d4f87e12934db30381541 after CI41297319356 all three jobs SUCCESS, sourcehead642df8d5db4b9adfd6850ef915b68f04eef945ca. P5 branch from latestmain; no protection bypass. P4 passive software gate PASS, full parity PARTIAL, hardware NOT TESTED.
+- P5: inspect pinned MIT legacy/nasactl and public Water Law/EHS/remote-sensor reports. User confirmed no local captures; no evidence level upgrade or live write.

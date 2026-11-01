@@ -1,5 +1,6 @@
 #pragma once
 #include "ac_profile.h"
+#include "profile_consumer.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/binary_sensor/binary_sensor.h"
 #include "esphome/components/text_sensor/text_sensor.h"
@@ -15,7 +16,7 @@ class AcClimate : public climate::Climate {
   void control(const climate::ClimateCall &call) override;
   bool room_supported_{false};
 };
-class AcDevice : private StateSink {
+class AcDevice : public PacketConsumer, private StateSink {
  public:
   AcDevice(Family family, uint32_t address) : profile_(family, address, *this) {}
   void set_outdoor_address(uint32_t address) { this->profile_.set_outdoor_address(address); }
@@ -26,8 +27,8 @@ class AcDevice : private StateSink {
   void set_binary_sensor(Field field, binary_sensor::BinarySensor *entity) { this->binaries_[static_cast<size_t>(field)] = entity; }
   void set_text_sensor(Field field, text_sensor::TextSensor *entity) { this->texts_[static_cast<size_t>(field)] = entity; }
   void set_climate(AcClimate *entity) { this->climate_ = entity; }
-  void receive(const nasa::Packet &packet) { this->profile_.receive(packet); }
-  void receive(const non_nasa::Packet &packet) { this->profile_.receive(packet); }
+  void receive(const nasa::Packet &packet) override { this->profile_.receive(packet); }
+  void receive(const non_nasa::Packet &packet) override { this->profile_.receive(packet); }
  private:
   void on_state(const State &state, uint32_t mask) override;
   AcProfile profile_;

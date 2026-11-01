@@ -377,3 +377,75 @@ def test_ac_unsupported_configuration_rejected(tmp_path, case, expected):
     result = run_esphome(tmp_path, data, "config")
     assert result.returncode != 0
     assert expected in result.stdout + result.stderr
+
+
+def ehs_device():
+    return {
+        "id": "hydro",
+        "profile": "ehs",
+        "address": 0x200002,
+        "dhw_temperature": {"name": "DHW Temperature"},
+        "dhw_target_temperature": {"name": "DHW Target"},
+        "water_law_shift": {"name": "Water Law Shift"},
+        "zones": [
+            {"number": 1, "power_state": {"name": "Zone 1 Enabled"}},
+            {"number": 2, "power_state": {"name": "Zone 2 Enabled"}},
+        ],
+    }
+
+
+def test_ehs_and_ac_share_single_owner(tmp_path):
+    data = config()
+    data["samsung_hvac"][0]["devices"] = [ac_device(), ehs_device()]
+    result = run_esphome(tmp_path, data, "compile", "--only-generate")
+    assert result.returncode == 0, result.stdout + result.stderr
+    main = (tmp_path / ".esphome/build/samsung-foundation/src/main.cpp").read_text()
+    assert "set_zones" in main and "set_sensor" in main
+
+
+@pytest.mark.parametrize(
+    "case,expected",
+    [
+        ("non_nasa", "profile must match"),
+        ("address", "hydro address"),
+        ("duplicate_zone", "Duplicate zone"),
+        ("bad_zone", "2"),
+        ("zone_temperature", "target_temperature"),
+        ("climate", "climate"),
+        ("write", "enable_writes"),
+        ("room", "room_temperature"),
+        ("outdoor", "outdoor_address"),
+        ("duplicate_device", "Duplicate device address"),
+    ],
+)
+def test_ehs_unsupported_configuration_rejected(tmp_path, case, expected):
+    data = config()
+    device = ehs_device()
+    devices = [device]
+    if case == "non_nasa":
+        data["samsung_hvac"][0]["protocol"] = "non_nasa"
+    elif case == "address":
+        device["address"] = 0x100000
+    elif case == "duplicate_zone":
+        device["zones"][1]["number"] = 1
+    elif case == "bad_zone":
+        device["zones"][1]["number"] = 3
+    elif case == "zone_temperature":
+        device["zones"][1]["target_temperature"] = {"name": "Unverified Zone Target"}
+    elif case == "climate":
+        device["climate"] = {"name": "Unverified Heat Pump"}
+    elif case == "write":
+        device["enable_writes"] = True
+    elif case == "room":
+        device["room_temperature"] = {"name": "Unverified Room"}
+    elif case == "outdoor":
+        device["outdoor_temperature"] = {"name": "Outdoor"}
+    elif case == "duplicate_device":
+        devices.append(
+            {"id": "same_hydro", "profile": "nasa_ac", "address": device["address"]}
+        )
+    data["samsung_hvac"][0]["devices"] = devices
+    result = run_esphome(tmp_path, data, "config")
+    assert "Traceback" not in result.stderr
+    assert result.returncode != 0
+    assert expected in result.stdout + result.stderr

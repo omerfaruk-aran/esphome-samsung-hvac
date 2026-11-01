@@ -59,6 +59,20 @@ ROOT = Path(__file__).resolve().parents[1]
             "ac_profiles",
             "All AC profile assertions passed",
         ),
+        (
+            "test_ehs_profile.cpp",
+            [
+                "ehs_profile.cpp",
+                "bus_transport.cpp",
+                "nasa_engine.cpp",
+                "nasa_read_queue.cpp",
+                "nasa_packet.cpp",
+                "nasa_framer.cpp",
+                "frame_assembler.cpp",
+            ],
+            "ehs",
+            "All EHS profile assertions passed",
+        ),
     ],
 )
 def test_host_with_sanitizers(tmp_path, program, sources, fixtures, success):
