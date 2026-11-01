@@ -14,8 +14,26 @@ HVAC wiring and bus interfaces can involve hazardous voltages or damage equipmen
 
 ## For contributors
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md). Public documentation, examples, comments, release notes, and discussions use US English. Planned documentation belongs in `docs/`. No protocol implementation or CI checks are present yet.
+Read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md). Public documentation, examples, comments, release notes, and discussions use US English. Planned documentation belongs in `docs/`. P0 provides an inert external component, real schema/code-generation tests and a two-framework firmware workflow. It does not implement transport processing, protocol engines or HVAC entities.
 
 ## License and attribution
 
 This project is licensed under the [MIT License](LICENSE). The legacy integration was originally developed by [Lanwin](https://github.com/lanwin) and maintained by [Ömer Faruk ARAN](https://github.com/omerfaruk-aran); see [NOTICE](NOTICE). This repository does not currently include legacy protocol source.
+
+## Foundation development checks
+
+Use Python 3.13 and a virtual environment, then install `requirements-dev.txt`.
+
+```sh
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+ruff check components tests
+ruff format --check components tests
+esphome config tests/yaml/esp-idf.yaml
+esphome compile tests/yaml/esp-idf.yaml
+esphome compile tests/yaml/arduino.yaml
+```
+
+The YAML files are build fixtures, not installation or wiring examples. Do not upload them to connected equipment. The foundation requires explicit `protocol: nasa` or `protocol: non_nasa`, exclusive `uart_id`, and 9600 8E1 test framing. This is a packaging contract, not a universal device configuration. It reads and transmits no bus bytes and creates no Home Assistant HVAC entities. Unsupported write settings fail validation.
+
+Read the [baseline inventory](docs/compatibility/legacy-feature-inventory.md), [architecture decisions](docs/architecture/adr/0001-public-component-packaging.md), [parity tracker](docs/architecture/legacy-parity.md) and [execution ledger](docs/development/execution-ledger.md). Firmware compilation does not establish physical compatibility. Hardware: NOT TESTED.

@@ -23,3 +23,8 @@ secrets.yaml
 .idea/
 .DS_Store
 *.swp
+
+# Local execution scratch and firmware outputs
+.superpowers/
+*.bin
+*.elf

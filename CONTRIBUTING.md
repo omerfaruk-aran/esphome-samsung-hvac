@@ -12,4 +12,4 @@ Thank you for helping improve this project. The repository is at the foundation 
 
 Use professional US English for public documentation, comments, examples, release notes, and discussions. Preserve attribution and verify licenses before including third-party material. Do not claim support without evidence. Changes involving hardware or protocol behavior should include device models, protocol, interface, configuration, sanitized captures, and validation results where available.
 
-There is no established build or test command yet. Do not invent results; document any checks you actually ran and their limitations. Follow the [Code of Conduct](CODE_OF_CONDUCT.md) and report security vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
+Use Python 3.13, install requirements-dev.txt, and run the checks in README.md. The PR workflow runs real schema/code-generation tests and ESP32 Arduino/ESP-IDF firmware builds. Do not invent results; document exact commands, outcomes and limitations. Follow the [Code of Conduct](CODE_OF_CONDUCT.md) and report security vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
