@@ -1,6 +1,6 @@
 # Samsung HVAC Modular for ESPHome
 
-A planned modular ESPHome integration for Samsung HVAC systems. This repository is in the foundation stage: it provides receive-only transport groundwork, but no HVAC control, verified hardware matrix, installation procedure, or migration path. Do not use it to control equipment yet.
+A planned modular ESPHome integration for Samsung HVAC systems. This repository is in the foundation stage: it provides receive-only transport, independent protocol engines and passive AC state entities, but no HVAC control, verified hardware matrix, installation procedure, or migration path. Do not use it to control equipment yet.
 
 ## Project goals
 
@@ -14,7 +14,9 @@ HVAC wiring and bus interfaces can involve hazardous voltages or damage equipmen
 
 ## For contributors
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md). Public documentation, examples, comments, release notes, and discussions use US English. Planned documentation belongs in `docs/`. The foundation and receive-only transport provide bounded framing, real host/schema/code-generation tests and a two-framework firmware workflow. NASA and Non-NASA packets are decoded by independent passive engines; HVAC entities are not implemented yet.
+Read [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md). Public documentation, examples, comments, release notes, and discussions use US English. Planned documentation belongs in `docs/`. The foundation and receive-only transport provide bounded framing, real host/schema/code-generation tests and a two-framework firmware workflow. NASA and Non-NASA packets are decoded by independent passive engines; device-scoped passive AC entities are available for development; public climate controls remain unavailable.
+
+See [passive AC profile configuration and limitations](docs/development/ac-profiles.md) before adding device entities.
 
 ## License and attribution
 
@@ -34,7 +36,7 @@ esphome compile tests/yaml/esp-idf.yaml
 esphome compile tests/yaml/arduino.yaml
 ```
 
-The YAML files are build fixtures, not installation or wiring examples. Do not upload them to connected equipment. The transport requires explicit `protocol: nasa` or `protocol: non_nasa`, exclusive `uart_id`, and 9600 8E1 test framing. This is a packaging contract, not a universal device configuration. It reads and validates framing without transmitting any bus bytes and creates no Home Assistant HVAC entities. Unsupported write settings fail validation.
+The YAML files are build fixtures, not installation or wiring examples. Do not upload them to connected equipment. The transport requires explicit `protocol: nasa` or `protocol: non_nasa`, exclusive `uart_id`, and 9600 8E1 test framing. This is a packaging contract, not a universal device configuration. It reads and validates framing without transmitting any bus bytes and can register standard read-only state entities through ESPHome. Unsupported write settings fail validation.
 
 Read the [baseline inventory](docs/compatibility/legacy-feature-inventory.md), [architecture decisions](docs/architecture/adr/0001-public-component-packaging.md), [parity tracker](docs/architecture/legacy-parity.md) and [execution ledger](docs/development/execution-ledger.md). Firmware compilation does not establish physical compatibility. Hardware: NOT TESTED.
 

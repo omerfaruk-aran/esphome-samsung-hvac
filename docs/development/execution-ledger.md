@@ -7,7 +7,7 @@ Codex must update this file after every meaningful task. Do not mark future phas
 - Legacy repository (read-only): https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus
 - Legacy baseline verified 2026-11-01: `6b1966bea8db9344d23763454f9cebed015d15c5`
 - Workspace package prepared: 2026-11-01
-- Overall status: IN PROGRESS — P3 Non-NASA
+- Overall status: IN PROGRESS — P4 AC profiles
 
 ## Status vocabulary
 `NOT STARTED` / `IN PROGRESS` / `PASS` / `FAIL` / `BLOCKED` / `NOT TESTED`
@@ -19,8 +19,8 @@ Codex must update this file after every meaningful task. Do not mark future phas
 | P0 Foundation | PASS | 2fc4012 / PR #1 | 24 tests, Ruff, both local firmware builds and all three CI jobs PASS | Six ADRs reviewed; hardware NOT TESTED |
 | P1 Transport | PASS | 71155da / PR #3 | 32 tests, both local builds and all three CI jobs PASS | DE ownership fixed; pytest9.0.3; hardware NOT TESTED |
 | P2 NASA | PASS | a66a87b / PR #4 | 33 tests, both local builds, all three CI jobs PASS | Review clean; hardware NOT TESTED; active reads unavailable |
-| P3 Non-NASA | IN PROGRESS | phase/p3-non-nasa | pending | P2 accepted; conservative readback ACK policy |
-| P4 AC profiles | NOT STARTED | — | — | — |
+| P3 Non-NASA | PASS | 7069274 / PR #5 | 34 tests, both local builds, all three CI jobs PASS | Review races fixed; hardware NOT TESTED; passive production |
+| P4 AC profiles | IN PROGRESS | phase/p4-ac-profiles | pending | Read-only entities/internal climate; control evidence unresolved |
 | P5 EHS | NOT STARTED | — | — | — |
 | P6 Catalog / FSV | NOT STARTED | — | — | — |
 | P7 Migration | NOT STARTED | — | — | — |
@@ -34,6 +34,19 @@ Codex must update this file after every meaningful task. Do not mark future phas
 
 ## Work log format
 Add newest entries first. Each entry must include date/phase, summary/files, commit/PR, exact test commands/results, hardware tested or NOT TESTED, risks and next action.
+
+
+## 2026-11-01 / P4 — passive AC profiles and final local verification
+
+- Modules/files: ac_profile.h/.cpp (pure per-device state and disabled offline control assessment), ac_entities.h/.cpp (standard ESPHome entities/internal climate), ac_config.py, root schema/routing; AC golden fixtures/metadata, host/schema/codegen tests, both API-enabled firmware fixtures; ADR0007, mapping/profile documentation, legacy entity/parity matrices, README/changelog.
+- TDD: initial host test failed without profile sources; real profile YAML initially failed before devices schema existed. Source-backed state/capability/address/category cases then passed. Synthetic golden frames decode through the real codecs into profiles; no captured data or compatibility is claimed. User confirmed no local captures and authorized continuing with public evidence.
+- Arduino initially FAILED because bit(b) and DISABLED macros collided with new symbols. Host compile with the exact definitions reproduced RED; renamed field_mask and CONTROL_DISABLED → GREEN. Both full frameworks rerun after the fix.
+- Independent review found one Important issue: Non-NASA invalid swing enum1 could be published as Off. Regression valid BOTH→raw enum1 observed RED, strict valid-enum whitelist → GREEN. Reviewer confirmed correction and no open Critical/Important/Minor findings; independent suite51PASS in10.72s and final targeted host4PASS in4.72s. Reviewer did not rerun firmware.
+- Final stable-snapshot commands: `../.venv/bin/python -m pytest -q` →51PASS in11.10s; `../.venv/bin/ruff check components tests`, `../.venv/bin/ruff format --check components tests`, `git diff --check` →PASS. Tests include4C++ programs under ASan/UBSan and47 real ESPHome schema/codegen cases. Logs artifacts/p4/pytest-reviewed.log and regression logs.
+- `../.venv/bin/esphome compile tests/yaml/esp-idf.yaml` and `../.venv/bin/esphome compile tests/yaml/arduino.yaml` →PASS, exit0, after review fixes; logs artifacts/p4/firmware-{idf,arduino}-reviewed.log. These compile native API entities with network:{} but no network credentials/actual connection; no deployment/upload. ESPHome2026.10.1, Python3.13.7, pytest9.0.3.
+- Review ruling: P4's supported baseline rows, representative profiles, unsupported-capability rejection and synthetic state/disabled-command boundaries meet the passive software gate once CI passes. Full legacy climate/control parity remains PARTIAL; P3 command lifecycle fixtures are not P4 public-control proof. This limitation does not block P5 read-only work. No public controls are implemented/enabled, disputed NASA room codes remain UNKNOWN, hardware/HA registry/restore remain NOT TESTED.
+- Authorization/validation/logging/audit/localization/migration: no live actions or TX enablement; explicit IDs, protocol/address/capability validation; no raw payloads or secrets logged; English-only public strings and warning on internal climate control attempts; every legacy entity disposition remains tracked without silent migration. Verified MIT provenance; no third-party implementation source transplanted; legacy working tree unchanged.
+- Local identity/auth/remote verified before delivery: authenticated maintainer via local gh/keyring, expected independent origin/main7069274. No connector identity or protection bypass. Branch phase/p4-ac-profiles; commit/PR/CI pending. Hardware NOT TESTED. Next prerequisite: PR checks and squash merge before P5.
 
 
 ## 2026-11-01 / P0 — baseline and packaging
@@ -191,3 +204,12 @@ Commands below run from repository/, unless otherwise stated:
 - Final `../.venv/bin/python -m pytest -q` →34PASS in7.17s, including seven Non-NASA assertion groups and LOW/HIGH macro defines under ASan/UBSan; Ruff check/format and git diff --check PASS.
 - Both `../.venv/bin/esphome compile tests/yaml/esp-idf.yaml` and Arduino counterpart PASS after review fixes. Logs artifacts/p3/firmware-{idf,arduino}-reviewed.log. Hardware NOT TESTED.
 - Review limits/rulings: physical timing, controller-seat ownership, capture correctness and equipment behavior remain unverified; no active production lifecycle submission. These costs remain documented. The fix pass uses reproducing tests and the full suite; no additional review seat is needed for already-covered fixes.
+
+
+## 2026-11-01 / P3 acceptance and P4 start
+
+- PR#5 merged by squash70692742dc883d87f31b38deaf5bbfee746d503b after all three jobs in CI41295164475 SUCCESS; matchedc0cad7c5f0cdd693d5110eec2e9d20c419be24f8. P4 branch from latestmain; protections unchanged.
+- P4 research: public discussion#82 first100 comments and discussion#78 all77 comments read/search-indexed for model/evidence leads; issue#384 and2 comments read. Model reports are not packet/behavior verification. A model cited by a different commenter than the capture author was not attached to that capture as verified provenance. No customer logs copied into repository.
+- Pinned SDK inspection: ClimateTraits requires Off/target and has no read-only climate flag. Ruling: keep climate projection internal-only until real control support exists; expose read-only state entities first. Cost: public climate control remains unavailable and must be considered explicitly at P4 acceptance.
+- Ruling: disputed NASA room mappings remain disabled/UNKNOWN despite model compatibility reports. Source-backed Non-NASA room readings can be scoped to its profile. No hardware result or compatibility is invented.
+- Optional async request for local model/capture paths sent; public source research and safe P4 work continue while waiting. No physical-device write requested or performed.
