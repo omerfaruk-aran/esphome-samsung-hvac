@@ -56,3 +56,9 @@ Notable changes will be recorded here. This project has not made a release.
 - Add passive FSV observations, explicit raw-only inspection of disputed words, invalid/sentinel handling and documented float publication limits.
 - Test an isolated immutable guarded-write lifecycle without a live bridge, public opt-in, retries or transmission. All shipped catalog entries remain passive/disabled; verified physical policies and active writes are unavailable.
 - Add scalar/policy/catalog/YAML tests and firmware observer coverage on both frameworks. Hardware and real equipment readback remain NOT TESTED.
+
+### P7 migration documentation (unreleased)
+
+- Complete explicit dispositions for all 65 legacy schema declarations and 27 entity rows, preserving baseline source/default evidence without claiming full parity.
+- Add optional passive migration, identity/filter/credential/rollback guidance and codegen-tested NASA AC, Non-NASA AC, EHS and multi-split examples.
+- Keep legacy controls and unsupported keys explicit; no compatibility facade, automatic registry migration, hardware upload or forced transition is added.

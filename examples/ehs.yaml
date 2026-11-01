@@ -1,0 +1,68 @@
+# Software migration reference only; hardware and Home Assistant registry are NOT TESTED.
+# Synthetic addresses/pins are not wiring guidance. Do not upload to unidentified equipment.
+# Supply local secrets.yaml; no real credentials belong in this repository.
+# Zones are inferred enable observations only; verified multi-zone support is not claimed.
+esphome:
+  name: samsung-migration-ehs
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+logger:
+  baud_rate: 0
+wifi:
+  ssid: !secret 'wifi_ssid'
+  password: !secret 'wifi_password'
+api:
+  encryption:
+    key: !secret 'api_encryption_key'
+external_components:
+- source:
+    type: local
+    path: ../components
+  components:
+  - samsung_hvac
+uart:
+  id: hvac_uart
+  rx_pin: GPIO16
+  tx_pin: GPIO17
+  baud_rate: 9600
+  parity: EVEN
+samsung_hvac:
+  id: hvac
+  uart_id: hvac_uart
+  protocol: nasa
+  flow_control_pin: GPIO23
+  devices:
+  - id: hydro
+    profile: ehs
+    address: 0x200002
+    dhw_temperature:
+      id: dhw_current
+      name: DHW Temperature
+    dhw_target_temperature:
+      id: dhw_target
+      name: DHW Target Temperature
+    dhw_power_state:
+      id: dhw_power
+      name: DHW Power
+    dhw_mode:
+      id: dhw_mode
+      name: DHW Mode
+    water_outlet_temperature:
+      name: Water Outlet Temperature
+    water_law_shift:
+      name: Water Law Shift
+    zones:
+    - number: 1
+      power_state:
+        name: Zone 1 Enable Observation
+    - number: 2
+      power_state:
+        name: Zone 2 Enable Observation
+  messages:
+  - id: heating_upper_observation
+    source_address: 0x200002
+    catalog: ehs_fsv_heating_upper
+    sensor:
+      name: Heating Upper Limit Observation

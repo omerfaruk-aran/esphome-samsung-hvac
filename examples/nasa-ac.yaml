@@ -1,0 +1,55 @@
+# Software migration reference only; hardware and Home Assistant registry are NOT TESTED.
+# Synthetic addresses/pins are not wiring guidance. Do not upload to unidentified equipment.
+# Supply local secrets.yaml; no real credentials belong in this repository.
+esphome:
+  name: samsung-migration-nasa-ac
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+logger:
+  baud_rate: 0
+wifi:
+  ssid: !secret 'wifi_ssid'
+  password: !secret 'wifi_password'
+api:
+  encryption:
+    key: !secret 'api_encryption_key'
+external_components:
+- source:
+    type: local
+    path: ../components
+  components:
+  - samsung_hvac
+uart:
+  id: hvac_uart
+  rx_pin: GPIO16
+  tx_pin: GPIO17
+  baud_rate: 9600
+  parity: EVEN
+samsung_hvac:
+  id: hvac
+  uart_id: hvac_uart
+  protocol: nasa
+  flow_control_pin: GPIO23
+  devices:
+  - id: living_room
+    profile: nasa_ac
+    address: 0x200000
+    target_temperature:
+      id: living_room_target
+      name: Living Room Target Temperature
+    power_state:
+      id: living_room_power
+      name: Living Room Power
+    operation_mode:
+      id: living_room_mode
+      name: Living Room Mode
+    fan_modes:
+    - auto
+    - low
+    - medium
+    - high
+    fan_mode:
+      id: living_room_fan
+      name: Living Room Fan

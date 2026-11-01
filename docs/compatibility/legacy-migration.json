@@ -1,0 +1,655 @@
+{
+  "baseline": "6b1966bea8db9344d23763454f9cebed015d15c5",
+  "declarations": [
+    {
+      "old_scope": "capabilities.presets",
+      "old_key": "<preset>",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L130",
+      "new_equivalent": "devices[].presets",
+      "status": "PARTIAL",
+      "notes": "Select explicit fixed names; longreach becomes long_reach. No preset control or arbitrary numeric aliases."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "fan_modes",
+      "old_requirement": "Optional",
+      "old_default": "`True`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L155",
+      "new_equivalent": "devices[].fan_modes",
+      "status": "PARTIAL",
+      "notes": "Boolean default True becomes an explicit list, default empty. This selects observed fan values, not controls."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "horizontal_swing",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L156",
+      "new_equivalent": "devices[].horizontal_swing",
+      "status": "PARTIAL",
+      "notes": "Default false retained; optional horizontal_swing_state is a read-only observation."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "vertical_swing",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L157",
+      "new_equivalent": "devices[].vertical_swing",
+      "status": "PARTIAL",
+      "notes": "Default false retained; optional vertical_swing_state is a read-only observation."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "turbo_mode",
+      "old_requirement": "Optional",
+      "old_default": "`True`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L158",
+      "new_equivalent": "Include turbo in devices[].fan_modes",
+      "status": "PARTIAL",
+      "notes": "Legacy default True is not inherited; enable only an explicitly supported observation."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "fan_mode_medium",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L159",
+      "new_equivalent": "Canonical medium fan name",
+      "status": "UNSUPPORTED",
+      "notes": "Legacy Middle/Medium display alias is not configurable; new text uses Medium."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "presets",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L160",
+      "new_equivalent": "NASA devices[].presets list",
+      "status": "PARTIAL",
+      "notes": "Default absent/empty; include none explicitly when desired. Non-NASA presets and preset control unavailable."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "message",
+      "old_requirement": "Required",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L175",
+      "new_equivalent": "messages[].catalog or custom.code",
+      "status": "PARTIAL",
+      "notes": "NASA scalar observations only; validate wire type/source/units explicitly. No implicit legacy default or active request."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "type",
+      "old_requirement": "Optional",
+      "old_default": "`'sensor'`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L176",
+      "new_equivalent": "messages[].sensor or binary_sensor",
+      "status": "PARTIAL",
+      "notes": "Choose entity kind explicitly; custom.value_type describes the separate wire type."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "message",
+      "old_requirement": "Required",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L185",
+      "new_equivalent": "messages[].catalog or custom.code",
+      "status": "PARTIAL",
+      "notes": "NASA scalar observations only; validate wire type/source/units explicitly. No implicit legacy default or active request."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "type",
+      "old_requirement": "Required",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L186",
+      "new_equivalent": "messages[].sensor or binary_sensor",
+      "status": "PARTIAL",
+      "notes": "Choose entity kind explicitly; custom.value_type describes the separate wire type."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "samsung_ac_device_id",
+      "old_requirement": "GenerateID",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L274",
+      "new_equivalent": "devices[].id",
+      "status": "PARTIAL",
+      "notes": "Explicit stable compile-time ID required; no automatic Home Assistant registry identity migration."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "capabilities",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L275",
+      "new_equivalent": "Per-device fan_modes, swing flags and presets",
+      "status": "PARTIAL",
+      "notes": "No root inheritance/deep merge. Every device declares its supported read-only observations."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "address",
+      "old_requirement": "Required",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L276",
+      "new_equivalent": "devices[].address numeric plus explicit profile/protocol",
+      "status": "PARTIAL",
+      "notes": "Convert NASA 20.00.00 to 0x200000; Non-NASA 00 to 0x00. No protocol inference from string length."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "room_temperature",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L277",
+      "new_equivalent": "Non-NASA devices[].room_temperature",
+      "status": "PARTIAL",
+      "notes": "NASA named room semantics remain unresolved/disabled; no automatic 0x4203/4204 mapping."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "room_temperature_offset",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L283",
+      "new_equivalent": "Non-NASA room sensor filters.offset",
+      "status": "PARTIAL",
+      "notes": "Sensor filter only; not the internal climate projection. Legacy offset affected both sensor and climate."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "outdoor_temperature",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L284",
+      "new_equivalent": "NASA outdoor_temperature plus outdoor_address",
+      "status": "PARTIAL",
+      "notes": "Explicit separate outdoor source; source-labelled signed tenths Celsius, hardware NOT TESTED."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "indoor_eva_in_temperature",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L290",
+      "new_equivalent": "AC devices[].indoor_eva_in_temperature",
+      "status": "PARTIAL",
+      "notes": "Read-only source conversion; do not apply a second tenths conversion."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "indoor_eva_out_temperature",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L296",
+      "new_equivalent": "AC devices[].indoor_eva_out_temperature",
+      "status": "PARTIAL",
+      "notes": "Read-only source conversion; do not reinterpret this evaporator field as a zone target."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "error_code",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L302",
+      "new_equivalent": "NASA/EHS error_code plus outdoor_address",
+      "status": "PARTIAL",
+      "notes": "Numeric source code only; no guessed error descriptions or universal sentinel policy."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "target_temperature",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L303",
+      "new_equivalent": "AC devices[].target_temperature sensor",
+      "status": "PARTIAL",
+      "notes": "Legacy writable number becomes a read-only sensor. Set-value actions and UI ranges are not migrated."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "water_outlet_target",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L304",
+      "new_equivalent": "EHS water_outlet_target_temperature sensor",
+      "status": "PARTIAL",
+      "notes": "Read-only generic outlet target, never silently assigned to Zone 1/2; number actions unavailable."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "water_target_temperature",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L305",
+      "new_equivalent": "EHS dhw_target_temperature sensor",
+      "status": "PARTIAL",
+      "notes": "Read-only DHW target; legacy writable number/range does not establish a safe write policy."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "power",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L306",
+      "new_equivalent": "AC/EHS power_state binary sensor",
+      "status": "PARTIAL",
+      "notes": "Legacy switch becomes a state observation; switch actions and optimistic control are unavailable."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "automatic_cleaning",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L309",
+      "new_equivalent": "NASA automatic_cleaning_state binary sensor",
+      "status": "PARTIAL",
+      "notes": "Observation only; legacy switch action unavailable."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "silence_mode",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L312",
+      "new_equivalent": "NASA silence_state binary sensor",
+      "status": "PARTIAL",
+      "notes": "Observation only; legacy switch action unavailable."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "filter_warning",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L315",
+      "new_equivalent": "NASA devices[].filter_warning",
+      "status": "PARTIAL",
+      "notes": "Read-only boolean accepts only 0/1; other values invalidate instead of legacy nonzero conversion."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "defrosting",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L320",
+      "new_equivalent": "NASA AC/EHS devices[].defrosting",
+      "status": "PARTIAL",
+      "notes": "Read-only boolean accepts only 0/1; no heating action inferred."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "filter_reset",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L324",
+      "new_equivalent": "Unavailable",
+      "status": "UNSUPPORTED",
+      "notes": "Physical reset write has no verified device policy or public button; remain on legacy if required."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "water_heater_power",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L327",
+      "new_equivalent": "EHS dhw_power_state binary sensor",
+      "status": "PARTIAL",
+      "notes": "DHW state only; switch control and water-heater actuation unavailable."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "mode",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L330",
+      "new_equivalent": "AC/EHS operation_mode text sensor",
+      "status": "PARTIAL",
+      "notes": "Read-only protocol label; select actions and automatic fan changes unavailable."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "water_heater_mode",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L331",
+      "new_equivalent": "EHS dhw_mode text sensor",
+      "status": "PARTIAL",
+      "notes": "Economy/Standard/Power/Force observations; no select control."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "climate",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L332",
+      "new_equivalent": "AC internal climate projection only",
+      "status": "PARTIAL",
+      "notes": "Public climate rejected; mandatory writable SDK traits cannot advertise unavailable controls. No EHS climate."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "map_auto_to_heat_cool",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L333",
+      "new_equivalent": "Auto text; internal projection uses Heat/Cool",
+      "status": "UNSUPPORTED",
+      "notes": "Legacy mapping toggle is not accepted. Internal projection behavior differs and has no public controls."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "custom_sensor",
+      "old_requirement": "Optional",
+      "old_default": "`[]`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L334",
+      "new_equivalent": "Root messages catalog/custom observers",
+      "status": "PARTIAL",
+      "notes": "NASA scalar sensor/binary observations only, explicit type/source/scale; no active reads or Non-NASA generic extraction."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "water_temperature",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L338",
+      "new_equivalent": "EHS dhw_temperature sensor",
+      "status": "PARTIAL",
+      "notes": "Signed tenths source interpretation, no guessed sentinel; hardware NOT TESTED."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "room_humidity",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L339",
+      "new_equivalent": "NASA AC humidity sensor",
+      "status": "PARTIAL",
+      "notes": "INFERRED percent label, 0-100 validation; no Non-NASA humidity."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "outdoor_instantaneous_power",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L340",
+      "new_equivalent": "No named equivalent",
+      "status": "UNSUPPORTED",
+      "notes": "Electrical scaling is unresolved; no automatic current/voltage-derived power or inferred physical units."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "outdoor_cumulative_energy",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L349",
+      "new_equivalent": "No named equivalent",
+      "status": "UNSUPPORTED",
+      "notes": "Legacy scaling/integration and reset behavior are not reproduced; do not double-scale raw counters."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "outdoor_current",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L364",
+      "new_equivalent": "No named equivalent",
+      "status": "UNSUPPORTED",
+      "notes": "Raw custom inspection is possible with UNKNOWN semantics; no default amperes conversion."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "outdoor_voltage",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L378",
+      "new_equivalent": "No named equivalent",
+      "status": "UNSUPPORTED",
+      "notes": "Raw custom inspection is possible with UNKNOWN semantics; no default voltage conversion."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "outdoor_operation_odu_mode",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L389",
+      "new_equivalent": "No named equivalent",
+      "status": "UNSUPPORTED",
+      "notes": "Named outdoor operation text mapping not carried forward; no verified model semantics."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "outdoor_operation_heatcool",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L395",
+      "new_equivalent": "No named equivalent",
+      "status": "UNSUPPORTED",
+      "notes": "Named outdoor operation text mapping not carried forward; no action inferred from a raw mode."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "message",
+      "old_requirement": "Optional",
+      "old_default": "`message`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L220",
+      "new_equivalent": "messages[].catalog or custom.code",
+      "status": "PARTIAL",
+      "notes": "NASA scalar observations only; validate wire type/source/units explicitly. No implicit legacy default or active request."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "raw_filters",
+      "old_requirement": "Optional",
+      "old_default": "`raw_filters`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L221",
+      "new_equivalent": "Typed signed/scale/offset/raw filters then ESPHome filters",
+      "status": "PARTIAL",
+      "notes": "Audit old lambdas manually. Raw sentinel/range checks precede conversion; arbitrary raw callbacks are not migrated."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "filters",
+      "old_requirement": "Optional",
+      "old_default": "`[{'multiply': 0.001}]`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L359",
+      "new_equivalent": "Standard ESPHome sensor filters",
+      "status": "PARTIAL",
+      "notes": "Apply after typed conversion; legacy implicit electrical multiply defaults are not copied."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "message",
+      "old_requirement": "Optional",
+      "old_default": "`33303`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L372",
+      "new_equivalent": "messages[].catalog or custom.code",
+      "status": "PARTIAL",
+      "notes": "NASA scalar observations only; validate wire type/source/units explicitly. No implicit legacy default or active request."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "filters",
+      "old_requirement": "Optional",
+      "old_default": "`[{'multiply': 0.1}]`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L373",
+      "new_equivalent": "Standard ESPHome sensor filters",
+      "status": "PARTIAL",
+      "notes": "Apply after typed conversion; legacy implicit electrical multiply defaults are not copied."
+    },
+    {
+      "old_scope": "device",
+      "old_key": "message",
+      "old_requirement": "Optional",
+      "old_default": "`9468`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L386",
+      "new_equivalent": "messages[].catalog or custom.code",
+      "status": "PARTIAL",
+      "notes": "NASA scalar observations only; validate wire type/source/units explicitly. No implicit legacy default or active request."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "enabled",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L135",
+      "new_equivalent": "Include the preset name explicitly",
+      "status": "PARTIAL",
+      "notes": "No inherited enable block or write capability. Disabled presets stay absent."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "name",
+      "old_requirement": "Optional",
+      "old_default": "`displayName`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L136",
+      "new_equivalent": "No custom preset display alias",
+      "status": "UNSUPPORTED",
+      "notes": "Preset state uses canonical names. Independent entity names remain standard ESPHome options."
+    },
+    {
+      "old_scope": "nested/helper",
+      "old_key": "value",
+      "old_requirement": "Optional",
+      "old_default": "`value`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L137",
+      "new_equivalent": "Fixed known preset values only",
+      "status": "UNSUPPORTED",
+      "notes": "Arbitrary preset wire values are not migrated; unknown capabilities remain unavailable."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "flow_control_pin",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L430",
+      "new_equivalent": "Root samsung_hvac.flow_control_pin",
+      "status": "PARTIAL",
+      "notes": "One exclusive direction pin, no shared UART/DE aliases; nonblocking timing differs and hardware is NOT TESTED."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "debug_mqtt_host",
+      "old_requirement": "Optional",
+      "old_default": "`''`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L431",
+      "new_equivalent": "No component debug MQTT client",
+      "status": "UNSUPPORTED",
+      "notes": "Use native ESPHome entity transport as configured; legacy debug broker credentials/topics are not migrated or published."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "debug_mqtt_port",
+      "old_requirement": "Optional",
+      "old_default": "`1883`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L432",
+      "new_equivalent": "No component debug MQTT client",
+      "status": "UNSUPPORTED",
+      "notes": "Use native ESPHome entity transport as configured; legacy debug broker credentials/topics are not migrated or published."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "debug_mqtt_username",
+      "old_requirement": "Optional",
+      "old_default": "`''`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L433",
+      "new_equivalent": "No component debug MQTT client",
+      "status": "UNSUPPORTED",
+      "notes": "Use native ESPHome entity transport as configured; legacy debug broker credentials/topics are not migrated or published."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "debug_mqtt_password",
+      "old_requirement": "Optional",
+      "old_default": "`''`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L434",
+      "new_equivalent": "No component debug MQTT client",
+      "status": "UNSUPPORTED",
+      "notes": "Use native ESPHome entity transport as configured; legacy debug broker credentials/topics are not migrated or published."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "debug_log_messages",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L435",
+      "new_equivalent": "Standard logger plus bounded transport/engine counters",
+      "status": "UNSUPPORTED",
+      "notes": "No component raw/decoded packet log or change-only debug switch; capture/redaction is a separate reviewed procedure."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "debug_log_messages_raw",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L436",
+      "new_equivalent": "Standard logger plus bounded transport/engine counters",
+      "status": "UNSUPPORTED",
+      "notes": "No component raw/decoded packet log or change-only debug switch; capture/redaction is a separate reviewed procedure."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "non_nasa_keepalive",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L437",
+      "new_equivalent": "No public equivalent",
+      "status": "UNSUPPORTED",
+      "notes": "Production stays passive; host-tested registration/keepalive helpers do not enable active traffic."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "non_nasa_tx_delay_ms",
+      "old_requirement": "Optional",
+      "old_default": "`0`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L438",
+      "new_equivalent": "No public equivalent",
+      "status": "UNSUPPORTED",
+      "notes": "No per-device timing override or active submission; future hardware timing requires identified evidence."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "debug_log_undefined_messages",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L441",
+      "new_equivalent": "Standard logger plus bounded transport/engine counters",
+      "status": "UNSUPPORTED",
+      "notes": "No component raw/decoded packet log or change-only debug switch; capture/redaction is a separate reviewed procedure."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "capabilities",
+      "old_requirement": "Optional",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L442",
+      "new_equivalent": "Per-device fan_modes, swing flags and presets",
+      "status": "PARTIAL",
+      "notes": "No root inheritance/deep merge. Every device declares its supported read-only observations."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "debug_log_messages_on_change",
+      "old_requirement": "Optional",
+      "old_default": "`False`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L443",
+      "new_equivalent": "Standard logger plus bounded transport/engine counters",
+      "status": "UNSUPPORTED",
+      "notes": "No component raw/decoded packet log or change-only debug switch; capture/redaction is a separate reviewed procedure."
+    },
+    {
+      "old_scope": "root",
+      "old_key": "devices",
+      "old_requirement": "Required",
+      "old_default": "`not supplied`",
+      "source_url": "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py#L444",
+      "new_equivalent": "Root devices, optional empty list, maximum 8",
+      "status": "PARTIAL",
+      "notes": "Explicit ID/profile/address, duplicate rejection and independent state; no automatic control discovery."
+    }
+  ]
+}
