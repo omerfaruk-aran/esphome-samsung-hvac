@@ -1,0 +1,65 @@
+name: Bug report
+description: Report a reproducible defect
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Remove secrets, personal data, and private network details before posting. For vulnerabilities, use private reporting instead."
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened?
+      description: Describe actual and expected behavior, and steps to reproduce.
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: ESPHome version and integration version or commit, if available.
+      placeholder: "ESPHome 2026.x; integration commit or not yet available"
+    validations:
+      required: true
+  - type: input
+    id: hardware
+    attributes:
+      label: Hardware
+      description: Interface hardware and ESP32 board or model.
+    validations:
+      required: true
+  - type: input
+    id: hvac
+    attributes:
+      label: Samsung equipment
+      description: Indoor and outdoor unit model numbers, if known.
+  - type: dropdown
+    id: protocol
+    attributes:
+      label: Protocol type
+      options:
+        - Unknown
+        - NASA
+        - Non-NASA
+        - EHS / heat pump (protocol unknown)
+  - type: textarea
+    id: uart
+    attributes:
+      label: UART and bus configuration
+      description: Include pins, baud rate, parity, stop bits, and interface details if known. Do not connect an ESP32 directly to an unknown bus.
+  - type: textarea
+    id: config
+    attributes:
+      label: Relevant YAML configuration
+      description: Remove credentials, addresses, and other sensitive information.
+      render: yaml
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs or packet captures
+      description: Provide relevant sanitized logs or captures, capture method, and timestamps where useful. Do not include credentials or private data.
+      render: text
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add relevant details or limitations of your testing.

@@ -1,0 +1,25 @@
+# ESPHome and PlatformIO generated data
+.esphome/
+.pio/
+.platformio/
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Local secrets and configuration
+secrets.yaml
+.env
+.env.*
+!.env.example
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+*.swp
