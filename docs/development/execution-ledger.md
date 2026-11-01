@@ -120,3 +120,11 @@ Commands below run from repository/, unless otherwise stated:
 - Review rulings: P2–P6 own typed semantics/ACK/retries/profiles/write policy; physical timing, collisions and driver overrun losses remain NOT TESTED; physically interconnected different pins and user C++ are outside declarative ownership enforcement; unsupported platforms/adapters remain rejected; remote CI success is still a separate prerequisite. Cost: software/simulation results cannot establish equipment compatibility.
 
 - P1 final fix validation: `../.venv/bin/python -m pytest -q` → 32 passed in 5.01s; Ruff check/format and git diff --check PASS. C++ adapter/core unchanged since both full firmware builds passed, except a callback lifetime comment. GPIO schema fixes are exercised by real codegen and four RED→GREEN alias regressions.
+
+
+### P1 PR and dependency security correction
+
+- P1 implementation commit fa66993, PR https://github.com/omerfaruk-aran/esphome-samsung-hvac/pull/3. Local Git identity/auth reverified before push. Remote Validation run 41290628879 started; no merge before checks complete.
+- GitHub reported Dependabot alert #1 for the development dependency pytest: vulnerable tmpdir handling in versions below 9.0.3. Updated requirements-dev.txt from 8.4.2 to the first patched 9.0.3, installed locally and reran the suite. This is a dependency correction in the phase validation path; no runtime code or protections changed. Dependabot's separate PR #2 is not merged or modified by this task.
+
+- Patched dependency validation: `../.venv/bin/python -m pytest -q` with pytest9.0.3 → 32 passed; `../.venv/bin/python -m pip check` → no broken requirements; git diff --check PASS.
