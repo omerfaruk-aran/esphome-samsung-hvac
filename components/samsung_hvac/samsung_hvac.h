@@ -9,6 +9,7 @@
 #include "non_nasa_engine.h"
 #include "protocol_selection.h"
 #include "ac_entities.h"
+#include "ehs_entities.h"
 #include <memory>
 
 namespace esphome::samsung_hvac {
@@ -18,7 +19,7 @@ class SamsungHVAC : public Component, public uart::UARTDevice, private BusIO, pr
  public:
   void set_protocol(Protocol protocol) { this->protocol_ = protocol; }
   void set_flow_control_pin(GPIOPin *pin) { this->flow_control_pin_ = pin; }
-  void add_profile(profiles::AcDevice *profile) {
+  void add_profile(profiles::PacketConsumer *profile) {
     if (this->profile_count_ < this->profiles_.size()) this->profiles_[this->profile_count_++] = profile;
   }
   void setup() override;
@@ -41,7 +42,7 @@ class SamsungHVAC : public Component, public uart::UARTDevice, private BusIO, pr
   void on_nasa_packet(const nasa::Packet &packet) override;
   void on_read_complete(const nasa::ReadResult &result) override;
   void on_non_nasa_packet(const non_nasa::Packet &packet) override;
-  std::array<profiles::AcDevice *, 8> profiles_{};
+  std::array<profiles::PacketConsumer *, 8> profiles_{};
   size_t profile_count_{0};
   Diagnostics stats_;
   uart::IDFUARTComponent *native_uart_{nullptr};

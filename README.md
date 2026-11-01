@@ -1,6 +1,6 @@
 # Samsung HVAC Modular for ESPHome
 
-A planned modular ESPHome integration for Samsung HVAC systems. This repository is in the foundation stage: it provides receive-only transport, independent protocol engines and passive AC state entities, but no HVAC control, verified hardware matrix, installation procedure, or migration path. Do not use it to control equipment yet.
+A planned modular ESPHome integration for Samsung HVAC systems. This repository is in the foundation stage: it provides receive-only transport, independent protocol engines and passive AC/EHS state entities, but no HVAC control, verified hardware matrix, installation procedure, or migration path. Do not use it to control equipment yet.
 
 ## Project goals
 
@@ -45,3 +45,5 @@ See [transport behavior and limits](docs/development/transport.md) for bounded b
 The [NASA engine notes](docs/protocol/nasa-engine.md) distinguish passive decoding from the host-tested read lifecycle and its remaining active-scheduler integration boundary.
 
 The [Non-NASA engine notes](docs/protocol/non-nasa-engine.md) explain source evidence, conservative ACK/readback behavior and the disabled production control lifecycle.
+
+The [read-only EHS profile](docs/development/ehs-profile.md) exposes source-labelled hydro observations; the [EHS matrix](docs/compatibility/ehs-matrix.md) separates public model reports from verified compatibility. No identified hardware or complete multi-zone support is claimed.

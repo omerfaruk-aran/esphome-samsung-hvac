@@ -151,18 +151,6 @@ DEVICE_SCHEMA = cv.All(
 )
 
 
-def validate_devices(config):
-    expected = "nasa_ac" if config["protocol"] == "nasa" else "non_nasa_ac"
-    seen = set()
-    for device in config["devices"]:
-        if device["profile"] != expected:
-            raise cv.Invalid("Device profile must match the bus protocol")
-        if device["address"] in seen:
-            raise cv.Invalid("Duplicate device address on the same bus")
-        seen.add(device["address"])
-    return config
-
-
 async def to_code(parent, config):
     var = cg.new_Pvariable(config[CONF_ID], config["profile"], config["address"])
     cg.add(parent.add_profile(var))

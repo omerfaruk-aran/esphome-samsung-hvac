@@ -1,0 +1,15 @@
+{
+  "evidence_level": "INFERRED",
+  "construction": "Synthetic source-derived NASA observations. Python CRC generated independently of C++ encoder.",
+  "device_models": [],
+  "capture_reference": null,
+  "sources": [
+    "legacy6b1966bea8db9344d23763454f9cebed015d15c5",
+    "nasactl629c43fce1c6a0595b5070028e34cf4ad0f25386"
+  ],
+  "files": [
+    "hydro_state.hex",
+    "outdoor_state.hex"
+  ],
+  "hardware": "NOT TESTED"
+}

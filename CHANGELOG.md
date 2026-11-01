@@ -43,3 +43,9 @@ Notable changes will be recorded here. This project has not made a release.
 - Add isolated, bounded NASA AC and Non-NASA AC profiles, explicit addresses/capabilities and standard ESPHome state entities.
 - Keep public climate/control entities unavailable; optional climate projections are internal only. Disputed NASA room codes remain disabled.
 - Add source-labelled state fixtures, profile/capability/codegen tests and API entity firmware compilation. Full legacy parity, device captures, hardware and Home Assistant registry/restore behavior remain unverified.
+
+### P5 EHS observations (unreleased)
+
+- Add a NASA-only, read-only EHS profile for source-labelled DHW, outlet, Water Law, flow and state observations, plus explicitly scoped outdoor telemetry.
+- Keep Zone1/2 enable observations separate; ambiguous room/zone temperatures and targets remain disabled. No verified multi-zone device support is claimed.
+- Add synthetic hydro/outdoor fixtures, zero-TX simulated-UART integration, YAML rejection tests, evidence/compatibility matrices and firmware entity coverage. No live device writes, active polling or FSV write option is added.

@@ -86,6 +86,49 @@ samsung_hvac:
     address: 2097153
     power_state:
       name: Bedroom Power
+  - id: hydro
+    profile: ehs
+    address: 2097154
+    outdoor_address: 1048576
+    dhw_temperature:
+      name: Hydro Dhw Temperature
+    dhw_target_temperature:
+      name: Hydro Dhw Target Temperature
+    water_outlet_temperature:
+      name: Hydro Water Outlet Temperature
+    water_outlet_target_temperature:
+      name: Hydro Water Outlet Target Temperature
+    water_return_temperature:
+      name: Hydro Water Return Temperature
+    water_law_shift:
+      name: Hydro Water Law Shift
+    water_law_target_temperature:
+      name: Hydro Water Law Target Temperature
+    water_flow:
+      name: Hydro Water Flow
+    outdoor_temperature:
+      name: Hydro Outdoor Temperature
+    error_code:
+      name: Hydro Error Code
+    power_state:
+      name: Hydro Power State
+    dhw_power_state:
+      name: Hydro Dhw Power State
+    water_pump_state:
+      name: Hydro Water Pump State
+    defrosting:
+      name: Hydro Defrosting
+    operation_mode:
+      name: Hydro Operation Mode
+    dhw_mode:
+      name: Hydro Dhw Mode
+    zones:
+    - number: 1
+      power_state:
+        name: Zone 1 Enabled
+    - number: 2
+      power_state:
+        name: Zone 2 Enabled
 api:
   reboot_timeout: 0s
 network: {}
