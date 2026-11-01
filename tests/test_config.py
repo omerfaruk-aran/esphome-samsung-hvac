@@ -449,3 +449,122 @@ def test_ehs_unsupported_configuration_rejected(tmp_path, case, expected):
     assert "Traceback" not in result.stderr
     assert result.returncode != 0
     assert expected in result.stdout + result.stderr
+
+
+def message_observer():
+    return {
+        "id": "raw_target",
+        "source_address": 0x200000,
+        "catalog": "nasa_target",
+        "sensor": {"name": "Observed Target"},
+    }
+
+
+@pytest.mark.parametrize(
+    "kind", ["catalog", "custom", "custom_double", "fsv", "binary"]
+)
+def test_typed_observer_generates(tmp_path, kind):
+    data = config()
+    message = message_observer()
+    if kind in ("custom", "custom_double"):
+        del message["catalog"]
+        message["custom"] = {
+            "code": 0x4202,
+            "value_type": "variable",
+            "signed": True,
+            "unit": "",
+            "scale": 0.1,
+            "offset": 0,
+            "source_role": "indoor",
+            "source_url": "https://example.com/research",
+            "sentinels": [65535],
+        }
+        if kind == "custom_double":
+            message["custom"]["scale"] = 1e-100
+            message["custom"]["offset"] = 4294967295.0
+    elif kind == "fsv":
+        message["catalog"] = "ehs_fsv_heating_upper"
+    elif kind == "binary":
+        message["catalog"] = "nasa_power"
+        del message["sensor"]
+        message["binary_sensor"] = {"name": "Observed Power"}
+    data["samsung_hvac"][0]["messages"] = [message]
+    result = run_esphome(tmp_path, data, "compile", "--only-generate")
+    assert result.returncode == 0, result.stdout + result.stderr
+    main = (tmp_path / ".esphome/build/samsung-foundation/src/main.cpp").read_text()
+    assert "add_message" in main
+    if kind == "custom_double":
+        assert "1e-100" in main and "1e-100f" not in main
+        assert "4294967295.0" in main and "4294967295.0f" not in main
+
+
+@pytest.mark.parametrize(
+    "case,expected",
+    [
+        ("protocol", "NASA"),
+        ("source", "source role"),
+        ("unknown", "Unknown catalog"),
+        ("disabled", "unresolved"),
+        ("write", "enable_writes"),
+        ("poll", "poll_interval"),
+        ("wrong_entity", "binary_sensor"),
+        ("unit", "unit"),
+        ("too_many", "32"),
+        ("type", "wire type"),
+        ("nonfinite", "finite"),
+        ("semantic_ambiguous", "raw unsigned"),
+    ],
+)
+def test_typed_observer_rejects_unsafe_configuration(tmp_path, case, expected):
+    data = config()
+    message = message_observer()
+    messages = [message]
+    if case == "protocol":
+        data["samsung_hvac"][0]["protocol"] = "non_nasa"
+    elif case == "source":
+        message["source_address"] = 0x100000
+    elif case == "unknown":
+        message["catalog"] = "invented_descriptor"
+    elif case == "disabled":
+        message["catalog"] = "unresolved_4204"
+    elif case == "write":
+        message["enable_writes"] = True
+    elif case == "poll":
+        message["poll_interval"] = "10s"
+    elif case == "wrong_entity":
+        message["catalog"] = "nasa_power"
+    elif case == "unit":
+        message["sensor"]["unit_of_measurement"] = "°F"
+    elif case == "too_many":
+        messages = [
+            {
+                "id": f"message_{i}",
+                "source_address": 0x200000,
+                "catalog": "nasa_target",
+                "sensor": {"name": f"Observed {i}"},
+            }
+            for i in range(33)
+        ]
+    else:
+        del message["catalog"]
+        message["custom"] = {
+            "code": 0x4202,
+            "value_type": "variable",
+            "signed": False,
+            "unit": "",
+            "scale": 1,
+            "offset": 0,
+            "source_role": "indoor",
+            "source_url": "https://example.com/research",
+        }
+        if case == "type":
+            message["custom"]["value_type"] = "enum"
+        elif case == "nonfinite":
+            message["custom"]["scale"] = float("nan")
+        elif case == "semantic_ambiguous":
+            message["custom"].update(code=0x4204, unit="°C", scale=0.1)
+    data["samsung_hvac"][0]["messages"] = messages
+    result = run_esphome(tmp_path, data, "config")
+    assert "Traceback" not in result.stderr
+    assert result.returncode != 0
+    assert expected in result.stdout + result.stderr

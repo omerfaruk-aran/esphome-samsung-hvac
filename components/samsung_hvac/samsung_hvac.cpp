@@ -75,6 +75,7 @@ void SamsungHVAC::on_frame(const Frame &frame) {
 }
 
 void SamsungHVAC::on_nasa_packet(const nasa::Packet &packet) {
+  for (size_t i = 0; i < this->message_count_; ++i) this->messages_[i]->receive(packet);
   for (size_t i = 0; i < this->profile_count_; ++i) this->profiles_[i]->receive(packet);
 }
 
@@ -92,6 +93,7 @@ void SamsungHVAC::dump_config() {
   ESP_LOGCONFIG(TAG, "  Protocol: %s", protocol_name(this->protocol_));
   ESP_LOGCONFIG(TAG, "  Receive-only; no active polling, registration, or control");
   ESP_LOGCONFIG(TAG, "  Passive device profiles: %u", static_cast<unsigned>(this->profile_count_));
+  ESP_LOGCONFIG(TAG, "  Passive typed observers: %u", static_cast<unsigned>(this->message_count_));
   LOG_PIN("  Direction pin: ", this->flow_control_pin_);
   ESP_LOGCONFIG(TAG, "  RX: %" PRIu32 " bytes, %" PRIu32 " valid frames, %" PRIu32 " invalid candidates",
                 this->stats_.rx_bytes, this->stats_.rx_frames, this->stats_.invalid_frames);

@@ -49,3 +49,10 @@ Notable changes will be recorded here. This project has not made a release.
 - Add a NASA-only, read-only EHS profile for source-labelled DHW, outlet, Water Law, flow and state observations, plus explicitly scoped outdoor telemetry.
 - Keep Zone1/2 enable observations separate; ambiguous room/zone temperatures and targets remain disabled. No verified multi-zone device support is claimed.
 - Add synthetic hydro/outdoor fixtures, zero-TX simulated-UART integration, YAML rejection tests, evidence/compatibility matrices and firmware entity coverage. No live device writes, active polling or FSV write option is added.
+
+### P6 typed observations (unreleased)
+
+- Add a versioned evidence-labelled catalog with strict protocol/wire/schema validation and NASA scalar catalog/custom observers.
+- Add passive FSV observations, explicit raw-only inspection of disputed words, invalid/sentinel handling and documented float publication limits.
+- Test an isolated immutable guarded-write lifecycle without a live bridge, public opt-in, retries or transmission. All shipped catalog entries remain passive/disabled; verified physical policies and active writes are unavailable.
+- Add scalar/policy/catalog/YAML tests and firmware observer coverage on both frameworks. Hardware and real equipment readback remain NOT TESTED.

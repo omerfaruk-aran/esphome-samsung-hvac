@@ -15,7 +15,7 @@ from esphome.const import (
 )
 import esphome.final_validate as fv
 
-from . import ac_config, ehs_config
+from . import ac_config, ehs_config, message_config
 
 AUTO_LOAD = ["sensor", "binary_sensor", "text_sensor", "climate"]
 
@@ -37,6 +37,8 @@ def _device_schema(value):
 
 def _validate_devices(config):
     allowed = {"nasa_ac", "ehs"} if config["protocol"] == "nasa" else {"non_nasa_ac"}
+    if config["messages"] and config[CONF_PROTOCOL] != "nasa":
+        raise cv.Invalid("Generic message observers require a NASA bus")
     seen = set()
     for device in config["devices"]:
         if device["profile"] not in allowed:
@@ -54,6 +56,9 @@ CONFIG_SCHEMA = cv.All(
             cv.GenerateID(): cv.declare_id(SamsungHVAC),
             cv.Required(CONF_PROTOCOL): cv.enum(PROTOCOLS, lower=True),
             cv.Required(CONF_UART_ID): cv.use_id(uart.UARTComponent),
+            cv.Optional("messages", default=[]): cv.All(
+                cv.ensure_list(message_config.SCHEMA), cv.Length(max=32)
+            ),
             cv.Optional("devices", default=[]): cv.All(
                 cv.ensure_list(_device_schema), cv.Length(max=8)
             ),
@@ -158,3 +163,6 @@ async def to_code(config):
             await ehs_config.to_code(var, device)
         else:
             await ac_config.to_code(var, device)
+
+    for message in config["messages"]:
+        await message_config.to_code(var, message)

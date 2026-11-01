@@ -1,0 +1,1709 @@
+{
+  "version": 1,
+  "messages": [
+    {
+      "id": "nasa_target",
+      "protocol": "nasa",
+      "code": 16897,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Legacy unsigned target read; not a write range.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_pipe_in",
+      "protocol": "nasa",
+      "code": 16901,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_pipe_out",
+      "protocol": "nasa",
+      "code": 16902,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_outdoor",
+      "protocol": "nasa",
+      "code": 33284,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "outdoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_error",
+      "protocol": "nasa",
+      "code": 33333,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "outdoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_humidity",
+      "protocol": "nasa",
+      "code": 16440,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "%",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Percent label in legacy; values above100 invalidate. No sensor-health proof.",
+      "fsv": false,
+      "raw_range": {
+        "minimum": 0,
+        "maximum": 100
+      }
+    },
+    {
+      "id": "nasa_power",
+      "protocol": "nasa",
+      "code": 16384,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_filter_warning",
+      "protocol": "nasa",
+      "code": 16423,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_defrost",
+      "protocol": "nasa",
+      "code": 16430,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/__init__.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_silence",
+      "protocol": "nasa",
+      "code": 16454,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_cleaning",
+      "protocol": "nasa",
+      "code": 16657,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_vertical_swing",
+      "protocol": "nasa",
+      "code": 16401,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_horizontal_swing",
+      "protocol": "nasa",
+      "code": 16510,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_mode",
+      "protocol": "nasa",
+      "code": 16385,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_fan",
+      "protocol": "nasa",
+      "code": 16390,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "nasa_preset",
+      "protocol": "nasa",
+      "code": 16480,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1,
+        2,
+        3,
+        6,
+        7,
+        9
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_dhw_current",
+      "protocol": "nasa",
+      "code": 16951,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py",
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "INFERRED source-specific conversion; targets follow legacy unsigned policy; see ehs-mappings.md signedness/Water Law limits.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_dhw_target",
+      "protocol": "nasa",
+      "code": 16949,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py",
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "INFERRED source-specific conversion; targets follow legacy unsigned policy; see ehs-mappings.md signedness/Water Law limits.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_outlet_current",
+      "protocol": "nasa",
+      "code": 16952,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "INFERRED source-specific conversion; targets follow legacy unsigned policy; see ehs-mappings.md signedness/Water Law limits.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_outlet_target",
+      "protocol": "nasa",
+      "code": 16967,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py",
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "INFERRED source-specific conversion; targets follow legacy unsigned policy; see ehs-mappings.md signedness/Water Law limits.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_return",
+      "protocol": "nasa",
+      "code": 16950,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "INFERRED source-specific conversion; targets follow legacy unsigned policy; see ehs-mappings.md signedness/Water Law limits.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_water_law_shift",
+      "protocol": "nasa",
+      "code": 16968,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "INFERRED source-specific conversion; targets follow legacy unsigned policy; see ehs-mappings.md signedness/Water Law limits.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_water_law_target",
+      "protocol": "nasa",
+      "code": 17023,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "INFERRED source-specific conversion; targets follow legacy unsigned policy; see ehs-mappings.md signedness/Water Law limits.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_flow",
+      "protocol": "nasa",
+      "code": 17129,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "L/min",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_dhw_mode",
+      "protocol": "nasa",
+      "code": 16486,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py",
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-derived observation; no device or sentinel verification.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_dhw_power",
+      "protocol": "nasa",
+      "code": 16485,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-labelled state only; no verified model, zone topology or write capability.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_pump",
+      "protocol": "nasa",
+      "code": 16521,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-labelled state only; no verified model, zone topology or write capability.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_zone1_power",
+      "protocol": "nasa",
+      "code": 16665,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.h"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-labelled state only; no verified model, zone topology or write capability.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_zone2_power",
+      "protocol": "nasa",
+      "code": 16670,
+      "value_type": "enum",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.h"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Source-labelled state only; no verified model, zone topology or write capability.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_fsv_heating_upper",
+      "protocol": "nasa",
+      "code": 16974,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Passive FSV observation only; may never be broadcast. No polling or writes.",
+      "fsv": true,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_fsv_heating_lower",
+      "protocol": "nasa",
+      "code": 16975,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Passive FSV observation only; may never be broadcast. No polling or writes.",
+      "fsv": true,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_fsv_cold_outdoor",
+      "protocol": "nasa",
+      "code": 16980,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Passive FSV observation only; may never be broadcast. No polling or writes.",
+      "fsv": true,
+      "raw_range": null
+    },
+    {
+      "id": "ehs_fsv_warm_outdoor",
+      "protocol": "nasa",
+      "code": 16981,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 0.1,
+      "offset": 0,
+      "signedness": "signed",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "ehs"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/paolostivanin/nasactl/blob/629c43fce1c6a0595b5070028e34cf4ad0f25386/components/nasactl/const.py"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Passive FSV observation only; may never be broadcast. No polling or writes.",
+      "fsv": true,
+      "raw_range": null
+    },
+    {
+      "id": "unresolved_4203",
+      "protocol": "nasa",
+      "code": 16899,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "disabled",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "unresolved"
+      ],
+      "device_models": [],
+      "evidence_level": "unknown",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Disputed room/zone semantics; disabled as a named semantic descriptor. Explicit raw unsigned unitless observation only.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "unresolved_4204",
+      "protocol": "nasa",
+      "code": 16900,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "disabled",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "unresolved"
+      ],
+      "device_models": [],
+      "evidence_level": "unknown",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Disputed room/zone semantics; disabled as a named semantic descriptor. Explicit raw unsigned unitless observation only.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "unresolved_42d6",
+      "protocol": "nasa",
+      "code": 17110,
+      "value_type": "variable",
+      "payload_length": 2,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "disabled",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "linear",
+      "layout": null,
+      "device_scope": [
+        "unresolved"
+      ],
+      "device_models": [],
+      "evidence_level": "unknown",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Disputed room/zone semantics; disabled as a named semantic descriptor. Explicit raw unsigned unitless observation only.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "non_nasa_target",
+      "protocol": "non_nasa",
+      "code": 32,
+      "value_type": "temperature8",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "non_nasa_temperature",
+      "layout": {
+        "byte": 0,
+        "mask": 255,
+        "shift": 0
+      },
+      "device_scope": [
+        "non_nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Cmd20 payload extraction, not a NASA message. Temperature bit7 clear: raw-55 C; set: ((raw&127)-32)*5/9 C. Swing raw0 normalizes Off. Generic advanced observer not implemented for Non-NASA.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "non_nasa_room",
+      "protocol": "non_nasa",
+      "code": 32,
+      "value_type": "temperature8",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "non_nasa_temperature",
+      "layout": {
+        "byte": 1,
+        "mask": 255,
+        "shift": 0
+      },
+      "device_scope": [
+        "non_nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Cmd20 payload extraction, not a NASA message. Temperature bit7 clear: raw-55 C; set: ((raw&127)-32)*5/9 C. Swing raw0 normalizes Off. Generic advanced observer not implemented for Non-NASA.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "non_nasa_pipe_in",
+      "protocol": "non_nasa",
+      "code": 32,
+      "value_type": "temperature8",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "non_nasa_temperature",
+      "layout": {
+        "byte": 2,
+        "mask": 255,
+        "shift": 0
+      },
+      "device_scope": [
+        "non_nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Cmd20 payload extraction, not a NASA message. Temperature bit7 clear: raw-55 C; set: ((raw&127)-32)*5/9 C. Swing raw0 normalizes Off. Generic advanced observer not implemented for Non-NASA.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "non_nasa_pipe_out",
+      "protocol": "non_nasa",
+      "code": 32,
+      "value_type": "temperature8",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "°C",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": null,
+      "conversion": "non_nasa_temperature",
+      "layout": {
+        "byte": 7,
+        "mask": 255,
+        "shift": 0
+      },
+      "device_scope": [
+        "non_nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Cmd20 payload extraction, not a NASA message. Temperature bit7 clear: raw-55 C; set: ((raw&127)-32)*5/9 C. Swing raw0 normalizes Off. Generic advanced observer not implemented for Non-NASA.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "non_nasa_power",
+      "protocol": "non_nasa",
+      "code": 32,
+      "value_type": "bitfield",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "boolean",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        1
+      ],
+      "conversion": "bit_extract",
+      "layout": {
+        "byte": 4,
+        "mask": 128,
+        "shift": 7
+      },
+      "device_scope": [
+        "non_nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Cmd20 payload extraction, not a NASA message. Temperature bit7 clear: raw-55 C; set: ((raw&127)-32)*5/9 C. Swing raw0 normalizes Off. Generic advanced observer not implemented for Non-NASA.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "non_nasa_mode",
+      "protocol": "non_nasa",
+      "code": 32,
+      "value_type": "bitfield",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        1,
+        2,
+        4,
+        8,
+        33,
+        34
+      ],
+      "conversion": "bit_extract",
+      "layout": {
+        "byte": 4,
+        "mask": 63,
+        "shift": 0
+      },
+      "device_scope": [
+        "non_nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Cmd20 payload extraction, not a NASA message. Temperature bit7 clear: raw-55 C; set: ((raw&127)-32)*5/9 C. Swing raw0 normalizes Off. Generic advanced observer not implemented for Non-NASA.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "non_nasa_fan",
+      "protocol": "non_nasa",
+      "code": 32,
+      "value_type": "bitfield",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        2,
+        4,
+        5,
+        6,
+        7
+      ],
+      "conversion": "bit_extract",
+      "layout": {
+        "byte": 3,
+        "mask": 7,
+        "shift": 0
+      },
+      "device_scope": [
+        "non_nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Cmd20 payload extraction, not a NASA message. Temperature bit7 clear: raw-55 C; set: ((raw&127)-32)*5/9 C. Swing raw0 normalizes Off. Generic advanced observer not implemented for Non-NASA.",
+      "fsv": false,
+      "raw_range": null
+    },
+    {
+      "id": "non_nasa_swing",
+      "protocol": "non_nasa",
+      "code": 32,
+      "value_type": "bitfield",
+      "payload_length": 1,
+      "source_role": "indoor",
+      "destination_role": "any",
+      "direction": "device_to_bus",
+      "access": "passive",
+      "unit": "",
+      "scale": 1,
+      "offset": 0,
+      "signedness": "unsigned",
+      "sentinels": [],
+      "sentinel_status": "unknown",
+      "valid_values": [
+        0,
+        26,
+        27,
+        28,
+        31
+      ],
+      "conversion": "bit_extract",
+      "layout": {
+        "byte": 3,
+        "mask": 248,
+        "shift": 3
+      },
+      "device_scope": [
+        "non_nasa_ac"
+      ],
+      "device_models": [],
+      "evidence_level": "inferred",
+      "source_url": [
+        "https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/6b1966bea8db9344d23763454f9cebed015d15c5/components/samsung_ac/protocol_non_nasa.cpp"
+      ],
+      "capture_reference": null,
+      "test_reference": [
+        "tests/test_catalog.py",
+        "tests/test_config.py"
+      ],
+      "notes": "Cmd20 payload extraction, not a NASA message. Temperature bit7 clear: raw-55 C; set: ((raw&127)-32)*5/9 C. Swing raw0 normalizes Off. Generic advanced observer not implemented for Non-NASA.",
+      "fsv": false,
+      "raw_range": null
+    }
+  ]
+}

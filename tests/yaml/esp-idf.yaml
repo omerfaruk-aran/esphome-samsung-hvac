@@ -129,6 +129,56 @@ samsung_hvac:
     - number: 2
       power_state:
         name: Zone 2 Enabled
+  messages:
+  - id: fsv_upper
+    source_address: 2097154
+    catalog: ehs_fsv_heating_upper
+    sensor:
+      name: FSV Heating Upper Observation
+  - id: power_observation
+    source_address: 2097152
+    catalog: nasa_power
+    binary_sensor:
+      name: Power Observation
+  - id: custom_long
+    source_address: 2097152
+    custom:
+      code: 17408
+      value_type: long_variable
+      signed: false
+      unit: ''
+      scale: 1
+      offset: 0
+      source_role: indoor
+      source_url: https://github.com/omerfaruk-aran/esphome-samsung-hvac
+    sensor:
+      name: Experimental Raw Long
+  - id: raw_4204
+    source_address: 2097152
+    custom:
+      code: 16900
+      value_type: variable
+      signed: false
+      unit: ''
+      scale: 1
+      offset: 0
+      source_role: indoor
+      source_url: https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/discussions/261
+    sensor:
+      name: Raw 0x4204
+  - id: double_precision_probe
+    source_address: 2097152
+    custom:
+      code: 17408
+      value_type: long_variable
+      signed: false
+      unit: ''
+      scale: 1.0e-100
+      offset: 4294967295.0
+      source_role: indoor
+      source_url: https://github.com/omerfaruk-aran/esphome-samsung-hvac
+    sensor:
+      name: Experimental Precision Probe
 api:
   reboot_timeout: 0s
 network: {}

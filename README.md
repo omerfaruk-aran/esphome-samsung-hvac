@@ -47,3 +47,5 @@ The [NASA engine notes](docs/protocol/nasa-engine.md) distinguish passive decodi
 The [Non-NASA engine notes](docs/protocol/non-nasa-engine.md) explain source evidence, conservative ACK/readback behavior and the disabled production control lifecycle.
 
 The [read-only EHS profile](docs/development/ehs-profile.md) exposes source-labelled hydro observations; the [EHS matrix](docs/compatibility/ehs-matrix.md) separates public model reports from verified compatibility. No identified hardware or complete multi-zone support is claimed.
+
+The [typed passive message interface](docs/development/advanced-messages.md) supports named catalog/custom scalar observations and passive FSV data. The [catalog schema](docs/protocol/message-catalog.md) records evidence; the [offline write gate](docs/development/write-policy.md) is tested infrastructure with no live write or polling option.
