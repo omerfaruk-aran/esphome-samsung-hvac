@@ -1,0 +1,29 @@
+# Build-only fixture. Pin numbers are not wiring guidance for HVAC equipment.
+esphome:
+  name: samsung-foundation-arduino
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+logger:
+  baud_rate: 0
+
+external_components:
+  - source:
+      type: local
+      path: ../../components
+    components: [samsung_hvac]
+
+uart:
+  id: hvac_uart
+  rx_pin: GPIO16
+  tx_pin: GPIO17
+  baud_rate: 9600
+  parity: EVEN
+
+samsung_hvac:
+  id: hvac
+  uart_id: hvac_uart
+  protocol: non_nasa
