@@ -13,3 +13,11 @@ Notable changes will be recorded here. This project has not made a release.
 - Add six reviewed ADRs and document the failed nested-source packaging prototype.
 - Add schema/code-generation tests and Arduino/ESP-IDF firmware CI.
 - No transport, HVAC control, supported device matrix or migration is available yet.
+
+
+### P1 transport (unreleased)
+
+- Add a receive-only, bounded UART path with independent NASA/Non-NASA integrity framing and diagnostics.
+- Add an internal serialized TX scheduler with queue limits, discovery/silence gating, nonblocking drain polling, direction guard and sticky faults; TX remains unavailable in YAML.
+- Test parser recovery, random streams, queue behavior, driver failures and clock rollover under address/undefined-behavior sanitizers.
+- Require native ESP32 UART and reject competing aliases on the same pins.

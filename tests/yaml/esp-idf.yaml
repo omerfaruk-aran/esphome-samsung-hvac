@@ -27,3 +27,4 @@ samsung_hvac:
   id: hvac
   uart_id: hvac_uart
   protocol: nasa
+  flow_control_pin: GPIO23

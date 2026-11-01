@@ -70,6 +70,80 @@ def test_separate_buses_are_independent(tmp_path):
     assert result.returncode == 0, result.stdout + result.stderr
 
 
+def test_optional_direction_pin_generates(tmp_path):
+    data = config()
+    data["samsung_hvac"][0]["flow_control_pin"] = "GPIO23"
+    result = run_esphome(tmp_path, data, "compile", "--only-generate")
+    assert result.returncode == 0, result.stdout + result.stderr
+    main = tmp_path / ".esphome/build/samsung-foundation/src/main.cpp"
+    assert "set_flow_control_pin" in main.read_text()
+
+
+def test_non_esp32_runtime_is_rejected(tmp_path):
+    data = config()
+    del data["esp32"]
+    data["esp8266"] = {"board": "d1_mini"}
+    data["uart"][0]["rx_pin"] = "GPIO4"
+    data["uart"][0]["tx_pin"] = "GPIO5"
+    result = run_esphome(tmp_path, data, "config")
+    assert result.returncode != 0
+    assert "ESP32" in result.stdout + result.stderr
+
+
+def test_uart_aliases_cannot_claim_same_pins(tmp_path):
+    data = config()
+    for pin in ("rx_pin", "tx_pin"):
+        data["uart"][0][pin] = {
+            "number": data["uart"][0][pin],
+            "allow_other_uses": True,
+        }
+    data["uart"].append({**data["uart"][0], "id": "alias_uart"})
+    data["samsung_hvac"].append(
+        {"id": "alias_hvac", "uart_id": "alias_uart", "protocol": "non_nasa"}
+    )
+    result = run_esphome(tmp_path, data, "config")
+    assert result.returncode != 0
+    assert "pins" in result.stdout + result.stderr
+
+
+@pytest.mark.parametrize(
+    "conflict", ["own_rx", "own_tx", "other_rx", "other_direction"]
+)
+def test_direction_pin_is_exclusive(tmp_path, conflict):
+    data = config()
+    for pin in ("rx_pin", "tx_pin"):
+        data["uart"][0][pin] = {
+            "number": data["uart"][0][pin],
+            "allow_other_uses": True,
+        }
+    number = "GPIO16" if conflict == "own_rx" else "GPIO17"
+    if conflict.startswith("other"):
+        data["uart"].append(
+            {
+                **data["uart"][0],
+                "id": "second_uart",
+                "rx_pin": {"number": "GPIO25", "allow_other_uses": True},
+                "tx_pin": "GPIO26",
+            }
+        )
+        data["samsung_hvac"].append(
+            {"id": "second", "uart_id": "second_uart", "protocol": "non_nasa"}
+        )
+        number = "GPIO25" if conflict == "other_rx" else "GPIO23"
+        if conflict == "other_direction":
+            data["samsung_hvac"][1]["flow_control_pin"] = {
+                "number": number,
+                "allow_other_uses": True,
+            }
+    data["samsung_hvac"][0]["flow_control_pin"] = {
+        "number": number,
+        "allow_other_uses": True,
+    }
+    result = run_esphome(tmp_path, data, "config")
+    assert result.returncode != 0
+    assert "direction pin" in result.stdout + result.stderr
+
+
 @pytest.mark.parametrize("protocol", [None, "auto", "invalid"])
 def test_requires_known_explicit_protocol(tmp_path, protocol):
     data = config()
